@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cookle.Migrations
 {
     [DbContext(typeof(UserContext))]
-    [Migration("20190501153010_InitialCreate")]
+    [Migration("20190501155613_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
