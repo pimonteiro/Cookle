@@ -9,22 +9,22 @@ using Cookle.Models;
 
 namespace Cookle.Controllers
 {
-    public class UserController : Controller
+    public class ReceitaController : Controller
     {
         private readonly CookleContext _context;
 
-        public UserController(CookleContext context)
+        public ReceitaController(CookleContext context)
         {
             _context = context;
         }
 
-        // GET: User
+        // GET: Receita
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            return View(await _context.Receita.ToListAsync());
         }
 
-        // GET: User/Details/5
+        // GET: Receita/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace Cookle.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
+            var receita = await _context.Receita
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
+            if (receita == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(receita);
         }
 
-        // GET: User/Create
+        // GET: Receita/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: User/Create
+        // POST: Receita/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email,Username,Password,Sexo,DataNascimento,Voz")] User user)
+        public async Task<IActionResult> Create([Bind("Id,Nome,Descricao,TempoPrep,NumPessoas,Dificuldade,Tipo,Imagem,Video")] Receita receita)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
+                _context.Add(receita);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(receita);
         }
 
-        // GET: User/Edit/5
+        // GET: Receita/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace Cookle.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var receita = await _context.Receita.FindAsync(id);
+            if (receita == null)
             {
                 return NotFound();
             }
-            return View(user);
+            return View(receita);
         }
 
-        // POST: User/Edit/5
+        // POST: Receita/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Username,Password,Sexo,DataNascimento,Voz")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Descricao,TempoPrep,NumPessoas,Dificuldade,Tipo,Imagem,Video")] Receita receita)
         {
-            if (id != user.Id)
+            if (id != receita.Id)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace Cookle.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Update(receita);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.Id))
+                    if (!ReceitaExists(receita.Id))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(receita);
         }
 
-        // GET: User/Delete/5
+        // GET: Receita/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +123,30 @@ namespace Cookle.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
+            var receita = await _context.Receita
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
+            if (receita == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(receita);
         }
 
-        // POST: User/Delete/5
+        // POST: Receita/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            _context.User.Remove(user);
+            var receita = await _context.Receita.FindAsync(id);
+            _context.Receita.Remove(receita);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int id)
+        private bool ReceitaExists(int id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.Receita.Any(e => e.Id == id);
         }
     }
 }

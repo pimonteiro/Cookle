@@ -9,22 +9,22 @@ using Cookle.Models;
 
 namespace Cookle.Controllers
 {
-    public class UserController : Controller
+    public class AdminController : Controller
     {
         private readonly CookleContext _context;
 
-        public UserController(CookleContext context)
+        public AdminController(CookleContext context)
         {
             _context = context;
         }
 
-        // GET: User
+        // GET: Admin
         public async Task<IActionResult> Index()
         {
-            return View(await _context.User.ToListAsync());
+            return View(await _context.Admin.ToListAsync());
         }
 
-        // GET: User/Details/5
+        // GET: Admin/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace Cookle.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
+            var admin = await _context.Admin
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
+            if (admin == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(admin);
         }
 
-        // GET: User/Create
+        // GET: Admin/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: User/Create
+        // POST: Admin/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email,Username,Password,Sexo,DataNascimento,Voz")] User user)
+        public async Task<IActionResult> Create([Bind("Id,Email,Password,Name")] Admin admin)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(user);
+                _context.Add(admin);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(admin);
         }
 
-        // GET: User/Edit/5
+        // GET: Admin/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace Cookle.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User.FindAsync(id);
-            if (user == null)
+            var admin = await _context.Admin.FindAsync(id);
+            if (admin == null)
             {
                 return NotFound();
             }
-            return View(user);
+            return View(admin);
         }
 
-        // POST: User/Edit/5
+        // POST: Admin/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Username,Password,Sexo,DataNascimento,Voz")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Password,Name")] Admin admin)
         {
-            if (id != user.Id)
+            if (id != admin.Id)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace Cookle.Controllers
             {
                 try
                 {
-                    _context.Update(user);
+                    _context.Update(admin);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.Id))
+                    if (!AdminExists(admin.Id))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(user);
+            return View(admin);
         }
 
-        // GET: User/Delete/5
+        // GET: Admin/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +123,30 @@ namespace Cookle.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User
+            var admin = await _context.Admin
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (user == null)
+            if (admin == null)
             {
                 return NotFound();
             }
 
-            return View(user);
+            return View(admin);
         }
 
-        // POST: User/Delete/5
+        // POST: Admin/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var user = await _context.User.FindAsync(id);
-            _context.User.Remove(user);
+            var admin = await _context.Admin.FindAsync(id);
+            _context.Admin.Remove(admin);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UserExists(int id)
+        private bool AdminExists(int id)
         {
-            return _context.User.Any(e => e.Id == id);
+            return _context.Admin.Any(e => e.Id == id);
         }
     }
 }

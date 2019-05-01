@@ -27,6 +27,7 @@ namespace Cookle.Models
         
         [Required]
         [Display(Name = "sexo")]
+        [EnumDataType(typeof(Sexo))]
         public Sexo Sexo { get; set; }
         
         [Required]
