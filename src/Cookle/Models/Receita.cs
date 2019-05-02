@@ -5,6 +5,7 @@ namespace Cookle.Models
 {
     public class Receita
     {
+        [Key]
         public int Id { get; set; }
         
         [Required]
@@ -19,19 +20,19 @@ namespace Cookle.Models
        
         [Display(Name = "TempoPrep")]
         [MaxLength(Int32.MaxValue)]
-        public int TempoPrep { get; set; }
+        public int? TempoPrep { get; set; }
 
         [Display(Name = "NumPessoas")]
         [MaxLength(Int32.MaxValue)]
-        public int NumPessoas { get; set; }
+        public int? NumPessoas { get; set; }
        
         [Display(Name = "Dificuldade")]
         [MaxLength(Int32.MaxValue)]
-        public int Dificuldade { get; set; }
+        public int? Dificuldade { get; set; }
        
         [Display(Name = "Tipo")]
         [MaxLength(Int32.MaxValue)]
-        public int Tipo { get; set; }
+        public int? Tipo { get; set; }
 
         [Display(Name = "Imagem")] [StringLength(45)]
         public string Imagem { get; set; }

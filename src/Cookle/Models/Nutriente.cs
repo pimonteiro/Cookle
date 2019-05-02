@@ -6,6 +6,7 @@ namespace Cookle.Models
 {
     public class Nutriente
     {
+        [Key]
         public int Id{ get; set; }
 
         [Required] [Display(Name = "Nome")] [StringLength(45)]

@@ -4,6 +4,7 @@ namespace Cookle.Models
 {
     public class Pais
     {
+        [Key]
         public int Id { get; set; }
 
         [Required] 
