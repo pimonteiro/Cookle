@@ -20,8 +20,8 @@ namespace Cookle.Models
         [MaxLength(Int32.MaxValue)]
         public int  Unidade { get; set; }
 
-        [ForeignKey("Ingrediente")] public virtual int Ingredientes { get; set; }
+        [ForeignKey("Ingrediente")] public virtual Ingrediente Ingredientes { get; set; }
 
-        [ForeignKey("Receita")] public virtual int Receitas { get; set; }
+        [ForeignKey("Receita")] public virtual Receita Receitas { get; set; }
     }
 }

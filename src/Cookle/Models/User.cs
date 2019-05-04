@@ -42,10 +42,10 @@ namespace Cookle.Models
         public DateTime DataNascimento { get; set; }
 
         [Required] [Display(Name = "voz")] public bool Voz { get; set; }
+        
+       // public int Morada { get; set; }
 
-        [Required] [Display(Name = "Morada")] public int Morada { get; set; }
-
-        [ForeignKey("Morada")] public virtual Morada Moradas { get; set; }
+      //  [ForeignKey("Morada")] public virtual Morada Moradas { get; set; }
     }
 
 }

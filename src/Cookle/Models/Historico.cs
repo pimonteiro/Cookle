@@ -19,10 +19,10 @@ namespace Cookle.Models
         public int Numero { get; set; }
         
         [ForeignKey("User")]
-        public virtual int Users { get; set; }
+        public virtual User Users { get; set; }
         
         [ForeignKey("Receita")]
-        public virtual int Receitas { get; set; }
+        public virtual Receita Receitas { get; set; }
         
     }
 }

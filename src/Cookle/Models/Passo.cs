@@ -17,6 +17,6 @@ namespace Cookle.Models
         public string Descricao { get; set; }
         
         [ForeignKey("Ingrediente")]
-        public virtual float Ingredientes { get; set; }
+        public virtual Ingrediente Ingredientes { get; set; }
     }
 }

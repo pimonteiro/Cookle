@@ -8,10 +8,10 @@ namespace Cookle.Models
     {
         [Key] public int User { get; set; }
 
-        [ForeignKey("User")] public virtual int Users { get; set; }
+        [ForeignKey("User")] public virtual User Users { get; set; }
 
         [Key] public int Receita { get; set; }
 
-        [ForeignKey("Receita")] public virtual int Receitas { get; set; }
+        [ForeignKey("Receita")] public virtual Receita Receitas { get; set; }
     }
 }

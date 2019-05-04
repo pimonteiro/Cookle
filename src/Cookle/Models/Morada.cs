@@ -15,6 +15,7 @@ namespace Cookle.Models
         [Key]
         public string CodigoPostal { get; set; }
         
+        [Key]
         public int Pais { get; set; }
         
         [ForeignKey("Pais")]

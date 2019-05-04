@@ -15,8 +15,8 @@ namespace Cookle.Models
         [MaxLength(Int32.MaxValue)]
         public float Quantidade { get; set; }
 
-        [ForeignKey("Nutriente")] public virtual int Nutrientes { get; set; }
+        [ForeignKey("Nutriente")] public virtual Nutriente Nutrientes { get; set; }
 
-        [ForeignKey("Receita")] public virtual int Receitas { get; set; }
+        [ForeignKey("Receita")] public virtual Receita Receitas { get; set; }
     }
 }
