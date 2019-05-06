@@ -8,21 +8,19 @@ namespace Cookle.Models
     public class Historico
     {
         [Key]
-        public int User { get; set; }
+        public int UserId { get; set; }
         
         [Key]
-        public int Receita { get; set; }
+        public int ReceitaId { get; set; }
         
         [DataType(DataType.Date)]
         public DateTime UltimaVez { get; set; }
         
         public int Numero { get; set; }
         
-        [ForeignKey("User")]
-        public virtual User Users { get; set; }
+        public User User { get; set; }
         
-        [ForeignKey("Receita")]
-        public virtual Receita Receitas { get; set; }
+        public Receita Receita { get; set; }
         
     }
 }

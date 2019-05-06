@@ -53,7 +53,7 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id")] Pais pais)
+        public async Task<IActionResult> Create([Bind("Id,Name")] Pais pais)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] Pais pais)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Pais pais)
         {
             if (id != pais.Id)
             {

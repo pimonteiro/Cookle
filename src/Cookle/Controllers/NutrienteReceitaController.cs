@@ -21,7 +21,7 @@ namespace Cookle.Controllers
         // GET: NutrienteReceita
         public async Task<IActionResult> Index()
         {
-            var cookleContext = _context.NutrienteReceita.Include(n => n.Nutrientes).Include(n => n.Receitas);
+            var cookleContext = _context.NutrienteReceita.Include(n => n.Receita);
             return View(await cookleContext.ToListAsync());
         }
 
@@ -34,9 +34,8 @@ namespace Cookle.Controllers
             }
 
             var nutrienteReceita = await _context.NutrienteReceita
-                .Include(n => n.Nutrientes)
-                .Include(n => n.Receitas)
-                .FirstOrDefaultAsync(m => m.Nutriente == id);
+                .Include(n => n.Receita)
+                .FirstOrDefaultAsync(m => m.NutrienteId == id);
             if (nutrienteReceita == null)
             {
                 return NotFound();
@@ -48,8 +47,7 @@ namespace Cookle.Controllers
         // GET: NutrienteReceita/Create
         public IActionResult Create()
         {
-            ViewData["Nutriente"] = new SelectList(_context.Nutriente, "Id", "Nome");
-            ViewData["Receita"] = new SelectList(_context.Receita, "Id", "Descricao");
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao");
             return View();
         }
 
@@ -58,7 +56,7 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Receita,Nutriente,Quantidade")] NutrienteReceita nutrienteReceita)
+        public async Task<IActionResult> Create([Bind("ReceitaId,NutrienteId,Quantidade")] NutrienteReceita nutrienteReceita)
         {
             if (ModelState.IsValid)
             {
@@ -66,8 +64,7 @@ namespace Cookle.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Nutriente"] = new SelectList(_context.Nutriente, "Id", "Nome", nutrienteReceita.Nutriente);
-            ViewData["Receita"] = new SelectList(_context.Receita, "Id", "Descricao", nutrienteReceita.Receita);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", nutrienteReceita.ReceitaId);
             return View(nutrienteReceita);
         }
 
@@ -84,8 +81,7 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            ViewData["Nutriente"] = new SelectList(_context.Nutriente, "Id", "Nome", nutrienteReceita.Nutriente);
-            ViewData["Receita"] = new SelectList(_context.Receita, "Id", "Descricao", nutrienteReceita.Receita);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", nutrienteReceita.ReceitaId);
             return View(nutrienteReceita);
         }
 
@@ -94,9 +90,9 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Receita,Nutriente,Quantidade")] NutrienteReceita nutrienteReceita)
+        public async Task<IActionResult> Edit(int id, [Bind("ReceitaId,NutrienteId,Quantidade")] NutrienteReceita nutrienteReceita)
         {
-            if (id != nutrienteReceita.Nutriente)
+            if (id != nutrienteReceita.NutrienteId)
             {
                 return NotFound();
             }
@@ -110,7 +106,7 @@ namespace Cookle.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!NutrienteReceitaExists(nutrienteReceita.Nutriente))
+                    if (!NutrienteReceitaExists(nutrienteReceita.NutrienteId))
                     {
                         return NotFound();
                     }
@@ -121,8 +117,7 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Nutriente"] = new SelectList(_context.Nutriente, "Id", "Nome", nutrienteReceita.Nutriente);
-            ViewData["Receita"] = new SelectList(_context.Receita, "Id", "Descricao", nutrienteReceita.Receita);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", nutrienteReceita.ReceitaId);
             return View(nutrienteReceita);
         }
 
@@ -135,9 +130,8 @@ namespace Cookle.Controllers
             }
 
             var nutrienteReceita = await _context.NutrienteReceita
-                .Include(n => n.Nutrientes)
-                .Include(n => n.Receitas)
-                .FirstOrDefaultAsync(m => m.Nutriente == id);
+                .Include(n => n.Receita)
+                .FirstOrDefaultAsync(m => m.NutrienteId == id);
             if (nutrienteReceita == null)
             {
                 return NotFound();
@@ -159,7 +153,7 @@ namespace Cookle.Controllers
 
         private bool NutrienteReceitaExists(int id)
         {
-            return _context.NutrienteReceita.Any(e => e.Nutriente == id);
+            return _context.NutrienteReceita.Any(e => e.NutrienteId == id);
         }
     }
 }

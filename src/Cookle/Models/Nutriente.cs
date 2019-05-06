@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using SQLitePCL;
 
@@ -14,5 +15,7 @@ namespace Cookle.Models
 
         [Required] [Display(Name = "Unidade")] [MaxLength(Int32.MaxValue)]
         public int Unidade { get; set; }
+        
+        public IList<NutrienteReceita> NutrienteReceitas { get; set; }
     }
 }

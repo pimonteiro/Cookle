@@ -21,7 +21,7 @@ namespace Cookle.Controllers
         // GET: Passo
         public async Task<IActionResult> Index()
         {
-            var cookleContext = _context.Passo.Include(p => p.Ingredientes);
+            var cookleContext = _context.Passo.Include(p => p.Receita).Include(p => p.SubReceita);
             return View(await cookleContext.ToListAsync());
         }
 
@@ -34,8 +34,9 @@ namespace Cookle.Controllers
             }
 
             var passo = await _context.Passo
-                .Include(p => p.Ingredientes)
-                .FirstOrDefaultAsync(m => m.Ingrediente == id);
+                .Include(p => p.Receita)
+                .Include(p => p.SubReceita)
+                .FirstOrDefaultAsync(m => m.Numero == id);
             if (passo == null)
             {
                 return NotFound();
@@ -47,7 +48,8 @@ namespace Cookle.Controllers
         // GET: Passo/Create
         public IActionResult Create()
         {
-            ViewData["Ingrediente"] = new SelectList(_context.Ingrediente, "Id", "Nome");
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao");
+            ViewData["SubReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao");
             return View();
         }
 
@@ -56,7 +58,7 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Numero,Ingrediente,SubReceita,Descricao")] Passo passo)
+        public async Task<IActionResult> Create([Bind("Numero,ReceitaId,SubReceitaId,Descricao")] Passo passo)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +66,8 @@ namespace Cookle.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Ingrediente"] = new SelectList(_context.Ingrediente, "Id", "Nome", passo.Ingrediente);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", passo.ReceitaId);
+            ViewData["SubReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", passo.SubReceitaId);
             return View(passo);
         }
 
@@ -81,7 +84,8 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            ViewData["Ingrediente"] = new SelectList(_context.Ingrediente, "Id", "Nome", passo.Ingrediente);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", passo.ReceitaId);
+            ViewData["SubReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", passo.SubReceitaId);
             return View(passo);
         }
 
@@ -90,9 +94,9 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Numero,Ingrediente,SubReceita,Descricao")] Passo passo)
+        public async Task<IActionResult> Edit(int id, [Bind("Numero,ReceitaId,SubReceitaId,Descricao")] Passo passo)
         {
-            if (id != passo.Ingrediente)
+            if (id != passo.Numero)
             {
                 return NotFound();
             }
@@ -106,7 +110,7 @@ namespace Cookle.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PassoExists(passo.Ingrediente))
+                    if (!PassoExists(passo.Numero))
                     {
                         return NotFound();
                     }
@@ -117,7 +121,8 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Ingrediente"] = new SelectList(_context.Ingrediente, "Id", "Nome", passo.Ingrediente);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", passo.ReceitaId);
+            ViewData["SubReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", passo.SubReceitaId);
             return View(passo);
         }
 
@@ -130,8 +135,9 @@ namespace Cookle.Controllers
             }
 
             var passo = await _context.Passo
-                .Include(p => p.Ingredientes)
-                .FirstOrDefaultAsync(m => m.Ingrediente == id);
+                .Include(p => p.Receita)
+                .Include(p => p.SubReceita)
+                .FirstOrDefaultAsync(m => m.Numero == id);
             if (passo == null)
             {
                 return NotFound();
@@ -153,7 +159,7 @@ namespace Cookle.Controllers
 
         private bool PassoExists(int id)
         {
-            return _context.Passo.Any(e => e.Ingrediente == id);
+            return _context.Passo.Any(e => e.Numero == id);
         }
     }
 }

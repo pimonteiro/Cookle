@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Cookle.Models
@@ -11,5 +12,7 @@ namespace Cookle.Models
         [Display(Name = "Name")]
         [StringLength(45)]
         public string Name { get; set; }
+
+        public ICollection<Morada> Moradas;
     }
 }

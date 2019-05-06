@@ -21,7 +21,7 @@ namespace Cookle.Controllers
         // GET: PreferenciaIngrediente
         public async Task<IActionResult> Index()
         {
-            var cookleContext = _context.PreferenciaIngrediente.Include(p => p.Ingredientes).Include(p => p.Users);
+            var cookleContext = _context.PreferenciaIngrediente.Include(p => p.Ingrediente).Include(p => p.User);
             return View(await cookleContext.ToListAsync());
         }
 
@@ -34,9 +34,9 @@ namespace Cookle.Controllers
             }
 
             var preferenciaIngrediente = await _context.PreferenciaIngrediente
-                .Include(p => p.Ingredientes)
-                .Include(p => p.Users)
-                .FirstOrDefaultAsync(m => m.User == id);
+                .Include(p => p.Ingrediente)
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(m => m.UserId == id);
             if (preferenciaIngrediente == null)
             {
                 return NotFound();
@@ -48,8 +48,8 @@ namespace Cookle.Controllers
         // GET: PreferenciaIngrediente/Create
         public IActionResult Create()
         {
-            ViewData["Ingrediente"] = new SelectList(_context.Ingrediente, "Id", "Nome");
-            ViewData["User"] = new SelectList(_context.User, "Id", "Email");
+            ViewData["IngredienteId"] = new SelectList(_context.Ingrediente, "Id", "Nome");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade");
             return View();
         }
 
@@ -58,7 +58,7 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("User,Ingrediente,Tipo")] PreferenciaIngrediente preferenciaIngrediente)
+        public async Task<IActionResult> Create([Bind("UserId,IngredienteId,Tipo")] PreferenciaIngrediente preferenciaIngrediente)
         {
             if (ModelState.IsValid)
             {
@@ -66,8 +66,8 @@ namespace Cookle.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Ingrediente"] = new SelectList(_context.Ingrediente, "Id", "Nome", preferenciaIngrediente.Ingrediente);
-            ViewData["User"] = new SelectList(_context.User, "Id", "Email", preferenciaIngrediente.User);
+            ViewData["IngredienteId"] = new SelectList(_context.Ingrediente, "Id", "Nome", preferenciaIngrediente.IngredienteId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade", preferenciaIngrediente.UserId);
             return View(preferenciaIngrediente);
         }
 
@@ -84,8 +84,8 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            ViewData["Ingrediente"] = new SelectList(_context.Ingrediente, "Id", "Nome", preferenciaIngrediente.Ingrediente);
-            ViewData["User"] = new SelectList(_context.User, "Id", "Email", preferenciaIngrediente.User);
+            ViewData["IngredienteId"] = new SelectList(_context.Ingrediente, "Id", "Nome", preferenciaIngrediente.IngredienteId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade", preferenciaIngrediente.UserId);
             return View(preferenciaIngrediente);
         }
 
@@ -94,9 +94,9 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("User,Ingrediente,Tipo")] PreferenciaIngrediente preferenciaIngrediente)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,IngredienteId,Tipo")] PreferenciaIngrediente preferenciaIngrediente)
         {
-            if (id != preferenciaIngrediente.User)
+            if (id != preferenciaIngrediente.UserId)
             {
                 return NotFound();
             }
@@ -110,7 +110,7 @@ namespace Cookle.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PreferenciaIngredienteExists(preferenciaIngrediente.User))
+                    if (!PreferenciaIngredienteExists(preferenciaIngrediente.UserId))
                     {
                         return NotFound();
                     }
@@ -121,8 +121,8 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Ingrediente"] = new SelectList(_context.Ingrediente, "Id", "Nome", preferenciaIngrediente.Ingrediente);
-            ViewData["User"] = new SelectList(_context.User, "Id", "Email", preferenciaIngrediente.User);
+            ViewData["IngredienteId"] = new SelectList(_context.Ingrediente, "Id", "Nome", preferenciaIngrediente.IngredienteId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade", preferenciaIngrediente.UserId);
             return View(preferenciaIngrediente);
         }
 
@@ -135,9 +135,9 @@ namespace Cookle.Controllers
             }
 
             var preferenciaIngrediente = await _context.PreferenciaIngrediente
-                .Include(p => p.Ingredientes)
-                .Include(p => p.Users)
-                .FirstOrDefaultAsync(m => m.User == id);
+                .Include(p => p.Ingrediente)
+                .Include(p => p.User)
+                .FirstOrDefaultAsync(m => m.UserId == id);
             if (preferenciaIngrediente == null)
             {
                 return NotFound();
@@ -159,7 +159,7 @@ namespace Cookle.Controllers
 
         private bool PreferenciaIngredienteExists(int id)
         {
-            return _context.PreferenciaIngrediente.Any(e => e.User == id);
+            return _context.PreferenciaIngrediente.Any(e => e.UserId == id);
         }
     }
 }

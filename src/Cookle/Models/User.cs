@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Cookle.Models
@@ -18,7 +20,7 @@ namespace Cookle.Models
 
         [Required]
         [Display(Name = "email")]
-        [StringLength(45)]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [Required]
@@ -27,8 +29,7 @@ namespace Cookle.Models
         public string Username { get; set; }
 
         [Required]
-        [Display(Name = "password")]
-        [StringLength(45)]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required]
@@ -43,9 +44,25 @@ namespace Cookle.Models
 
         [Required] [Display(Name = "voz")] public bool Voz { get; set; }
         
-       // public int Morada { get; set; }
+        [Required]
+        public string Rua { get; set; }
+        [Required]
+        public string Cidade { get; set; }
+        [Required]
+        public string CodigoPostal { get; set; }
 
-      //  [ForeignKey("Morada")] public virtual Morada Moradas { get; set; }
+        [ForeignKey("Rua, Cidade, CodigoPostal")]
+        public Morada Morada { get; set; }
+
+        public IList<PreferenciaIngrediente> PreferenciaIngredientes { get; set; }
+
+        public IList<Plano> Planos { get; set; }
+        
+        public IList<Nota> Notas { get; set; }
+        
+        public IList<Frigorifico> Frigorificos { get; set; }
+        
+        public IList<Historico> Historicos { get; set; }
     }
 
 }

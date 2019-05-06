@@ -6,13 +6,12 @@ namespace Cookle.Models
 {
     public class Frigorifico
     {
-        [Key] public int User { get; set; }
+        [Key] public int UserId { get; set; }
 
-        [Key] public int Ingrediente { get; set; }
+        [Key] public int IngredienteId { get; set; }
 
         [Required]
         [Display(Name = "Quantidade")]
-        [MaxLength(Int32.MaxValue)]
         public int Quantidade { get; set; }
         
         [Required]
@@ -20,8 +19,8 @@ namespace Cookle.Models
         [DataType(DataType.Date)]
         public DateTime Data { get; set; }
         
-        [ForeignKey("Ingrediente")] public virtual Ingrediente Ingredientes { get; set; }
+        public Ingrediente Ingrediente { get; set; }
 
-        [ForeignKey("User")] public virtual User Users { get; set; }
+        public User User { get; set; }
     }
 }

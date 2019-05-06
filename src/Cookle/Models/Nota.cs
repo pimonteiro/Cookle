@@ -8,21 +8,18 @@ namespace Cookle.Models
     {
         [Key]
         public int Id { get; set; }
-        [Key]
-        public int Receita { get; set; }
-        [Key]
-        public int User { get; set; }
+        
+        public int ReceitaId { get; set; }
+        public int UserId { get; set; }
         
         [Required]
         [Display(Name = "Descricao")]
         [StringLength(50)]
         public string Descricao { get; set; }
         
-        [ForeignKey("Receita")]
-        public virtual Receita Receitas { get; set; }
+        public Receita Receita { get; set; }
         
-        [ForeignKey("User")]
-        public virtual User Users { get; set; }
+        public User User { get; set; }
         
         [Required]
         [DataType(DataType.Date)]

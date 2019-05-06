@@ -15,10 +15,11 @@ namespace Cookle.Models
         [Key]
         public string CodigoPostal { get; set; }
         
-        [Key]
-        public int Pais { get; set; }
-        
         [ForeignKey("Pais")]
-        public virtual Pais Paises { get; set; }
+        public int PaisId { get; set; }
+        
+        public virtual User User { get; set; }
+        
+        public virtual Pais Pais { get; set; }
     }
 }

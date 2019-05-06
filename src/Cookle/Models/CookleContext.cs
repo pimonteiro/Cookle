@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Cookle.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Cookle.Models
 {
@@ -15,32 +16,31 @@ namespace Cookle.Models
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+
             builder.Entity<Historico>().HasKey(table => new {
-                table.User, table.Receita
+                table.UserId, table.ReceitaId
             });
             builder.Entity<Frigorifico>().HasKey(table => new {
-                table.User, table.Ingrediente
+                table.UserId, table.IngredienteId
             });
             builder.Entity<IngredienteReceita>().HasKey(table => new {
-                table.Ingrediente, table.Receita
+                table.IngredienteId, table.ReceitaId
             });
-            builder.Entity<Morada>().HasKey(table => new {
-                table.Rua, table.Cidade, table.Pais, table.CodigoPostal
-            });
-            builder.Entity<Nota>().HasKey(table => new {
-                table.User, table.Receita, table.Id
+            builder.Entity<Morada>().HasKey(table => new
+            {
+                table.Rua, table.Cidade, table.CodigoPostal
             });
             builder.Entity<NutrienteReceita>().HasKey(table => new {
-                table.Nutriente, table.Receita
+                table.NutrienteId, table.ReceitaId
             });
             builder.Entity<Passo>().HasKey(table => new {
-                table.Ingrediente, table.Numero
+                table.Numero, table.ReceitaId
             });
             builder.Entity<Plano>().HasKey(table => new {
-                table.User, table.Receita
+                table.UserId, table.ReceitaId
             });
             builder.Entity<PreferenciaIngrediente>().HasKey(table => new {
-                table.User, table.Ingrediente
+                table.UserId, table.IngredienteId
             });
            
 
@@ -61,6 +61,7 @@ namespace Cookle.Models
         public DbSet<Cookle.Models.Passo> Passo { get; set; }
         public DbSet<Cookle.Models.PreferenciaIngrediente> PreferenciaIngrediente { get; set; }
         public DbSet<Cookle.Models.NutrienteReceita> NutrienteReceita { get; set; }
+        public DbSet<Cookle.Models.IngredienteReceita> IngredienteReceita { get; set; }
     }
     
 }

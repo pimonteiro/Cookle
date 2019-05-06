@@ -16,10 +16,10 @@
                 @Html.DisplayNameFor(model => model.Tipo)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ingredientes)
+                @Html.DisplayNameFor(model => model.Ingrediente)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Users)
+                @Html.DisplayNameFor(model => model.User)
             </th>
             <th></th>
         </tr>
@@ -31,10 +31,10 @@
                 @Html.DisplayFor(modelItem => item.Tipo)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Ingredientes.Nome)
+                @Html.DisplayFor(modelItem => item.Ingrediente.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Users.Email)
+                @Html.DisplayFor(modelItem => item.User.Cidade)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

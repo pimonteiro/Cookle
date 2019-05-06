@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cookle.Models
 {
@@ -19,19 +21,15 @@ namespace Cookle.Models
         public string Descricao { get; set; }
        
         [Display(Name = "TempoPrep")]
-        [MaxLength(Int32.MaxValue)]
         public int? TempoPrep { get; set; }
 
         [Display(Name = "NumPessoas")]
-        [MaxLength(Int32.MaxValue)]
         public int? NumPessoas { get; set; }
        
         [Display(Name = "Dificuldade")]
-        [MaxLength(Int32.MaxValue)]
         public int? Dificuldade { get; set; }
        
         [Display(Name = "Tipo")]
-        [MaxLength(Int32.MaxValue)]
         public int? Tipo { get; set; }
 
         [Display(Name = "Imagem")] [StringLength(45)]
@@ -41,6 +39,20 @@ namespace Cookle.Models
         [StringLength(45)]
         public string Video { get; set; }
 
+        public IList<Plano> Planos { get; set; }
+        
+        [InverseProperty("Receita")]
+        public IList<Passo> Passos { get; set; }
+        
+        public IList<NutrienteReceita> NutrienteReceitas { get; set; }
+        
+        public IList<Nota> Notas { get; set; }
+        
+        public IList<IngredienteReceita>  IngredienteReceitas { get; set; }
 
+        public IList<Historico> Historicos { get; set; }
+        
+        [InverseProperty("SubReceita")]
+        public ICollection<Passo> SubReceitas { get; set; }
     }
 }

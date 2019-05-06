@@ -1,4 +1,4 @@
-@model IEnumerable<Cookle.Models.Plano>
+@model IEnumerable<Cookle.Models.IngredienteReceita>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,7 +13,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                @Html.DisplayNameFor(model => model.Quantidade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Unidade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ingrediente)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Receita)
@@ -25,7 +31,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Cidade)
+                @Html.DisplayFor(modelItem => item.Quantidade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Unidade)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ingrediente.Nome)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Receita.Descricao)

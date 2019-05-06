@@ -16,10 +16,7 @@
                 @Html.DisplayNameFor(model => model.Quantidade)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nutrientes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Receitas)
+                @Html.DisplayNameFor(model => model.Receita)
             </th>
             <th></th>
         </tr>
@@ -31,10 +28,7 @@
                 @Html.DisplayFor(modelItem => item.Quantidade)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Nutrientes.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Receitas.Descricao)
+                @Html.DisplayFor(modelItem => item.Receita.Descricao)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |

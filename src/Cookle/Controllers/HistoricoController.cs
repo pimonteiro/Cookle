@@ -21,7 +21,7 @@ namespace Cookle.Controllers
         // GET: Historico
         public async Task<IActionResult> Index()
         {
-            var cookleContext = _context.Historico.Include(h => h.Receitas).Include(h => h.Users);
+            var cookleContext = _context.Historico.Include(h => h.Receita).Include(h => h.User);
             return View(await cookleContext.ToListAsync());
         }
 
@@ -34,9 +34,9 @@ namespace Cookle.Controllers
             }
 
             var historico = await _context.Historico
-                .Include(h => h.Receitas)
-                .Include(h => h.Users)
-                .FirstOrDefaultAsync(m => m.User == id);
+                .Include(h => h.Receita)
+                .Include(h => h.User)
+                .FirstOrDefaultAsync(m => m.UserId == id);
             if (historico == null)
             {
                 return NotFound();
@@ -48,8 +48,8 @@ namespace Cookle.Controllers
         // GET: Historico/Create
         public IActionResult Create()
         {
-            ViewData["Receita"] = new SelectList(_context.Receita, "Id", "Descricao");
-            ViewData["User"] = new SelectList(_context.User, "Id", "Email");
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade");
             return View();
         }
 
@@ -58,7 +58,7 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("User,Receita,UltimaVez,Numero")] Historico historico)
+        public async Task<IActionResult> Create([Bind("UserId,ReceitaId,UltimaVez,Numero")] Historico historico)
         {
             if (ModelState.IsValid)
             {
@@ -66,8 +66,8 @@ namespace Cookle.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Receita"] = new SelectList(_context.Receita, "Id", "Descricao", historico.Receita);
-            ViewData["User"] = new SelectList(_context.User, "Id", "Email", historico.User);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", historico.ReceitaId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade", historico.UserId);
             return View(historico);
         }
 
@@ -84,8 +84,8 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            ViewData["Receita"] = new SelectList(_context.Receita, "Id", "Descricao", historico.Receita);
-            ViewData["User"] = new SelectList(_context.User, "Id", "Email", historico.User);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", historico.ReceitaId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade", historico.UserId);
             return View(historico);
         }
 
@@ -94,9 +94,9 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("User,Receita,UltimaVez,Numero")] Historico historico)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,ReceitaId,UltimaVez,Numero")] Historico historico)
         {
-            if (id != historico.User)
+            if (id != historico.UserId)
             {
                 return NotFound();
             }
@@ -110,7 +110,7 @@ namespace Cookle.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!HistoricoExists(historico.User))
+                    if (!HistoricoExists(historico.UserId))
                     {
                         return NotFound();
                     }
@@ -121,8 +121,8 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Receita"] = new SelectList(_context.Receita, "Id", "Descricao", historico.Receita);
-            ViewData["User"] = new SelectList(_context.User, "Id", "Email", historico.User);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", historico.ReceitaId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade", historico.UserId);
             return View(historico);
         }
 
@@ -135,9 +135,9 @@ namespace Cookle.Controllers
             }
 
             var historico = await _context.Historico
-                .Include(h => h.Receitas)
-                .Include(h => h.Users)
-                .FirstOrDefaultAsync(m => m.User == id);
+                .Include(h => h.Receita)
+                .Include(h => h.User)
+                .FirstOrDefaultAsync(m => m.UserId == id);
             if (historico == null)
             {
                 return NotFound();
@@ -159,7 +159,7 @@ namespace Cookle.Controllers
 
         private bool HistoricoExists(int id)
         {
-            return _context.Historico.Any(e => e.User == id);
+            return _context.Historico.Any(e => e.UserId == id);
         }
     }
 }

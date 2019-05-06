@@ -6,17 +6,16 @@ namespace Cookle.Models
 {
     public class NutrienteReceita
     {
-        [Key] public int Receita { get; set; }
+        [Key] public int ReceitaId { get; set; }
 
-        [Key] public int Nutriente { get; set; }
+        [Key] public int NutrienteId { get; set; }
 
         [Required]
         [Display(Name = "Quantidade")]
-        [MaxLength(Int32.MaxValue)]
         public float Quantidade { get; set; }
 
-        [ForeignKey("Nutriente")] public virtual Nutriente Nutrientes { get; set; }
+        public Nutriente Nutriente { get; set; }
 
-        [ForeignKey("Receita")] public virtual Receita Receitas { get; set; }
+        public Receita Receita { get; set; }
     }
 }

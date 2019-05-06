@@ -21,7 +21,7 @@ namespace Cookle.Controllers
         // GET: Nota
         public async Task<IActionResult> Index()
         {
-            var cookleContext = _context.Nota.Include(n => n.Receitas).Include(n => n.Users);
+            var cookleContext = _context.Nota.Include(n => n.Receita).Include(n => n.User);
             return View(await cookleContext.ToListAsync());
         }
 
@@ -34,9 +34,9 @@ namespace Cookle.Controllers
             }
 
             var nota = await _context.Nota
-                .Include(n => n.Receitas)
-                .Include(n => n.Users)
-                .FirstOrDefaultAsync(m => m.User == id);
+                .Include(n => n.Receita)
+                .Include(n => n.User)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (nota == null)
             {
                 return NotFound();
@@ -48,8 +48,8 @@ namespace Cookle.Controllers
         // GET: Nota/Create
         public IActionResult Create()
         {
-            ViewData["Receita"] = new SelectList(_context.Receita, "Id", "Descricao");
-            ViewData["User"] = new SelectList(_context.User, "Id", "Email");
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade");
             return View();
         }
 
@@ -58,7 +58,7 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Receita,User,Descricao,Data")] Nota nota)
+        public async Task<IActionResult> Create([Bind("Id,ReceitaId,UserId,Descricao,Data")] Nota nota)
         {
             if (ModelState.IsValid)
             {
@@ -66,8 +66,8 @@ namespace Cookle.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Receita"] = new SelectList(_context.Receita, "Id", "Descricao", nota.Receita);
-            ViewData["User"] = new SelectList(_context.User, "Id", "Email", nota.User);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", nota.ReceitaId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade", nota.UserId);
             return View(nota);
         }
 
@@ -84,8 +84,8 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            ViewData["Receita"] = new SelectList(_context.Receita, "Id", "Descricao", nota.Receita);
-            ViewData["User"] = new SelectList(_context.User, "Id", "Email", nota.User);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", nota.ReceitaId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade", nota.UserId);
             return View(nota);
         }
 
@@ -94,9 +94,9 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Receita,User,Descricao,Data")] Nota nota)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ReceitaId,UserId,Descricao,Data")] Nota nota)
         {
-            if (id != nota.User)
+            if (id != nota.Id)
             {
                 return NotFound();
             }
@@ -110,7 +110,7 @@ namespace Cookle.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!NotaExists(nota.User))
+                    if (!NotaExists(nota.Id))
                     {
                         return NotFound();
                     }
@@ -121,8 +121,8 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Receita"] = new SelectList(_context.Receita, "Id", "Descricao", nota.Receita);
-            ViewData["User"] = new SelectList(_context.User, "Id", "Email", nota.User);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", nota.ReceitaId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade", nota.UserId);
             return View(nota);
         }
 
@@ -135,9 +135,9 @@ namespace Cookle.Controllers
             }
 
             var nota = await _context.Nota
-                .Include(n => n.Receitas)
-                .Include(n => n.Users)
-                .FirstOrDefaultAsync(m => m.User == id);
+                .Include(n => n.Receita)
+                .Include(n => n.User)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (nota == null)
             {
                 return NotFound();
@@ -159,7 +159,7 @@ namespace Cookle.Controllers
 
         private bool NotaExists(int id)
         {
-            return _context.Nota.Any(e => e.User == id);
+            return _context.Nota.Any(e => e.Id == id);
         }
     }
 }

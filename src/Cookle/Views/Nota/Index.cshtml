@@ -16,10 +16,10 @@
                 @Html.DisplayNameFor(model => model.Descricao)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Receitas)
+                @Html.DisplayNameFor(model => model.Receita)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Users)
+                @Html.DisplayNameFor(model => model.User)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Data)
@@ -34,18 +34,18 @@
                 @Html.DisplayFor(modelItem => item.Descricao)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Receitas.Descricao)
+                @Html.DisplayFor(modelItem => item.Receita.Descricao)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Users.Email)
+                @Html.DisplayFor(modelItem => item.User.Cidade)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Data)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

@@ -18,22 +18,16 @@
             @Html.DisplayFor(model => model.Quantidade)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nutrientes)
+            @Html.DisplayNameFor(model => model.Receita)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nutrientes.Nome)
-        </dd >
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Receitas)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Receitas.Descricao)
-        </dd >
+            @Html.DisplayFor(model => model.Receita.Descricao)
+        </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="Receita" />
-        <input type="hidden" asp-for="Nutriente" />
+        <input type="hidden" asp-for="ReceitaId" />
+        <input type="hidden" asp-for="NutrienteId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

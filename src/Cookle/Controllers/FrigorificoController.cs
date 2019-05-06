@@ -21,7 +21,7 @@ namespace Cookle.Controllers
         // GET: Frigorifico
         public async Task<IActionResult> Index()
         {
-            var cookleContext = _context.Frigorifico.Include(f => f.Ingredientes).Include(f => f.Users);
+            var cookleContext = _context.Frigorifico.Include(f => f.User);
             return View(await cookleContext.ToListAsync());
         }
 
@@ -34,9 +34,8 @@ namespace Cookle.Controllers
             }
 
             var frigorifico = await _context.Frigorifico
-                .Include(f => f.Ingredientes)
-                .Include(f => f.Users)
-                .FirstOrDefaultAsync(m => m.User == id);
+                .Include(f => f.User)
+                .FirstOrDefaultAsync(m => m.UserId == id);
             if (frigorifico == null)
             {
                 return NotFound();
@@ -48,8 +47,7 @@ namespace Cookle.Controllers
         // GET: Frigorifico/Create
         public IActionResult Create()
         {
-            ViewData["Ingrediente"] = new SelectList(_context.Ingrediente, "Id", "Nome");
-            ViewData["User"] = new SelectList(_context.User, "Id", "Email");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade");
             return View();
         }
 
@@ -58,7 +56,7 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("User,Ingrediente,Quantidade,Data")] Frigorifico frigorifico)
+        public async Task<IActionResult> Create([Bind("UserId,IngredienteId,Quantidade,Data")] Frigorifico frigorifico)
         {
             if (ModelState.IsValid)
             {
@@ -66,8 +64,7 @@ namespace Cookle.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Ingrediente"] = new SelectList(_context.Ingrediente, "Id", "Nome", frigorifico.Ingrediente);
-            ViewData["User"] = new SelectList(_context.User, "Id", "Email", frigorifico.User);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade", frigorifico.UserId);
             return View(frigorifico);
         }
 
@@ -84,8 +81,7 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            ViewData["Ingrediente"] = new SelectList(_context.Ingrediente, "Id", "Nome", frigorifico.Ingrediente);
-            ViewData["User"] = new SelectList(_context.User, "Id", "Email", frigorifico.User);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade", frigorifico.UserId);
             return View(frigorifico);
         }
 
@@ -94,9 +90,9 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("User,Ingrediente,Quantidade,Data")] Frigorifico frigorifico)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,IngredienteId,Quantidade,Data")] Frigorifico frigorifico)
         {
-            if (id != frigorifico.User)
+            if (id != frigorifico.UserId)
             {
                 return NotFound();
             }
@@ -110,7 +106,7 @@ namespace Cookle.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FrigorificoExists(frigorifico.User))
+                    if (!FrigorificoExists(frigorifico.UserId))
                     {
                         return NotFound();
                     }
@@ -121,8 +117,7 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Ingrediente"] = new SelectList(_context.Ingrediente, "Id", "Nome", frigorifico.Ingrediente);
-            ViewData["User"] = new SelectList(_context.User, "Id", "Email", frigorifico.User);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade", frigorifico.UserId);
             return View(frigorifico);
         }
 
@@ -135,9 +130,8 @@ namespace Cookle.Controllers
             }
 
             var frigorifico = await _context.Frigorifico
-                .Include(f => f.Ingredientes)
-                .Include(f => f.Users)
-                .FirstOrDefaultAsync(m => m.User == id);
+                .Include(f => f.User)
+                .FirstOrDefaultAsync(m => m.UserId == id);
             if (frigorifico == null)
             {
                 return NotFound();
@@ -159,7 +153,7 @@ namespace Cookle.Controllers
 
         private bool FrigorificoExists(int id)
         {
-            return _context.Frigorifico.Any(e => e.User == id);
+            return _context.Frigorifico.Any(e => e.UserId == id);
         }
     }
 }

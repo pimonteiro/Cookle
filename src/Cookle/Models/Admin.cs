@@ -8,12 +8,12 @@ namespace Cookle.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        [Display(Name = "email")]
+        [DataType(DataType.EmailAddress)]
         [StringLength(45)]
         public string Email { get; set; }
         
         [Required]
-        [Display(Name = "password")]
+        [DataType(DataType.Password)]
         [StringLength(45)]
         public string Password { get; set; }
         

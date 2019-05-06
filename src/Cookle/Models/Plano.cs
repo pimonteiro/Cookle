@@ -6,12 +6,12 @@ namespace Cookle.Models
 {
     public class Plano
     {
-        [Key] public int User { get; set; }
+        [Key] public int UserId { get; set; }
 
-        [ForeignKey("User")] public virtual User Users { get; set; }
+        public virtual User User { get; set; }
 
-        [Key] public int Receita { get; set; }
+        [Key] public int ReceitaId { get; set; }
 
-        [ForeignKey("Receita")] public virtual Receita Receitas { get; set; }
+        public virtual Receita Receita { get; set; }
     }
 }

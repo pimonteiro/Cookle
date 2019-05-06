@@ -21,7 +21,7 @@ namespace Cookle.Controllers
         // GET: Morada
         public async Task<IActionResult> Index()
         {
-            var cookleContext = _context.Morada.Include(m => m.Paises);
+            var cookleContext = _context.Morada.Include(m => m.Pais);
             return View(await cookleContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace Cookle.Controllers
             }
 
             var morada = await _context.Morada
-                .Include(m => m.Paises)
+                .Include(m => m.Pais)
                 .FirstOrDefaultAsync(m => m.Rua == id);
             if (morada == null)
             {
@@ -47,7 +47,7 @@ namespace Cookle.Controllers
         // GET: Morada/Create
         public IActionResult Create()
         {
-            ViewData["Pais"] = new SelectList(_context.Pais, "Id", "Name");
+            ViewData["PaisId"] = new SelectList(_context.Pais, "Id", "Name");
             return View();
         }
 
@@ -56,7 +56,7 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Rua,Cidade,CodigoPostal,Pais")] Morada morada)
+        public async Task<IActionResult> Create([Bind("Rua,Cidade,CodigoPostal,PaisId")] Morada morada)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace Cookle.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Pais"] = new SelectList(_context.Pais, "Id", "Name", morada.Pais);
+            ViewData["PaisId"] = new SelectList(_context.Pais, "Id", "Name", morada.PaisId);
             return View(morada);
         }
 
@@ -81,7 +81,7 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            ViewData["Pais"] = new SelectList(_context.Pais, "Id", "Name", morada.Pais);
+            ViewData["PaisId"] = new SelectList(_context.Pais, "Id", "Name", morada.PaisId);
             return View(morada);
         }
 
@@ -90,7 +90,7 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Rua,Cidade,CodigoPostal,Pais")] Morada morada)
+        public async Task<IActionResult> Edit(string id, [Bind("Rua,Cidade,CodigoPostal,PaisId")] Morada morada)
         {
             if (id != morada.Rua)
             {
@@ -117,7 +117,7 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Pais"] = new SelectList(_context.Pais, "Id", "Name", morada.Pais);
+            ViewData["PaisId"] = new SelectList(_context.Pais, "Id", "Name", morada.PaisId);
             return View(morada);
         }
 
@@ -130,7 +130,7 @@ namespace Cookle.Controllers
             }
 
             var morada = await _context.Morada
-                .Include(m => m.Paises)
+                .Include(m => m.Pais)
                 .FirstOrDefaultAsync(m => m.Rua == id);
             if (morada == null)
             {
