@@ -21,8 +21,7 @@ namespace Cookle.Controllers
         // GET: User
         public async Task<IActionResult> Index()
         {
-            var cookleContext = _context.User.Include(u => u.Morada);
-            return View(await cookleContext.ToListAsync());
+            return View(await _context.User.ToListAsync());
         }
 
         // GET: User/Details/5
@@ -34,7 +33,6 @@ namespace Cookle.Controllers
             }
 
             var user = await _context.User
-                .Include(u => u.Morada)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
@@ -47,7 +45,6 @@ namespace Cookle.Controllers
         // GET: User/Create
         public IActionResult Create()
         {
-            ViewData["Rua"] = new SelectList(_context.Morada, "Rua", "Rua");
             return View();
         }
 
@@ -56,7 +53,7 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email,Username,Password,Sexo,DataNascimento,Voz,Rua,Cidade,CodigoPostal")] User user)
+        public async Task<IActionResult> Create([Bind("Id,Email,Username,Password,Sexo,DataNascimento,Voz")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +61,6 @@ namespace Cookle.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Rua"] = new SelectList(_context.Morada, "Rua", "Rua", user.Rua);
             return View(user);
         }
 
@@ -81,7 +77,6 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            ViewData["Rua"] = new SelectList(_context.Morada, "Rua", "Rua", user.Rua);
             return View(user);
         }
 
@@ -90,7 +85,7 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Username,Password,Sexo,DataNascimento,Voz,Rua,Cidade,CodigoPostal")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Username,Password,Sexo,DataNascimento,Voz")] User user)
         {
             if (id != user.Id)
             {
@@ -117,7 +112,6 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Rua"] = new SelectList(_context.Morada, "Rua", "Rua", user.Rua);
             return View(user);
         }
 
@@ -130,7 +124,6 @@ namespace Cookle.Controllers
             }
 
             var user = await _context.User
-                .Include(u => u.Morada)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {

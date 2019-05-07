@@ -47,7 +47,7 @@ namespace Cookle.Controllers
         // GET: Frigorifico/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Email");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace Cookle.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade", frigorifico.UserId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Email", frigorifico.UserId);
             return View(frigorifico);
         }
 
@@ -81,7 +81,7 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade", frigorifico.UserId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Email", frigorifico.UserId);
             return View(frigorifico);
         }
 
@@ -117,7 +117,7 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Cidade", frigorifico.UserId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Email", frigorifico.UserId);
             return View(frigorifico);
         }
 

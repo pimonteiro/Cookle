@@ -9,21 +9,6 @@ namespace Cookle.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Admin",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Email = table.Column<string>(maxLength: 45, nullable: false),
-                    Password = table.Column<string>(maxLength: 45, nullable: false),
-                    Name = table.Column<string>(maxLength: 45, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Admin", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Ingrediente",
                 columns: table => new
                 {
@@ -51,19 +36,6 @@ namespace Cookle.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pais",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(maxLength: 45, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Pais", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Receita",
                 columns: table => new
                 {
@@ -71,10 +43,10 @@ namespace Cookle.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Nome = table.Column<string>(maxLength: 45, nullable: false),
                     Descricao = table.Column<string>(maxLength: 150, nullable: false),
-                    TempoPrep = table.Column<int>(maxLength: 2147483647, nullable: true),
-                    NumPessoas = table.Column<int>(maxLength: 2147483647, nullable: true),
-                    Dificuldade = table.Column<int>(maxLength: 2147483647, nullable: true),
-                    Tipo = table.Column<int>(maxLength: 2147483647, nullable: true),
+                    TempoPrep = table.Column<int>(nullable: true),
+                    NumPessoas = table.Column<int>(nullable: true),
+                    Dificuldade = table.Column<int>(nullable: true),
+                    Tipo = table.Column<int>(nullable: true),
                     Imagem = table.Column<string>(maxLength: 45, nullable: true),
                     Video = table.Column<string>(maxLength: 45, nullable: true)
                 },
@@ -84,24 +56,21 @@ namespace Cookle.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Morada",
+                name: "User",
                 columns: table => new
                 {
-                    Rua = table.Column<string>(nullable: false),
-                    Cidade = table.Column<string>(nullable: false),
-                    CodigoPostal = table.Column<string>(nullable: false),
-                    PaisId = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Email = table.Column<string>(nullable: false),
+                    Username = table.Column<string>(maxLength: 45, nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    Sexo = table.Column<int>(nullable: false),
+                    DataNascimento = table.Column<DateTime>(nullable: false),
+                    Voz = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Morada", x => new { x.Rua, x.Cidade, x.CodigoPostal });
-                    table.UniqueConstraint("AK_Morada_Cidade_CodigoPostal_Rua", x => new { x.Cidade, x.CodigoPostal, x.Rua });
-                    table.ForeignKey(
-                        name: "FK_Morada_Pais_PaisId",
-                        column: x => x.PaisId,
-                        principalTable: "Pais",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,17 +80,18 @@ namespace Cookle.Migrations
                     ReceitaId = table.Column<int>(nullable: false),
                     IngredienteId = table.Column<int>(nullable: false),
                     Quantidade = table.Column<float>(nullable: false),
-                    Unidade = table.Column<int>(nullable: false)
+                    Unidade = table.Column<int>(nullable: false),
+                    IngredienteId1 = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_IngredienteReceita", x => new { x.IngredienteId, x.ReceitaId });
                     table.ForeignKey(
-                        name: "FK_IngredienteReceita_Ingrediente_IngredienteId",
-                        column: x => x.IngredienteId,
+                        name: "FK_IngredienteReceita_Ingrediente_IngredienteId1",
+                        column: x => x.IngredienteId1,
                         principalTable: "Ingrediente",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_IngredienteReceita_Receita_ReceitaId",
                         column: x => x.ReceitaId,
@@ -183,52 +153,24 @@ namespace Cookle.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Email = table.Column<string>(nullable: false),
-                    Username = table.Column<string>(maxLength: 45, nullable: false),
-                    Password = table.Column<string>(nullable: false),
-                    Sexo = table.Column<int>(nullable: false),
-                    DataNascimento = table.Column<DateTime>(nullable: false),
-                    Voz = table.Column<bool>(nullable: false),
-                    Rua = table.Column<string>(nullable: false),
-                    Cidade = table.Column<string>(nullable: false),
-                    CodigoPostal = table.Column<string>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_User_Morada_Rua_Cidade_CodigoPostal",
-                        columns: x => new { x.Rua, x.Cidade, x.CodigoPostal },
-                        principalTable: "Morada",
-                        principalColumns: new[] { "Rua", "Cidade", "CodigoPostal" },
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Frigorifico",
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false),
                     IngredienteId = table.Column<int>(nullable: false),
                     Quantidade = table.Column<int>(nullable: false),
-                    Data = table.Column<DateTime>(nullable: false),
-                    IngredienteId1 = table.Column<int>(nullable: true)
+                    Data = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Frigorifico", x => new { x.UserId, x.IngredienteId });
                     table.UniqueConstraint("AK_Frigorifico_IngredienteId_UserId", x => new { x.IngredienteId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_Frigorifico_Ingrediente_IngredienteId1",
-                        column: x => x.IngredienteId1,
+                        name: "FK_Frigorifico_Ingrediente_IngredienteId",
+                        column: x => x.IngredienteId,
                         principalTable: "Ingrediente",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Frigorifico_User_UserId",
                         column: x => x.UserId,
@@ -244,18 +186,19 @@ namespace Cookle.Migrations
                     UserId = table.Column<int>(nullable: false),
                     ReceitaId = table.Column<int>(nullable: false),
                     UltimaVez = table.Column<DateTime>(nullable: false),
-                    Numero = table.Column<int>(nullable: false)
+                    Numero = table.Column<int>(nullable: false),
+                    ReceitaId1 = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Historico", x => new { x.UserId, x.ReceitaId });
                     table.UniqueConstraint("AK_Historico_ReceitaId_UserId", x => new { x.ReceitaId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_Historico_Receita_ReceitaId",
-                        column: x => x.ReceitaId,
+                        name: "FK_Historico_Receita_ReceitaId1",
+                        column: x => x.ReceitaId1,
                         principalTable: "Receita",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Historico_User_UserId",
                         column: x => x.UserId,
@@ -344,19 +287,19 @@ namespace Cookle.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Frigorifico_IngredienteId1",
-                table: "Frigorifico",
+                name: "IX_Historico_ReceitaId1",
+                table: "Historico",
+                column: "ReceitaId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_IngredienteReceita_IngredienteId1",
+                table: "IngredienteReceita",
                 column: "IngredienteId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_IngredienteReceita_ReceitaId",
                 table: "IngredienteReceita",
                 column: "ReceitaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Morada_PaisId",
-                table: "Morada",
-                column: "PaisId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Nota_ReceitaId",
@@ -387,19 +330,10 @@ namespace Cookle.Migrations
                 name: "IX_Passo_SubReceitaId",
                 table: "Passo",
                 column: "SubReceitaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_User_Rua_Cidade_CodigoPostal",
-                table: "User",
-                columns: new[] { "Rua", "Cidade", "CodigoPostal" },
-                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Admin");
-
             migrationBuilder.DropTable(
                 name: "Frigorifico");
 
@@ -435,12 +369,6 @@ namespace Cookle.Migrations
 
             migrationBuilder.DropTable(
                 name: "User");
-
-            migrationBuilder.DropTable(
-                name: "Morada");
-
-            migrationBuilder.DropTable(
-                name: "Pais");
         }
     }
 }

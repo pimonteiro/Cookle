@@ -24,17 +24,11 @@
             @Html.DisplayFor(model => model.Unidade)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ingrediente)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ingrediente.Nome)
-        </dd >
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Receita)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Receita.Descricao)
-        </dd >
+        </dd class>
     </dl>
     
     <form asp-action="Delete">

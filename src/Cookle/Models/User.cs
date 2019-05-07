@@ -44,16 +44,6 @@ namespace Cookle.Models
 
         [Required] [Display(Name = "voz")] public bool Voz { get; set; }
         
-        [Required]
-        public string Rua { get; set; }
-        [Required]
-        public string Cidade { get; set; }
-        [Required]
-        public string CodigoPostal { get; set; }
-
-        [ForeignKey("Rua, Cidade, CodigoPostal")]
-        public Morada Morada { get; set; }
-
         public IList<PreferenciaIngrediente> PreferenciaIngredientes { get; set; }
 
         public IList<Plano> Planos { get; set; }
