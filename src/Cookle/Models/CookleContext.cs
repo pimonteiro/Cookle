@@ -26,10 +26,6 @@ namespace Cookle.Models
             builder.Entity<IngredienteReceita>().HasKey(table => new {
                 table.IngredienteId, table.ReceitaId
             });
-            builder.Entity<Morada>().HasKey(table => new
-            {
-                table.Rua, table.Cidade, table.CodigoPostal
-            });
             builder.Entity<NutrienteReceita>().HasKey(table => new {
                 table.NutrienteId, table.ReceitaId
             });
@@ -45,23 +41,35 @@ namespace Cookle.Models
            
 
         }
-        
 
         public DbSet<Cookle.Models.User> User { get; set; }
-        public DbSet<Cookle.Models.Pais> Pais { get; set; }
-        public DbSet<Cookle.Models.Admin> Admin { get; set; }
-        public DbSet<Cookle.Models.Nutriente> Nutriente { get; set; }
-        public DbSet<Cookle.Models.Ingrediente> Ingrediente { get; set; }
+
         public DbSet<Cookle.Models.Receita> Receita { get; set; }
-        public DbSet<Cookle.Models.Historico> Historico { get; set; }
-        public DbSet<Cookle.Models.Nota> Nota { get; set; }
-        public DbSet<Cookle.Models.Frigorifico> Frigorifico { get; set; }
-        public DbSet<Cookle.Models.Plano> Plano { get; set; }
-        public DbSet<Cookle.Models.Morada> Morada { get; set; }
-        public DbSet<Cookle.Models.Passo> Passo { get; set; }
+
         public DbSet<Cookle.Models.PreferenciaIngrediente> PreferenciaIngrediente { get; set; }
+
         public DbSet<Cookle.Models.NutrienteReceita> NutrienteReceita { get; set; }
+
+        public DbSet<Cookle.Models.Nota> Nota { get; set; }
+
         public DbSet<Cookle.Models.IngredienteReceita> IngredienteReceita { get; set; }
+
+        public DbSet<Cookle.Models.Historico> Historico { get; set; }
+
+        public DbSet<Cookle.Models.Frigorifico> Frigorifico { get; set; }
+
+        public DbSet<Cookle.Models.Admin> Admin { get; set; }
+
+        public DbSet<Cookle.Models.Passo> Passo { get; set; }
+
+        public DbSet<Cookle.Models.Plano> Plano { get; set; }
+
+        public DbSet<Cookle.Models.Nutriente> Nutriente { get; set; }
+
+        public DbSet<Cookle.Models.Ingrediente> Ingrediente { get; set; }
+        
+
+      
     }
     
 }

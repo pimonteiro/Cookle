@@ -37,6 +37,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            @if (User.Identity.IsAuthenticated){
+                                <a asp-controller="User" asp-action="Logout">Hello @User.Identity.Name
+                                    (Sign Out)</a>
+                            }else{
+                                <a asp-controller="User" asp-action="UserLogin">Login</a>
+                            }
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -73,7 +81,9 @@
                 integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
         </script>
     </environment>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryvalidate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validationunobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

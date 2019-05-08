@@ -30,9 +30,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Voz)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Morada)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -56,9 +53,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Voz)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Morada.Rua)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

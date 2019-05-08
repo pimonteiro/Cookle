@@ -87,4 +87,43 @@
       <_ContentIncludedByDefault Remove="Views\User\Index.cshtml" />
     </ItemGroup>
 
+
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Views\Pais\Create.cshtml" />
+      <UpToDateCheckInput Remove="Views\Pais\Delete.cshtml" />
+      <UpToDateCheckInput Remove="Views\Pais\Details.cshtml" />
+      <UpToDateCheckInput Remove="Views\Pais\Edit.cshtml" />
+      <UpToDateCheckInput Remove="Views\Pais\Index.cshtml" />
+      <UpToDateCheckInput Remove="Views\Frigorifico\Create.cshtml" />
+      <UpToDateCheckInput Remove="Views\Frigorifico\Delete.cshtml" />
+      <UpToDateCheckInput Remove="Views\Frigorifico\Details.cshtml" />
+      <UpToDateCheckInput Remove="Views\Frigorifico\Edit.cshtml" />
+      <UpToDateCheckInput Remove="Views\Frigorifico\Index.cshtml" />
+      <UpToDateCheckInput Remove="Views\Nota\Create.cshtml" />
+      <UpToDateCheckInput Remove="Views\Nota\Delete.cshtml" />
+      <UpToDateCheckInput Remove="Views\Nota\Details.cshtml" />
+      <UpToDateCheckInput Remove="Views\Nota\Edit.cshtml" />
+      <UpToDateCheckInput Remove="Views\Nota\Index.cshtml" />
+      <UpToDateCheckInput Remove="Views\PreferenciaIngrediente\Create.cshtml" />
+      <UpToDateCheckInput Remove="Views\PreferenciaIngrediente\Delete.cshtml" />
+      <UpToDateCheckInput Remove="Views\PreferenciaIngrediente\Details.cshtml" />
+      <UpToDateCheckInput Remove="Views\PreferenciaIngrediente\Edit.cshtml" />
+      <UpToDateCheckInput Remove="Views\PreferenciaIngrediente\Index.cshtml" />
+      <UpToDateCheckInput Remove="Views\Ingrediente\Create.cshtml" />
+      <UpToDateCheckInput Remove="Views\Ingrediente\Delete.cshtml" />
+      <UpToDateCheckInput Remove="Views\Ingrediente\Details.cshtml" />
+      <UpToDateCheckInput Remove="Views\Ingrediente\Edit.cshtml" />
+      <UpToDateCheckInput Remove="Views\Ingrediente\Index.cshtml" />
+      <UpToDateCheckInput Remove="Views\Nutriente\Create.cshtml" />
+      <UpToDateCheckInput Remove="Views\Nutriente\Delete.cshtml" />
+      <UpToDateCheckInput Remove="Views\Nutriente\Details.cshtml" />
+      <UpToDateCheckInput Remove="Views\Nutriente\Edit.cshtml" />
+      <UpToDateCheckInput Remove="Views\Nutriente\Index.cshtml" />
+      <UpToDateCheckInput Remove="Views\Passo\Create.cshtml" />
+      <UpToDateCheckInput Remove="Views\Passo\Delete.cshtml" />
+      <UpToDateCheckInput Remove="Views\Passo\Details.cshtml" />
+      <UpToDateCheckInput Remove="Views\Passo\Edit.cshtml" />
+      <UpToDateCheckInput Remove="Views\Passo\Index.cshtml" />
+    </ItemGroup>
+
 </Project>
