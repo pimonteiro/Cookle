@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Cookle.Models;
@@ -39,5 +39,18 @@ namespace Cookle.Data
                 table.UserId, table.IngredienteId
             });
         }
+        public DbSet<Cookle.Models.Admin> Admin { get; set; }
+        public DbSet<Cookle.Models.Frigorifico> Frigorifico { get; set; }
+        public DbSet<Cookle.Models.Historico> Historico { get; set; }
+        public DbSet<Cookle.Models.Ingrediente> Ingrediente { get; set; }
+        public DbSet<Cookle.Models.IngredienteReceita> IngredienteReceita { get; set; }
+        public DbSet<Cookle.Models.Nota> Nota { get; set; }
+        public DbSet<Cookle.Models.Nutriente> Nutriente { get; set; }
+        public DbSet<Cookle.Models.NutrienteReceita> NutrienteReceita { get; set; }
+        public DbSet<Cookle.Models.Passo> Passo { get; set; }
+        public DbSet<Cookle.Models.Plano> Plano { get; set; }
+        public DbSet<Cookle.Models.PreferenciaIngrediente> PreferenciaIngrediente { get; set; }
+        public DbSet<Cookle.Models.Receita> Receita { get; set; }
+        public DbSet<Cookle.Models.User> User { get; set; }
     }
 }
