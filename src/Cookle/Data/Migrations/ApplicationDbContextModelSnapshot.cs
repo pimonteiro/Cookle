@@ -54,11 +54,15 @@ namespace Cookle.Migrations
 
                     b.Property<int>("Quantidade");
 
+                    b.Property<string>("UserId1");
+
                     b.HasKey("UserId", "IngredienteId");
 
                     b.HasAlternateKey("IngredienteId", "UserId");
 
                     b.HasIndex("IngredienteId1");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Frigorifico");
                 });
@@ -73,9 +77,13 @@ namespace Cookle.Migrations
 
                     b.Property<DateTime>("UltimaVez");
 
+                    b.Property<string>("UserId1");
+
                     b.HasKey("UserId", "ReceitaId");
 
                     b.HasAlternateKey("ReceitaId", "UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Historico");
                 });
@@ -128,11 +136,13 @@ namespace Cookle.Migrations
 
                     b.Property<int>("UserId");
 
+                    b.Property<string>("UserId1");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ReceitaId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Nota");
                 });
@@ -201,9 +211,13 @@ namespace Cookle.Migrations
 
                     b.Property<int>("ReceitaId");
 
+                    b.Property<string>("UserId1");
+
                     b.HasKey("UserId", "ReceitaId");
 
                     b.HasAlternateKey("ReceitaId", "UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Plano");
                 });
@@ -216,9 +230,13 @@ namespace Cookle.Migrations
 
                     b.Property<int>("Tipo");
 
+                    b.Property<string>("UserId1");
+
                     b.HasKey("UserId", "IngredienteId");
 
                     b.HasAlternateKey("IngredienteId", "UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("PreferenciaIngrediente");
                 });
@@ -254,33 +272,6 @@ namespace Cookle.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Receita");
-                });
-
-            modelBuilder.Entity("Cookle.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DataNascimento");
-
-                    b.Property<string>("Email")
-                        .IsRequired();
-
-                    b.Property<string>("Password")
-                        .IsRequired();
-
-                    b.Property<int>("Sexo");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(45);
-
-                    b.Property<bool>("Voz");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -337,6 +328,9 @@ namespace Cookle.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
                     b.Property<string>("Email")
                         .HasMaxLength(256);
 
@@ -376,6 +370,8 @@ namespace Cookle.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -448,6 +444,19 @@ namespace Cookle.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Cookle.Models.User", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<DateTime>("DataNascimento");
+
+                    b.Property<int>("Sexo");
+
+                    b.Property<bool>("Voz");
+
+                    b.HasDiscriminator().HasValue("User");
+                });
+
             modelBuilder.Entity("Cookle.Models.Frigorifico", b =>
                 {
                     b.HasOne("Cookle.Models.Ingrediente", "Ingrediente")
@@ -456,8 +465,7 @@ namespace Cookle.Migrations
 
                     b.HasOne("Cookle.Models.User", "User")
                         .WithMany("Frigorificos")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Cookle.Models.Historico", b =>
@@ -469,8 +477,7 @@ namespace Cookle.Migrations
 
                     b.HasOne("Cookle.Models.User", "User")
                         .WithMany("Historicos")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Cookle.Models.IngredienteReceita", b =>
@@ -495,8 +502,7 @@ namespace Cookle.Migrations
 
                     b.HasOne("Cookle.Models.User", "User")
                         .WithMany("Notas")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Cookle.Models.NutrienteReceita", b =>
@@ -532,8 +538,7 @@ namespace Cookle.Migrations
 
                     b.HasOne("Cookle.Models.User", "User")
                         .WithMany("Planos")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Cookle.Models.PreferenciaIngrediente", b =>
@@ -545,8 +550,7 @@ namespace Cookle.Migrations
 
                     b.HasOne("Cookle.Models.User", "User")
                         .WithMany("PreferenciaIngredientes")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
