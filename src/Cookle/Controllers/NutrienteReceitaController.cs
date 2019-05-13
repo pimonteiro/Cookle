@@ -48,7 +48,7 @@ namespace Cookle.Controllers
         // GET: NutrienteReceita/Create
         public IActionResult Create()
         {
-            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao");
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace Cookle.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", nutrienteReceita.ReceitaId);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", nutrienteReceita.ReceitaId);
             return View(nutrienteReceita);
         }
 
@@ -82,7 +82,7 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", nutrienteReceita.ReceitaId);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", nutrienteReceita.ReceitaId);
             return View(nutrienteReceita);
         }
 
@@ -118,7 +118,7 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", nutrienteReceita.ReceitaId);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", nutrienteReceita.ReceitaId);
             return View(nutrienteReceita);
         }
 

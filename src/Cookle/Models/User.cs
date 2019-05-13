@@ -15,10 +15,9 @@ namespace Cookle.Models
         NA
     }
 
-    public class User : IdentityUser
+    public class User : IdentityUser<int>
     {
        
-
        // [Required]
         [Display(Name = "sexo")]
         [EnumDataType(typeof(Sexo))]

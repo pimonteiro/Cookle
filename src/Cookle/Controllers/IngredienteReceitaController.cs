@@ -50,7 +50,7 @@ namespace Cookle.Controllers
         public IActionResult Create()
         {
             ViewData["IngredienteId"] = new SelectList(_context.Ingrediente, "Id", "Nome");
-            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao");
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao");
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace Cookle.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IngredienteId"] = new SelectList(_context.Ingrediente, "Id", "Nome", ingredienteReceita.IngredienteId);
-            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", ingredienteReceita.ReceitaId);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", ingredienteReceita.ReceitaId);
             return View(ingredienteReceita);
         }
 
@@ -86,7 +86,7 @@ namespace Cookle.Controllers
                 return NotFound();
             }
             ViewData["IngredienteId"] = new SelectList(_context.Ingrediente, "Id", "Nome", ingredienteReceita.IngredienteId);
-            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", ingredienteReceita.ReceitaId);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", ingredienteReceita.ReceitaId);
             return View(ingredienteReceita);
         }
 
@@ -123,7 +123,7 @@ namespace Cookle.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IngredienteId"] = new SelectList(_context.Ingrediente, "Id", "Nome", ingredienteReceita.IngredienteId);
-            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", ingredienteReceita.ReceitaId);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", ingredienteReceita.ReceitaId);
             return View(ingredienteReceita);
         }
 

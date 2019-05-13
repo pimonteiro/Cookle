@@ -49,8 +49,8 @@ namespace Cookle.Controllers
         // GET: Plano/Create
         public IActionResult Create()
         {
-            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao");
-            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email");
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace Cookle.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", plano.ReceitaId);
-            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email", plano.UserId);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", plano.ReceitaId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", plano.UserId);
             return View(plano);
         }
 
@@ -85,8 +85,8 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", plano.ReceitaId);
-            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email", plano.UserId);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", plano.ReceitaId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", plano.UserId);
             return View(plano);
         }
 
@@ -122,8 +122,8 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", plano.ReceitaId);
-            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email", plano.UserId);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", plano.ReceitaId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", plano.UserId);
             return View(plano);
         }
 

@@ -27,7 +27,8 @@ namespace Cookle.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
@@ -41,7 +42,8 @@ namespace Cookle.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -118,7 +120,7 @@ namespace Cookle.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<int>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -139,7 +141,7 @@ namespace Cookle.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -161,7 +163,7 @@ namespace Cookle.Migrations
                     LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
                     ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -178,8 +180,8 @@ namespace Cookle.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    UserId = table.Column<int>(nullable: false),
+                    RoleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -202,7 +204,7 @@ namespace Cookle.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
                     Name = table.Column<string>(maxLength: 128, nullable: false),
                     Value = table.Column<string>(nullable: true)
@@ -226,8 +228,7 @@ namespace Cookle.Migrations
                     IngredienteId = table.Column<int>(nullable: false),
                     Quantidade = table.Column<int>(nullable: false),
                     Data = table.Column<DateTime>(nullable: false),
-                    IngredienteId1 = table.Column<int>(nullable: true),
-                    UserId1 = table.Column<string>(nullable: true)
+                    IngredienteId1 = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -240,11 +241,11 @@ namespace Cookle.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Frigorifico_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Frigorifico_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -253,8 +254,7 @@ namespace Cookle.Migrations
                 {
                     UserId = table.Column<int>(nullable: false),
                     IngredienteId = table.Column<int>(nullable: false),
-                    Tipo = table.Column<int>(nullable: false),
-                    UserId1 = table.Column<string>(nullable: true)
+                    Tipo = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -267,11 +267,11 @@ namespace Cookle.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PreferenciaIngrediente_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_PreferenciaIngrediente_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -281,8 +281,7 @@ namespace Cookle.Migrations
                     UserId = table.Column<int>(nullable: false),
                     ReceitaId = table.Column<int>(nullable: false),
                     UltimaVez = table.Column<DateTime>(nullable: false),
-                    Numero = table.Column<int>(nullable: false),
-                    UserId1 = table.Column<string>(nullable: true)
+                    Numero = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -295,11 +294,11 @@ namespace Cookle.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Historico_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Historico_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -337,7 +336,6 @@ namespace Cookle.Migrations
                     ReceitaId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     Descricao = table.Column<string>(maxLength: 50, nullable: false),
-                    UserId1 = table.Column<string>(nullable: true),
                     Data = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -350,11 +348,11 @@ namespace Cookle.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Nota_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Nota_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -414,8 +412,7 @@ namespace Cookle.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<int>(nullable: false),
-                    ReceitaId = table.Column<int>(nullable: false),
-                    UserId1 = table.Column<string>(nullable: true)
+                    ReceitaId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -428,11 +425,11 @@ namespace Cookle.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Plano_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Plano_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -480,16 +477,6 @@ namespace Cookle.Migrations
                 column: "IngredienteId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Frigorifico_UserId1",
-                table: "Frigorifico",
-                column: "UserId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Historico_UserId1",
-                table: "Historico",
-                column: "UserId1");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_IngredienteReceita_ReceitaId",
                 table: "IngredienteReceita",
                 column: "ReceitaId");
@@ -500,9 +487,9 @@ namespace Cookle.Migrations
                 column: "ReceitaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Nota_UserId1",
+                name: "IX_Nota_UserId",
                 table: "Nota",
-                column: "UserId1");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NutrienteReceita_NutrienteId1",
@@ -523,16 +510,6 @@ namespace Cookle.Migrations
                 name: "IX_Passo_SubReceitaId",
                 table: "Passo",
                 column: "SubReceitaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Plano_UserId1",
-                table: "Plano",
-                column: "UserId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PreferenciaIngrediente_UserId1",
-                table: "PreferenciaIngrediente",
-                column: "UserId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
