@@ -5,15 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Cookle.Data;
 using Cookle.Models;
 
 namespace Cookle.Controllers
 {
     public class FrigorificoController : Controller
     {
-        private readonly CookleContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public FrigorificoController(CookleContext context)
+        public FrigorificoController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -21,8 +22,8 @@ namespace Cookle.Controllers
         // GET: Frigorifico
         public async Task<IActionResult> Index()
         {
-            var cookleContext = _context.Frigorifico.Include(f => f.User);
-            return View(await cookleContext.ToListAsync());
+            var applicationDbContext = _context.Frigorifico.Include(f => f.User);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Frigorifico/Details/5
@@ -47,7 +48,7 @@ namespace Cookle.Controllers
         // GET: Frigorifico/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Email");
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email");
             return View();
         }
 
@@ -64,7 +65,7 @@ namespace Cookle.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Email", frigorifico.UserId);
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email", frigorifico.UserId);
             return View(frigorifico);
         }
 
@@ -81,7 +82,7 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Email", frigorifico.UserId);
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email", frigorifico.UserId);
             return View(frigorifico);
         }
 
@@ -117,7 +118,7 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Email", frigorifico.UserId);
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email", frigorifico.UserId);
             return View(frigorifico);
         }
 

@@ -5,15 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Cookle.Data;
 using Cookle.Models;
 
 namespace Cookle.Controllers
 {
     public class NutrienteReceitaController : Controller
     {
-        private readonly CookleContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public NutrienteReceitaController(CookleContext context)
+        public NutrienteReceitaController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -21,8 +22,8 @@ namespace Cookle.Controllers
         // GET: NutrienteReceita
         public async Task<IActionResult> Index()
         {
-            var cookleContext = _context.NutrienteReceita.Include(n => n.Receita);
-            return View(await cookleContext.ToListAsync());
+            var applicationDbContext = _context.NutrienteReceita.Include(n => n.Receita);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: NutrienteReceita/Details/5
@@ -47,7 +48,7 @@ namespace Cookle.Controllers
         // GET: NutrienteReceita/Create
         public IActionResult Create()
         {
-            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao");
+            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao");
             return View();
         }
 
@@ -64,7 +65,7 @@ namespace Cookle.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", nutrienteReceita.ReceitaId);
+            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", nutrienteReceita.ReceitaId);
             return View(nutrienteReceita);
         }
 
@@ -81,7 +82,7 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", nutrienteReceita.ReceitaId);
+            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", nutrienteReceita.ReceitaId);
             return View(nutrienteReceita);
         }
 
@@ -117,7 +118,7 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", nutrienteReceita.ReceitaId);
+            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", nutrienteReceita.ReceitaId);
             return View(nutrienteReceita);
         }
 

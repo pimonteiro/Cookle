@@ -5,9 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Cookle
@@ -15,9 +13,8 @@ namespace Cookle
     public class Program
     {
         public static void Main(string[] args)
-        { 
-            var host = CreateWebHostBuilder(args).Build();
-            host.Run();
+        {
+            CreateWebHostBuilder(args).Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

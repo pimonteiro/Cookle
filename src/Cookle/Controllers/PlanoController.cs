@@ -5,15 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Cookle.Data;
 using Cookle.Models;
 
 namespace Cookle.Controllers
 {
     public class PlanoController : Controller
     {
-        private readonly CookleContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public PlanoController(CookleContext context)
+        public PlanoController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -21,8 +22,8 @@ namespace Cookle.Controllers
         // GET: Plano
         public async Task<IActionResult> Index()
         {
-            var cookleContext = _context.Plano.Include(p => p.Receita).Include(p => p.User);
-            return View(await cookleContext.ToListAsync());
+            var applicationDbContext = _context.Plano.Include(p => p.Receita).Include(p => p.User);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Plano/Details/5
@@ -48,8 +49,8 @@ namespace Cookle.Controllers
         // GET: Plano/Create
         public IActionResult Create()
         {
-            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao");
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Email");
+            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao");
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email");
             return View();
         }
 
@@ -66,8 +67,8 @@ namespace Cookle.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", plano.ReceitaId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Email", plano.UserId);
+            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", plano.ReceitaId);
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email", plano.UserId);
             return View(plano);
         }
 
@@ -84,8 +85,8 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", plano.ReceitaId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Email", plano.UserId);
+            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", plano.ReceitaId);
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email", plano.UserId);
             return View(plano);
         }
 
@@ -121,8 +122,8 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", plano.ReceitaId);
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Email", plano.UserId);
+            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", plano.ReceitaId);
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email", plano.UserId);
             return View(plano);
         }
 

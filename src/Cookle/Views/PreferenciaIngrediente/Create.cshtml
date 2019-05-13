@@ -18,8 +18,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="IngredienteId" class="control-label"></label>
-                <input asp-for="IngredienteId" class="form-control" />
-                <span asp-validation-for="IngredienteId" class="text-danger"></span>
+                <select asp-for="IngredienteId" class ="form-control" asp-items="ViewBag.IngredienteId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Tipo" class="control-label"></label>

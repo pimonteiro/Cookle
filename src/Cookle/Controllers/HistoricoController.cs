@@ -5,15 +5,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Cookle.Data;
 using Cookle.Models;
 
 namespace Cookle.Controllers
 {
     public class HistoricoController : Controller
     {
-        private readonly CookleContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public HistoricoController(CookleContext context)
+        public HistoricoController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -21,8 +22,8 @@ namespace Cookle.Controllers
         // GET: Historico
         public async Task<IActionResult> Index()
         {
-            var cookleContext = _context.Historico.Include(h => h.User);
-            return View(await cookleContext.ToListAsync());
+            var applicationDbContext = _context.Historico.Include(h => h.Receita).Include(h => h.User);
+            return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Historico/Details/5
@@ -34,6 +35,7 @@ namespace Cookle.Controllers
             }
 
             var historico = await _context.Historico
+                .Include(h => h.Receita)
                 .Include(h => h.User)
                 .FirstOrDefaultAsync(m => m.UserId == id);
             if (historico == null)
@@ -47,7 +49,8 @@ namespace Cookle.Controllers
         // GET: Historico/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Email");
+            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao");
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email");
             return View();
         }
 
@@ -64,7 +67,8 @@ namespace Cookle.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Email", historico.UserId);
+            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", historico.ReceitaId);
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email", historico.UserId);
             return View(historico);
         }
 
@@ -81,7 +85,8 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Email", historico.UserId);
+            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", historico.ReceitaId);
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email", historico.UserId);
             return View(historico);
         }
 
@@ -117,7 +122,8 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.User, "Id", "Email", historico.UserId);
+            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", historico.ReceitaId);
+            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email", historico.UserId);
             return View(historico);
         }
 
@@ -130,6 +136,7 @@ namespace Cookle.Controllers
             }
 
             var historico = await _context.Historico
+                .Include(h => h.Receita)
                 .Include(h => h.User)
                 .FirstOrDefaultAsync(m => m.UserId == id);
             if (historico == null)
