@@ -1,129 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-    <PropertyGroup>
-        <TargetFramework>netcoreapp2.2</TargetFramework>
-        <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <UserSecretsId>aspnet-Cookle-838724B2-6675-4988-AC9B-F707373636EC</UserSecretsId>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
 
 
-    <ItemGroup>
-        <PackageReference Include="bootstrap" Version="4.3.1" />
-        <PackageReference Include="EntityFramework" Version="6.2.0" />
-        <PackageReference Include="Microsoft.AspNetCore.App" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.2" />
-        <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SQLite" Version="2.2.4" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SQLServer" Version="2.2.4" />
-        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
-    </ItemGroup>
+  <ItemGroup>
+    <None Update="app.db" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 
-
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="Pages\User\Index.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Frigorifico\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Frigorifico\Delete.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Frigorifico\Details.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Frigorifico\Edit.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Frigorifico\Index.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Historico\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Historico\Delete.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Historico\Details.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Historico\Edit.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Historico\Index.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Ingrediente\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Ingrediente\Delete.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Ingrediente\Details.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Ingrediente\Edit.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Ingrediente\Index.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Morada\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Morada\Delete.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Morada\Details.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Morada\Edit.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Morada\Index.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Nota\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Nota\Delete.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Nota\Details.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Nota\Edit.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Nota\Index.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Nutriente\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Nutriente\Delete.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Nutriente\Details.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Nutriente\Edit.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Nutriente\Index.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\NutrienteReceita\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\NutrienteReceita\Delete.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\NutrienteReceita\Details.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\NutrienteReceita\Edit.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\NutrienteReceita\Index.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Pais\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Pais\Delete.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Pais\Details.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Pais\Edit.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Pais\Index.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Passo\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Passo\Delete.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Passo\Details.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Passo\Edit.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Passo\Index.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Plano\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Plano\Delete.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Plano\Details.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Plano\Edit.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Plano\Index.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\PreferenciaIngrediente\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\PreferenciaIngrediente\Delete.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\PreferenciaIngrediente\Details.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\PreferenciaIngrediente\Edit.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\PreferenciaIngrediente\Index.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Receita\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Receita\Delete.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Receita\Details.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Receita\Edit.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\Receita\Index.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\User\Create.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\User\Delete.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\User\Details.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\User\Edit.cshtml" />
-      <_ContentIncludedByDefault Remove="Views\User\Index.cshtml" />
-    </ItemGroup>
-
-
-    <ItemGroup>
-      <UpToDateCheckInput Remove="Views\Pais\Create.cshtml" />
-      <UpToDateCheckInput Remove="Views\Pais\Delete.cshtml" />
-      <UpToDateCheckInput Remove="Views\Pais\Details.cshtml" />
-      <UpToDateCheckInput Remove="Views\Pais\Edit.cshtml" />
-      <UpToDateCheckInput Remove="Views\Pais\Index.cshtml" />
-      <UpToDateCheckInput Remove="Views\Frigorifico\Create.cshtml" />
-      <UpToDateCheckInput Remove="Views\Frigorifico\Delete.cshtml" />
-      <UpToDateCheckInput Remove="Views\Frigorifico\Details.cshtml" />
-      <UpToDateCheckInput Remove="Views\Frigorifico\Edit.cshtml" />
-      <UpToDateCheckInput Remove="Views\Frigorifico\Index.cshtml" />
-      <UpToDateCheckInput Remove="Views\Nota\Create.cshtml" />
-      <UpToDateCheckInput Remove="Views\Nota\Delete.cshtml" />
-      <UpToDateCheckInput Remove="Views\Nota\Details.cshtml" />
-      <UpToDateCheckInput Remove="Views\Nota\Edit.cshtml" />
-      <UpToDateCheckInput Remove="Views\Nota\Index.cshtml" />
-      <UpToDateCheckInput Remove="Views\PreferenciaIngrediente\Create.cshtml" />
-      <UpToDateCheckInput Remove="Views\PreferenciaIngrediente\Delete.cshtml" />
-      <UpToDateCheckInput Remove="Views\PreferenciaIngrediente\Details.cshtml" />
-      <UpToDateCheckInput Remove="Views\PreferenciaIngrediente\Edit.cshtml" />
-      <UpToDateCheckInput Remove="Views\PreferenciaIngrediente\Index.cshtml" />
-      <UpToDateCheckInput Remove="Views\Ingrediente\Create.cshtml" />
-      <UpToDateCheckInput Remove="Views\Ingrediente\Delete.cshtml" />
-      <UpToDateCheckInput Remove="Views\Ingrediente\Details.cshtml" />
-      <UpToDateCheckInput Remove="Views\Ingrediente\Edit.cshtml" />
-      <UpToDateCheckInput Remove="Views\Ingrediente\Index.cshtml" />
-      <UpToDateCheckInput Remove="Views\Nutriente\Create.cshtml" />
-      <UpToDateCheckInput Remove="Views\Nutriente\Delete.cshtml" />
-      <UpToDateCheckInput Remove="Views\Nutriente\Details.cshtml" />
-      <UpToDateCheckInput Remove="Views\Nutriente\Edit.cshtml" />
-      <UpToDateCheckInput Remove="Views\Nutriente\Index.cshtml" />
-      <UpToDateCheckInput Remove="Views\Passo\Create.cshtml" />
-      <UpToDateCheckInput Remove="Views\Passo\Delete.cshtml" />
-      <UpToDateCheckInput Remove="Views\Passo\Details.cshtml" />
-      <UpToDateCheckInput Remove="Views\Passo\Edit.cshtml" />
-      <UpToDateCheckInput Remove="Views\Passo\Index.cshtml" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.4" />
+  </ItemGroup>
 
 </Project>
