@@ -27,7 +27,8 @@ namespace Cookle.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true)
@@ -41,7 +42,8 @@ namespace Cookle.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     UserName = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
                     Email = table.Column<string>(maxLength: 256, nullable: true),
@@ -55,7 +57,10 @@ namespace Cookle.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Sexo = table.Column<int>(nullable: false),
+                    DataNascimento = table.Column<DateTime>(nullable: false),
+                    Voz = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -110,30 +115,12 @@ namespace Cookle.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "User",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Email = table.Column<string>(nullable: false),
-                    Username = table.Column<string>(maxLength: 45, nullable: false),
-                    Password = table.Column<string>(nullable: false),
-                    Sexo = table.Column<int>(nullable: false),
-                    DataNascimento = table.Column<DateTime>(nullable: false),
-                    Voz = table.Column<bool>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<int>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -154,7 +141,7 @@ namespace Cookle.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
                 },
@@ -176,7 +163,7 @@ namespace Cookle.Migrations
                     LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
                     ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -193,8 +180,8 @@ namespace Cookle.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    UserId = table.Column<int>(nullable: false),
+                    RoleId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -217,7 +204,7 @@ namespace Cookle.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
                     Name = table.Column<string>(maxLength: 128, nullable: false),
                     Value = table.Column<string>(nullable: true)
@@ -227,6 +214,87 @@ namespace Cookle.Migrations
                     table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Frigorifico",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(nullable: false),
+                    IngredienteId = table.Column<int>(nullable: false),
+                    Quantidade = table.Column<int>(nullable: false),
+                    Data = table.Column<DateTime>(nullable: false),
+                    IngredienteId1 = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Frigorifico", x => new { x.UserId, x.IngredienteId });
+                    table.UniqueConstraint("AK_Frigorifico_IngredienteId_UserId", x => new { x.IngredienteId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_Frigorifico_Ingrediente_IngredienteId1",
+                        column: x => x.IngredienteId1,
+                        principalTable: "Ingrediente",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Frigorifico_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PreferenciaIngrediente",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(nullable: false),
+                    IngredienteId = table.Column<int>(nullable: false),
+                    Tipo = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PreferenciaIngrediente", x => new { x.UserId, x.IngredienteId });
+                    table.UniqueConstraint("AK_PreferenciaIngrediente_IngredienteId_UserId", x => new { x.IngredienteId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_PreferenciaIngrediente_Ingrediente_IngredienteId",
+                        column: x => x.IngredienteId,
+                        principalTable: "Ingrediente",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PreferenciaIngrediente_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Historico",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(nullable: false),
+                    ReceitaId = table.Column<int>(nullable: false),
+                    UltimaVez = table.Column<DateTime>(nullable: false),
+                    Numero = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Historico", x => new { x.UserId, x.ReceitaId });
+                    table.UniqueConstraint("AK_Historico_ReceitaId_UserId", x => new { x.ReceitaId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_Historico_Receita_ReceitaId",
+                        column: x => x.ReceitaId,
+                        principalTable: "Receita",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Historico_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
@@ -255,6 +323,34 @@ namespace Cookle.Migrations
                         name: "FK_IngredienteReceita_Receita_ReceitaId",
                         column: x => x.ReceitaId,
                         principalTable: "Receita",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Nota",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    ReceitaId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
+                    Descricao = table.Column<string>(maxLength: 50, nullable: false),
+                    Data = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Nota", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Nota_Receita_ReceitaId",
+                        column: x => x.ReceitaId,
+                        principalTable: "Receita",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Nota_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -312,89 +408,6 @@ namespace Cookle.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Frigorifico",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(nullable: false),
-                    IngredienteId = table.Column<int>(nullable: false),
-                    Quantidade = table.Column<int>(nullable: false),
-                    Data = table.Column<DateTime>(nullable: false),
-                    IngredienteId1 = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Frigorifico", x => new { x.UserId, x.IngredienteId });
-                    table.UniqueConstraint("AK_Frigorifico_IngredienteId_UserId", x => new { x.IngredienteId, x.UserId });
-                    table.ForeignKey(
-                        name: "FK_Frigorifico_Ingrediente_IngredienteId1",
-                        column: x => x.IngredienteId1,
-                        principalTable: "Ingrediente",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Frigorifico_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Historico",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(nullable: false),
-                    ReceitaId = table.Column<int>(nullable: false),
-                    UltimaVez = table.Column<DateTime>(nullable: false),
-                    Numero = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Historico", x => new { x.UserId, x.ReceitaId });
-                    table.UniqueConstraint("AK_Historico_ReceitaId_UserId", x => new { x.ReceitaId, x.UserId });
-                    table.ForeignKey(
-                        name: "FK_Historico_Receita_ReceitaId",
-                        column: x => x.ReceitaId,
-                        principalTable: "Receita",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Historico_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Nota",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ReceitaId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    Descricao = table.Column<string>(maxLength: 50, nullable: false),
-                    Data = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Nota", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Nota_Receita_ReceitaId",
-                        column: x => x.ReceitaId,
-                        principalTable: "Receita",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Nota_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Plano",
                 columns: table => new
                 {
@@ -412,35 +425,9 @@ namespace Cookle.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Plano_User_UserId",
+                        name: "FK_Plano_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PreferenciaIngrediente",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(nullable: false),
-                    IngredienteId = table.Column<int>(nullable: false),
-                    Tipo = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PreferenciaIngrediente", x => new { x.UserId, x.IngredienteId });
-                    table.UniqueConstraint("AK_PreferenciaIngrediente_IngredienteId_UserId", x => new { x.IngredienteId, x.UserId });
-                    table.ForeignKey(
-                        name: "FK_PreferenciaIngrediente_Ingrediente_IngredienteId",
-                        column: x => x.IngredienteId,
-                        principalTable: "Ingrediente",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PreferenciaIngrediente_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -573,9 +560,6 @@ namespace Cookle.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "Nutriente");
 
             migrationBuilder.DropTable(
@@ -585,7 +569,7 @@ namespace Cookle.Migrations
                 name: "Ingrediente");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "AspNetUsers");
         }
     }
 }

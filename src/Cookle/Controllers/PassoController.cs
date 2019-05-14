@@ -49,8 +49,8 @@ namespace Cookle.Controllers
         // GET: Passo/Create
         public IActionResult Create()
         {
-            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao");
-            ViewData["SubReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao");
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao");
+            ViewData["SubReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao");
             return View();
         }
 
@@ -67,8 +67,8 @@ namespace Cookle.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", passo.ReceitaId);
-            ViewData["SubReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", passo.SubReceitaId);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", passo.ReceitaId);
+            ViewData["SubReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", passo.SubReceitaId);
             return View(passo);
         }
 
@@ -85,8 +85,8 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", passo.ReceitaId);
-            ViewData["SubReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", passo.SubReceitaId);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", passo.ReceitaId);
+            ViewData["SubReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", passo.SubReceitaId);
             return View(passo);
         }
 
@@ -122,8 +122,8 @@ namespace Cookle.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", passo.ReceitaId);
-            ViewData["SubReceitaId"] = new SelectList(_context.Set<Receita>(), "Id", "Descricao", passo.SubReceitaId);
+            ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", passo.ReceitaId);
+            ViewData["SubReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", passo.SubReceitaId);
             return View(passo);
         }
 

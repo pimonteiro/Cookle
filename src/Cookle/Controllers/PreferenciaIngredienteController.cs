@@ -50,7 +50,7 @@ namespace Cookle.Controllers
         public IActionResult Create()
         {
             ViewData["IngredienteId"] = new SelectList(_context.Ingrediente, "Id", "Nome");
-            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email");
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id");
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace Cookle.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IngredienteId"] = new SelectList(_context.Ingrediente, "Id", "Nome", preferenciaIngrediente.IngredienteId);
-            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email", preferenciaIngrediente.UserId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", preferenciaIngrediente.UserId);
             return View(preferenciaIngrediente);
         }
 
@@ -86,7 +86,7 @@ namespace Cookle.Controllers
                 return NotFound();
             }
             ViewData["IngredienteId"] = new SelectList(_context.Ingrediente, "Id", "Nome", preferenciaIngrediente.IngredienteId);
-            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email", preferenciaIngrediente.UserId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", preferenciaIngrediente.UserId);
             return View(preferenciaIngrediente);
         }
 
@@ -123,7 +123,7 @@ namespace Cookle.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["IngredienteId"] = new SelectList(_context.Ingrediente, "Id", "Nome", preferenciaIngrediente.IngredienteId);
-            ViewData["UserId"] = new SelectList(_context.Set<User>(), "Id", "Email", preferenciaIngrediente.UserId);
+            ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", preferenciaIngrediente.UserId);
             return View(preferenciaIngrediente);
         }
 

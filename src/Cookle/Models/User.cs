@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -14,25 +15,10 @@ namespace Cookle.Models
         NA
     }
 
-    public class User
+    public class User : IdentityUser<int>
     {
-        [Key] public int Id { get; set; }
-
-        [Required]
-        [Display(Name = "email")]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
-
-        [Required]
-        [Display(Name = "username")]
-        [StringLength(45)]
-        public string Username { get; set; }
-
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        [Required]
+       
+       // [Required]
         [Display(Name = "sexo")]
         [EnumDataType(typeof(Sexo))]
         public Sexo Sexo { get; set; }
