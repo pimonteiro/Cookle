@@ -7,7 +7,7 @@ namespace Cookle.Utils
 {
     public class Voice
     {
-        public static async Task SynthesisToSpeakerAsync(string text)
+        private static async Task SynthesisToSpeakerAsync(string text)
         {
             // Creates an instance of a speech config with specified subscription key and service region.
             // Replace with your own subscription key and service region (e.g., "westus").
@@ -39,7 +39,7 @@ namespace Cookle.Utils
             }
         }
 
-        public static async Task TranslationContinuousRecognitionAsync(string output)
+        private static async Task TranslationContinuousRecognitionAsync(string output)
         {
             // Creates an instance of a speech translation config with specified subscription key and service region.
             // Replace with your own subscription key and service region (e.g., "westus").
@@ -73,6 +73,18 @@ namespace Cookle.Utils
                 // Stops continuous recognition.
                 await recognizer.StopContinuousRecognitionAsync().ConfigureAwait(false);
             }
+        }
+
+        public static void Speak(string text)
+        {
+            SynthesisToSpeakerAsync(text).Wait();
+        }
+
+        public static string Listen()
+        {
+            string output = "Canceled";
+            TranslationContinuousRecognitionAsync(output).Wait();
+            return output;
         }
     }
 }
