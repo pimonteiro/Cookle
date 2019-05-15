@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cookle.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190513165839_CreateIdentitySchema")]
+    [Migration("20190514124936_CreateIdentitySchema")]
     partial class CreateIdentitySchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
