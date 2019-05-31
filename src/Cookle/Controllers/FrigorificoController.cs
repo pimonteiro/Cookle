@@ -20,7 +20,7 @@ namespace Cookle.Controllers
         }
 
         // GET: Frigorifico
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Frigorifico()
         {
             var applicationDbContext = _context.Frigorifico.Include(f => f.User);
             return View(await applicationDbContext.ToListAsync());
@@ -63,7 +63,7 @@ namespace Cookle.Controllers
             {
                 _context.Add(frigorifico);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Frigorifico));
             }
             ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", frigorifico.UserId);
             return View(frigorifico);
@@ -116,7 +116,7 @@ namespace Cookle.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Frigorifico));
             }
             ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", frigorifico.UserId);
             return View(frigorifico);
@@ -149,7 +149,7 @@ namespace Cookle.Controllers
             var frigorifico = await _context.Frigorifico.FindAsync(id);
             _context.Frigorifico.Remove(frigorifico);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Frigorifico));
         }
 
         private bool FrigorificoExists(int id)
