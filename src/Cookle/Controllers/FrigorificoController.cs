@@ -42,7 +42,7 @@ namespace Cookle.Controllers
                 return NotFound();
             }
 
-            return View(frigorifico);
+            return View(frigorifico.Ingrediente.Nome, frigorifico.Quantidade);
         }
 
         // GET: Frigorifico/Create
