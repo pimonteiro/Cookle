@@ -1,11 +1,12 @@
-﻿
+﻿@model Cookle.Models.Receita
+
 @{
     ViewData["Title"] = "Receita Preview";
 }
 
 <section class="clean-block clean-faq dark" style="margin-top: 40px;margin-bottom: 140px;">
     <div class="block-heading" style="margin-top:25px;">
-        <h2 class="text-info">Bacalhau com Natas</h2>
+        <h2 class="text-info">@Model.Nome</h2>
     </div>
     <div class="container d-flex justify-content-center">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -20,7 +21,7 @@
                 </div>
                 <div class="carousel-item">
                     <div class="embed-responsive embed-responsive-16by9">
-                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen></iframe>
+                        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"></iframe>
                     </div>
                 </div>
                 <div class="carousel-item">
@@ -39,20 +40,28 @@
     </div>
     <div style="margin-top:10px;">
         <div style="margin-left:10px;">
-            <p>O bacalhau com natas é uma receita clássica da culinária portuguesa e é uma das mais adoradas formas de servir bacalhau. Cremoso e saboroso, é uma receita obrigatória para o seu repertório!<br></p>
+            <p>@Model.Descricao<br></p>
+            
             <ul>
-                <li><strong>500</strong>&nbsp;<strong>g</strong>&nbsp;batata<br></li>
-                <li><strong>125</strong>&nbsp;<strong>ml</strong>&nbsp;azeite + qb para fritar<br></li>
-                <li><strong>400</strong>&nbsp;<strong>g</strong>&nbsp;bacalhau<br></li>
-                <li><strong>40</strong>&nbsp;<strong>g</strong>&nbsp;manteiga<br></li>
+                @{
+                    foreach (IngredienteReceita ing in Model.IngredienteReceitas)
+                    {
+                        <li><strong>@ing.Quantidade</strong>&nbsp;<strong>@ing.Unidade</strong>&nbsp;@ing.Receita.Nome<br></li>
+                    }
+                }
             </ul>
             <div>
                 <h3>Notas:</h3>
                 <ul>
-                    <li>Achei um pouco salgado demais. Para a próxima diminuir na quantidade de sal.<br></li>
+                    @{
+                        foreach (Nota n in Model.Notas)
+                        {
+                            <li>@n.Descricao<br></li>
+                        }
+                    }
                 </ul>
             </div>
-            <div style="text-align:center;"><button class="btn btn-primary float-right" type="button" style="margin-right:10px;">Começar receita</button></div>
+            <div style="text-align:center;"><a asp-controller="" asp-action=""><input class="btn btn-primary float-right" type="button" style="margin-right:10px;">Começar receita</a></div>
         </div>
     </div>
 </section>

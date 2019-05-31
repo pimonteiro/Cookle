@@ -1,6 +1,7 @@
-﻿
+﻿@model Cookle.Models.User
+
 @{
-    ViewData["Title"] = "PlanoSemanal";
+    ViewData["Title"] = "Plano Semanal";
 }
 
 <section class="clean-block clean-pricing dark" style="background-color: #f6f6f6;margin-top: 44px;">
@@ -15,15 +16,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="float-none"><i class="fa fa-remove" style="color:red;"></i></td>
-                        <td>polpa de tomate</td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td><button class="btn btn-primary float-right" type="button">Adicionar</button></td>
-                        <td></td>
-                    </tr>
+                    @{
+                        foreach (Plano p in Model.Planos)
+                        {
+                            <tr>
+                                <td class="float-none"><a asp-controller="" asp-action=""><input type="text" value="@p.ReceitaId"/><i class="fa fa-remove" style="color:red;"></i></a></td>
+                                <td>@p.Receita.Nome</td>
+                            </tr>
+                        }
+                    }
                 </tbody>
             </table>
         </div>
