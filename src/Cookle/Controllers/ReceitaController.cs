@@ -27,9 +27,24 @@ namespace Cookle.Controllers
                 return NotFound();
             }
 
-            var passos =  _context.Passo.Where(p => p.ReceitaId == id).ToList();
-            
-            return View(passos);
+            var receita = await _context.Receita
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (receita == null)
+            {
+                return NotFound();
+            }
+
+            var nutrienteReceita = _context.NutrienteReceita.Where(n => n.ReceitaId == id).ToList();
+            List<Nutriente> nutrientes = null;
+            foreach (var n in nutrienteReceita)
+            {
+                if (n.ReceitaId == id)
+                {
+                    nutrientes.Add(_context.Nutriente.FirstOrDefault(m => m.Id == n.NutrienteId));
+                }
+            }
+            ViewData["ValorNutricional"] = nutrientes;
+            return View(receita);
         }
 
         // GET: Receita/Details/5
