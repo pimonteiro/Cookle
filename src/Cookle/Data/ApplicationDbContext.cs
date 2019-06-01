@@ -190,7 +190,7 @@ namespace Cookle.Data
                     Quantidade = 2.0f,
                     Unidade = 2
                 });
-            
+
             builder.Entity<IngredienteReceita>().HasData(
                 new IngredienteReceita
                 {
@@ -198,6 +198,47 @@ namespace Cookle.Data
                     IngredienteId = 5,
                     Quantidade = 1.5f,
                     Unidade = 3
+                });
+
+            builder.Entity<Passo>().HasData(
+                new Passo
+                {
+                    ReceitaId = 1,
+                    Descricao = "Bata todos os ingredientes no liquidificador até obter uma consistência cremosa.",
+                    Numero = 1
+                });
+            
+            builder.Entity<Passo>().HasData(
+                new Passo
+                {
+                    ReceitaId = 1,
+                    Descricao = "Unte uma frigideira com óleo e despeje uma concha de massa.",
+                    Numero = 2
+                });
+            
+            builder.Entity<Passo>().HasData(
+                new Passo
+                {
+                    ReceitaId = 1,
+                    Descricao = "Faça movimentos circulares para que a massa se espalhe por toda a frigideira.",
+                    Numero = 3
+                });
+            
+            
+            builder.Entity<Passo>().HasData(
+                new Passo
+                {
+                    ReceitaId = 1,
+                    Descricao = "Espere até a massa se soltar do fundo, vire e deixe fritar do outro lado.",
+                    Numero = 4
+                });
+            
+            builder.Entity<Passo>().HasData(
+                new Passo
+                {
+                    ReceitaId = 1,
+                    Descricao = "Acrescente o recheio de sua preferência, enrole e está pronta para servir.",
+                    Numero = 5
                 });
         }
 
