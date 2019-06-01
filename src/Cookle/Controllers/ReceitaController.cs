@@ -64,7 +64,34 @@ namespace Cookle.Controllers
 
             return View(receita.Passos.ElementAt(0));
         }
+        
+        //GET: ReceitaPreview
+        public async Task<IActionResult> ReceitaPreview(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var receita = await _context.Receita
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (receita == null)
+            {
+                return NotFound();
+            }
+
+            var nutrienteReceita = _context.NutrienteReceita.Where(n => n.ReceitaId == id).ToList();
+            var valor = 0;
+            foreach (var n in nutrienteReceita)
+            {
+                if (n.ReceitaId == id)
+                {
+                    valor += _context.Nutriente.FirstOrDefault(m => m.Id == n.NutrienteId).Unidade;
+                }
+            }
+            ViewData["ValorNutricional"] = valor;
+            return View(receita);
+        }
         // GET: Receita/Create
         public IActionResult Create()
         {
