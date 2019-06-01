@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -54,7 +55,10 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Sexo,DataNascimento,Voz,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user)
+        public async Task<IActionResult> Create(
+            [Bind(
+                "Sexo,DataNascimento,Voz,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")]
+            User user)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +66,7 @@ namespace Cookle.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(user);
         }
 
@@ -78,6 +83,7 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
+
             return View(user);
         }
 
@@ -86,9 +92,12 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Sexo,DataNascimento,Voz,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] User user)
+        public async Task<IActionResult> Edit(int id,
+            [Bind(
+                "Sexo,DataNascimento,Voz,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")]
+            User user)
         {
-            if (id != user.Id)
+            if (id != user.Id || id.ToString() != LoggedUserId())
             {
                 return NotFound();
             }
@@ -111,8 +120,10 @@ namespace Cookle.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             return View(user);
         }
 
@@ -148,6 +159,12 @@ namespace Cookle.Controllers
         private bool UserExists(int id)
         {
             return _context.User.Any(e => e.Id == id);
+        }
+
+        public String LoggedUserId()
+        {
+            var id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return id;
         }
     }
 }

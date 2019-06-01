@@ -1,114 +1,126 @@
 @model Cookle.Models.User
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Perfil";
 }
 
-<h1>Edit</h1>
+<hr/>
+<main class="page">
+    <div class="container">
+        <section class="clean-block about-us" style="margin-top: 35px;">
+            <h2 class="text-left text-info" style="margin-top: 51px; margin-left: 10px;">Perfil</h2>
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="Email" class="control-label">Email</label>
+                        <input asp-for="Email" class="form-control" value="@Model.Email"/>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="UserName" class="control-label">Nome</label>
+                        <input asp-for="UserName" class="form-control" value="@Model.UserName"/>
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="DataNascimento" class="control-label">Data de Nascimento</label>
+                        @Html.Display(@Model.DataNascimento.Date.ToString())
+                        <input asp-for="DataNascimento" class="form-control" />
+                        <span asp-validation-for="DataNascimento" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="Sexo">Sexo</label>
+                        <select asp-for="Sexo" class="form-control">
+                            @{
+                                var sex = Model.Sexo;
+                                if (sex == Sexo.F)
+                                {
+                                    <option value="@Sexo.F" selected>Feminino</option>
+                                    <option value="@Sexo.M">Masculino</option>
+                                    <option value="@Sexo.NA">Outro</option>
+                                }
+                                else if (sex == Sexo.M)
+                                {
+                                    <option value="@Sexo.M" selected>Masculino</option>
+                                    <option value="@Sexo.F">Feminino</option>
+                                    <option value="@Sexo.NA">Outro</option>
+                                }
+                                else
+                                {
+                                    <option value="@Sexo.NA" selected>Outro</option>
+                                    <option value="@Sexo.M">Masculino</option>
+                                    <option value="@Sexo.F">Feminino</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Sexo" class="text-danger"></span>
 
-<h4>User</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Sexo" class="control-label"></label>
-                <select asp-for="Sexo" class="form-control"></select>
-                <span asp-validation-for="Sexo" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-check">
+                    @{
+                        var mic = Model.Voz;
+                        if (mic == true)
+                        {
+                            <input class="form-check-input" type="checkbox" value="true" id="defaultCheck1" checked>
+                        }
+                        else
+                        {
+                            <input class="form-check-input" type="checkbox" value="true" id="defaultCheck1">
+                        }
+                    }
+                    <label class="form-check-label" for="defaultCheck1">
+                        Permito que a aplicação tenha acesso ao microfone e à câmara.
+                    </label>
+                </div>
+                <div class="form-group">
+                </div>
+                <input type="hidden" asp-for="Id"/>
+                <input type="hidden" asp-for="NormalizedUserName"/>
+                <input type="hidden" asp-for="NormalizedEmail"/>
+                <input type="hidden" asp-for="EmailConfirmed"/>
+                <input type="hidden" asp-for="PasswordHash"/>
+                <input type="hidden" asp-for="SecurityStamp"/>
+                <input type="hidden" asp-for="ConcurrencyStamp"/>
+                <input type="hidden" asp-for="PhoneNumber"/>
+                <input type="hidden" asp-for="PhoneNumberConfirmed"/>
+                <input type="hidden" asp-for="TwoFactorEnabled"/>
+                <input type="hidden" asp-for="LockoutEnd"/>
+                <input type="hidden" asp-for="LockoutEnabled"/>
+
+
+                <button type="submit" class="btn btn-primary">Atualizar</button>
+            </form>
+            <div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Alimentos excluídos</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <button class="btn btn-primary float-right" type="button">Adicionar</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="DataNascimento" class="control-label"></label>
-                <input asp-for="DataNascimento" class="form-control" />
-                <span asp-validation-for="DataNascimento" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Voz" /> @Html.DisplayNameFor(model => model.Voz)
-                </label>
-            </div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NormalizedUserName" class="control-label"></label>
-                <input asp-for="NormalizedUserName" class="form-control" />
-                <span asp-validation-for="NormalizedUserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NormalizedEmail" class="control-label"></label>
-                <input asp-for="NormalizedEmail" class="form-control" />
-                <span asp-validation-for="NormalizedEmail" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="EmailConfirmed" /> @Html.DisplayNameFor(model => model.EmailConfirmed)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="PasswordHash" class="control-label"></label>
-                <input asp-for="PasswordHash" class="form-control" />
-                <span asp-validation-for="PasswordHash" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SecurityStamp" class="control-label"></label>
-                <input asp-for="SecurityStamp" class="form-control" />
-                <span asp-validation-for="SecurityStamp" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConcurrencyStamp" class="control-label"></label>
-                <input asp-for="ConcurrencyStamp" class="form-control" />
-                <span asp-validation-for="ConcurrencyStamp" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="PhoneNumberConfirmed" /> @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
-                </label>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="TwoFactorEnabled" /> @Html.DisplayNameFor(model => model.TwoFactorEnabled)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="LockoutEnd" class="control-label"></label>
-                <input asp-for="LockoutEnd" class="form-control" />
-                <span asp-validation-for="LockoutEnd" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="LockoutEnabled" /> @Html.DisplayNameFor(model => model.LockoutEnabled)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="AccessFailedCount" class="control-label"></label>
-                <input asp-for="AccessFailedCount" class="form-control" />
-                <span asp-validation-for="AccessFailedCount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </section>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+</main>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
