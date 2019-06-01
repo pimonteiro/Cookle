@@ -54,7 +54,8 @@ namespace Cookle.Data
                 {
                     Id = 1,
                     Email = "admin@admin.com",
-                    Password = "admin"
+                    Password = "admin",
+                    Name = "ADMIN"
                 }
             );
 
@@ -65,7 +66,7 @@ namespace Cookle.Data
                     Nome = "Hidratos de carbono",
                     Unidade = 0
                 });
-            
+
             builder.Entity<Nutriente>().HasData(
                 new Nutriente
                 {
@@ -73,7 +74,7 @@ namespace Cookle.Data
                     Nome = "Lípidos",
                     Unidade = 0
                 });
-            
+
             builder.Entity<Nutriente>().HasData(
                 new Nutriente
                 {
@@ -81,40 +82,122 @@ namespace Cookle.Data
                     Nome = "Proteínas",
                     Unidade = 0
                 });
-            
+
             builder.Entity<Ingrediente>().HasData(
                 new Ingrediente
                 {
                     Id = 1,
                     Nome = "Ovos",
                 });
-            
+
             builder.Entity<Ingrediente>().HasData(
                 new Ingrediente
                 {
                     Id = 2,
                     Nome = "Farinha de trigo",
                 });
-            
+
             builder.Entity<Ingrediente>().HasData(
                 new Ingrediente
                 {
                     Id = 3,
                     Nome = "Leite",
                 });
-            
+
             builder.Entity<Ingrediente>().HasData(
                 new Ingrediente
                 {
                     Id = 4,
                     Nome = "Sal",
                 });
-            
+
             builder.Entity<Ingrediente>().HasData(
                 new Ingrediente
                 {
                     Id = 5,
                     Nome = "Oleo vegetal",
+                });
+
+            builder.Entity<Receita>().HasData(
+                new Receita
+                {
+                    Id = 1,
+                    Descricao = "Uma massa simples mas deliciosa.",
+                    Dificuldade = 1,
+                    Nome = "Massa de panquecas simples",
+                    TempoPrep = 15,
+                    NumPessoas = 2,
+                    Tipo = 0, // SHOULD BE AN ENUM; TOO LATE 
+                }
+            );
+
+            builder.Entity<NutrienteReceita>().HasData(
+                new NutrienteReceita
+                {
+                    ReceitaId = 1,
+                    NutrienteId = 1,
+                    Quantidade = 60.3f
+                });
+
+            builder.Entity<NutrienteReceita>().HasData(
+                new NutrienteReceita
+                {
+                    ReceitaId = 1,
+                    NutrienteId = 2,
+                    Quantidade = 13.0f
+                });
+
+            builder.Entity<NutrienteReceita>().HasData(
+                new NutrienteReceita
+                {
+                    ReceitaId = 1,
+                    NutrienteId = 3,
+                    Quantidade = 10.1f
+                });
+
+            builder.Entity<IngredienteReceita>().HasData(
+                new IngredienteReceita
+                {
+                    ReceitaId = 1,
+                    IngredienteId = 1,
+                    Quantidade = 1.0f,
+                    Unidade = 0
+                });
+
+            builder.Entity<IngredienteReceita>().HasData(
+                new IngredienteReceita
+                {
+                    ReceitaId = 1,
+                    IngredienteId = 2,
+                    Quantidade = 1.0f,
+                    Unidade = 1
+                });
+
+            builder.Entity<IngredienteReceita>().HasData(
+                new IngredienteReceita
+                {
+                    ReceitaId = 1,
+                    IngredienteId = 3,
+                    Quantidade = 1.0f,
+                    Unidade = 1
+                });
+
+            builder.Entity<IngredienteReceita>().HasData(
+                new IngredienteReceita
+                {
+                    ReceitaId = 1,
+                    IngredienteId = 4,
+                    Quantidade = 2.0f,
+                    Unidade = 2
+                });
+            
+            builder.Entity<IngredienteReceita>().HasData(
+                new IngredienteReceita
+                {
+                    ReceitaId = 1,
+                    IngredienteId = 5,
+                    Quantidade = 1.5f,
+                    Unidade = 3
                 });
         }
 
