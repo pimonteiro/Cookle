@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "A cozinhar";
+    var nut = ViewData["ValorNutricional"];
 }
 
 <section class="clean-block clean-post dark" style="margin-bottom: 48px;">
@@ -22,7 +23,7 @@
                 </ul>
 
 
-                <p><strong>Valor nutritivo: </strong>Missing!</p>
+                <p><strong>Valor nutritivo: </strong>@nut  kcal.</p>
                 <h3>Confecção</h3>
                 @{
                     foreach (Passo p in Model.Passos)
