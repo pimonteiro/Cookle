@@ -46,6 +46,24 @@ namespace Cookle.Controllers
             ViewData["ValorNutricional"] = valor;
             return View(receita);
         }
+        
+        //GET: ReceitaPasso
+        public async Task<IActionResult> ReceitaPasso(int? id) //ID de receita
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var receita = await _context.Receita
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (receita == null)
+            {
+                return NotFound();
+            }
+
+            return View(receita.Passos.ElementAt(0));
+        }
 
         // GET: Receita/Create
         public IActionResult Create()
