@@ -35,33 +35,15 @@ namespace Cookle.Controllers
             }
 
             var nutrienteReceita = _context.NutrienteReceita.Where(n => n.ReceitaId == id).ToList();
-            List<Nutriente> nutrientes = null;
+            var valor = 0;
             foreach (var n in nutrienteReceita)
             {
                 if (n.ReceitaId == id)
                 {
-                    nutrientes.Add(_context.Nutriente.FirstOrDefault(m => m.Id == n.NutrienteId));
+                    valor += _context.Nutriente.FirstOrDefault(m => m.Id == n.NutrienteId).Unidade;
                 }
             }
-            ViewData["ValorNutricional"] = nutrientes;
-            return View(receita);
-        }
-
-        // GET: Receita/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var receita = await _context.Receita
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (receita == null)
-            {
-                return NotFound();
-            }
-
+            ViewData["ValorNutricional"] = valor;
             return View(receita);
         }
 
