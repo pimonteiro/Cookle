@@ -20,7 +20,7 @@
                         foreach (Plano p in Model.Planos)
                         {
                             <tr>
-                                <td class="float-none"><a asp-controller="" asp-action=""><input type="text" value="@p.ReceitaId"/><i class="fa fa-remove" style="color:red;"></i></a></td>
+                                <td class="float-none"><a asp-controller="" asp-action="" asp-route-id="@p.ReceitaId"><i class="fa fa-remove" style="color:red;"></i></a></td>
                                 <td>@p.Receita.Nome</td>
                             </tr>
                         }
