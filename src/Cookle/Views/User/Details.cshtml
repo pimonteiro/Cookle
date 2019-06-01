@@ -1,120 +1,126 @@
-@model Cookle.Models.User
+﻿@model Cookle.Models.User
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Perfil";
 }
 
-<h1>Details</h1>
+<hr/>
+<main class="page">
+    <div class="container">
+        <section class="clean-block about-us" style="margin-top: 35px;">
+            <h2 class="text-left text-info" style="margin-top: 51px; margin-left: 10px;">Perfil</h2>
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="Email" class="control-label">Email</label>
+                        <input asp-for="Email" class="form-control" value="@Model.Email"/>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="UserName" class="control-label">Nome</label>
+                        <input asp-for="UserName" class="form-control" value="@Model.UserName"/>
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="DataNascimento" class="control-label">Data de Nascimento</label>
+                        @Html.Display(@Model.DataNascimento.Date.ToString())
+                        <input asp-for="DataNascimento" class="form-control" />
+                        <span asp-validation-for="DataNascimento" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label asp-for="Sexo">Sexo</label>
+                        <select asp-for="Sexo" class="form-control">
+                            @{
+                                var sex = Model.Sexo;
+                                if (sex == Sexo.F)
+                                {
+                                    <option value="@Sexo.F" selected>Feminino</option>
+                                    <option value="@Sexo.M">Masculino</option>
+                                    <option value="@Sexo.NA">Outro</option>
+                                }
+                                else if (sex == Sexo.M)
+                                {
+                                    <option value="@Sexo.M" selected>Masculino</option>
+                                    <option value="@Sexo.F">Feminino</option>
+                                    <option value="@Sexo.NA">Outro</option>
+                                }
+                                else
+                                {
+                                    <option value="@Sexo.NA" selected>Outro</option>
+                                    <option value="@Sexo.M">Masculino</option>
+                                    <option value="@Sexo.F">Feminino</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Sexo" class="text-danger"></span>
 
-<div>
-    <h4>User</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sexo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sexo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataNascimento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataNascimento)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Voz)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Voz)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NormalizedUserName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NormalizedUserName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NormalizedEmail)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NormalizedEmail)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EmailConfirmed)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EmailConfirmed)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PasswordHash)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PasswordHash)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SecurityStamp)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SecurityStamp)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ConcurrencyStamp)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ConcurrencyStamp)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PhoneNumberConfirmed)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TwoFactorEnabled)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TwoFactorEnabled)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LockoutEnd)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LockoutEnd)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LockoutEnabled)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LockoutEnabled)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AccessFailedCount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AccessFailedCount)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+                    </div>
+                </div>
+                <div class="form-check">
+                    @{
+                        var mic = Model.Voz;
+                        if (mic == true)
+                        {
+                            <input class="form-check-input" type="checkbox" value="true" id="defaultCheck1" checked>
+                        }
+                        else
+                        {
+                            <input class="form-check-input" type="checkbox" value="true" id="defaultCheck1">
+                        }
+                    }
+                    <label class="form-check-label" for="defaultCheck1">
+                        Permito que a aplicação tenha acesso ao microfone e à câmara.
+                    </label>
+                </div>
+                <div class="form-group">
+                </div>
+                <input type="hidden" asp-for="Id"/>
+                <input type="hidden" asp-for="NormalizedUserName"/>
+                <input type="hidden" asp-for="NormalizedEmail"/>
+                <input type="hidden" asp-for="EmailConfirmed"/>
+                <input type="hidden" asp-for="PasswordHash"/>
+                <input type="hidden" asp-for="SecurityStamp"/>
+                <input type="hidden" asp-for="ConcurrencyStamp"/>
+                <input type="hidden" asp-for="PhoneNumber"/>
+                <input type="hidden" asp-for="PhoneNumberConfirmed"/>
+                <input type="hidden" asp-for="TwoFactorEnabled"/>
+                <input type="hidden" asp-for="LockoutEnd"/>
+                <input type="hidden" asp-for="LockoutEnabled"/>
+
+
+                <button type="submit" class="btn btn-primary">Atualizar</button>
+            </form>
+            <div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Alimentos excluídos</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <button class="btn btn-primary float-right" type="button">Adicionar</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
