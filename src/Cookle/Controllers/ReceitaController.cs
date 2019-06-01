@@ -19,10 +19,17 @@ namespace Cookle.Controllers
             _context = context;
         }
 
-        // GET: Receita
-        public async Task<IActionResult> Index()
+        // GET: ReceitaIntegra
+        public async Task<IActionResult> ReceitaIntegra(int? id)
         {
-            return View(await _context.Receita.ToListAsync());
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var passos =  _context.Passo.Where(p => p.ReceitaId == id).ToList();
+            
+            return View(passos);
         }
 
         // GET: Receita/Details/5
@@ -60,7 +67,7 @@ namespace Cookle.Controllers
             {
                 _context.Add(receita);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ReceitaIntegra));
             }
             return View(receita);
         }
@@ -111,7 +118,7 @@ namespace Cookle.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ReceitaIntegra));
             }
             return View(receita);
         }
@@ -142,7 +149,7 @@ namespace Cookle.Controllers
             var receita = await _context.Receita.FindAsync(id);
             _context.Receita.Remove(receita);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ReceitaIntegra));
         }
 
         private bool ReceitaExists(int id)
