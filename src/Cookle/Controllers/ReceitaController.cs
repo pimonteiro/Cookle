@@ -92,6 +92,19 @@ namespace Cookle.Controllers
             ViewData["ValorNutricional"] = valor;
             return View(receita);
         }
+        
+        //GET: MenuReceitas
+        public async Task<IActionResult> MenuReceitas(string palavra)
+        {
+            List<Receita> receitas;
+            receitas = !string.IsNullOrEmpty(palavra) ? _context.Receita.Where(r => r.Nome.Contains(palavra)).ToList() :
+                                                        _context.Receita.ToList();
+
+            ViewData["Receitas"] = receitas;
+            return View();
+        }
+
+
         // GET: Receita/Create
         public IActionResult Create()
         {
