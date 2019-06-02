@@ -54,13 +54,46 @@ namespace Cookle.Data
                 new Admin() {Id = 1, Email = "admin@admin.pt", Name = "Admin", Password = "admin123"});
 
             #endregion
+            
+            #region ReceitaSeed
 
-            #region FrigorificoSeed
+            builder.Entity<Receita>().HasData(
+                new Receita()
+                {
+                    Id = 1,
+                    Descricao =
+                        "Um dos bolos mais fáceis e saborosos - e uma receita muito indicada para ensinar às crianças. Pode ser feito com iogurte natural ou de qualquer sabor e é óptimo para o lanche.",
+                    Dificuldade = 2,
+                    Imagem = "https://www.pingodoce.pt/wp-content/uploads/2016/03/comofazerbolodeiogurte617.jpg",
+                    Nome = "Bolo de iogurte", NumPessoas = 10, TempoPrep = 55
+                });
+            builder.Entity<Receita>().HasData(
+                new Receita()
+                {
+                    Id = 2,
+                    Descricao =
+                        "A forma mais fácil de bater claras em castelo, para que os seus bolos fiquem perfeitos.",
+                    Dificuldade = 1,
+                    Imagem =
+                        "https://i1.wp.com/www.docesregionais.com/wp-content/uploads/2013/02/Como-Bater-Claras-em-NeveCastelo.jpg",
+                    Nome = "Claras em Castelo"
+                });
 
-            builder.Entity<Frigorifico>().HasData(
-                new Frigorifico() {UserId = 1, IngredienteId = 1, Data = DateTime.Parse("2019-06-30"), Quantidade = 3});
+
+            builder.Entity<Receita>().HasData(
+                new Receita
+                {
+                    Id = 3,
+                    Descricao = "Uma massa simples mas deliciosa.",
+                    Dificuldade = 1,
+                    Nome = "Massa de panquecas simples",
+                    TempoPrep = 15,
+                    NumPessoas = 2
+                }
+            );
 
             #endregion
+
 
             #region HistoricoSeed
 
@@ -135,6 +168,13 @@ namespace Cookle.Data
                     Quantidade = 1.5f,
                     Unidade = 1
                 });
+
+            #endregion
+            
+            #region FrigorificoSeed
+
+            builder.Entity<Frigorifico>().HasData(
+                new Frigorifico() {UserId = 1, IngredienteId = 1, Data = DateTime.Parse("2019-06-30"), Quantidade = 3});
 
             #endregion
 
@@ -289,44 +329,7 @@ namespace Cookle.Data
 
             #endregion
 
-            #region ReceitaSeed
-
-            builder.Entity<Receita>().HasData(
-                new Receita()
-                {
-                    Id = 1,
-                    Descricao =
-                        "Um dos bolos mais fáceis e saborosos - e uma receita muito indicada para ensinar às crianças. Pode ser feito com iogurte natural ou de qualquer sabor e é óptimo para o lanche.",
-                    Dificuldade = 2,
-                    Imagem = "https://www.pingodoce.pt/wp-content/uploads/2016/03/comofazerbolodeiogurte617.jpg",
-                    Nome = "Bolo de iogurte", NumPessoas = 10, TempoPrep = 55
-                });
-            builder.Entity<Receita>().HasData(
-                new Receita()
-                {
-                    Id = 2,
-                    Descricao =
-                        "A forma mais fácil de bater claras em castelo, para que os seus bolos fiquem perfeitos.",
-                    Dificuldade = 1,
-                    Imagem =
-                        "https://i1.wp.com/www.docesregionais.com/wp-content/uploads/2013/02/Como-Bater-Claras-em-NeveCastelo.jpg",
-                    Nome = "Claras em Castelo"
-                });
-
-
-            builder.Entity<Receita>().HasData(
-                new Receita
-                {
-                    Id = 3,
-                    Descricao = "Uma massa simples mas deliciosa.",
-                    Dificuldade = 1,
-                    Nome = "Massa de panquecas simples",
-                    TempoPrep = 15,
-                    NumPessoas = 2
-                }
-            );
-
-            #endregion
+           
         }
 
         public DbSet<Cookle.Models.Admin> Admin { get; set; }
