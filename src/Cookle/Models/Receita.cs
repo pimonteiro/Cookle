@@ -12,12 +12,12 @@ namespace Cookle.Models
         
         [Required]
         [Display(Name = "Nome")]
-        [StringLength(150)]
+        [StringLength(500)]
         public string Nome { get; set; }
         
         [Required]
         [Display(Name = "Descricao")]
-        [StringLength(150)]
+        [StringLength(500)]
         public string Descricao { get; set; }
        
         [Display(Name = "TempoPrep")]
@@ -32,11 +32,11 @@ namespace Cookle.Models
         [Display(Name = "Tipo")]
         public int? Tipo { get; set; }
 
-        [Display(Name = "Imagem")] [StringLength(45)]
+        [Display(Name = "Imagem")] [StringLength(500)]
         public string Imagem { get; set; }
         
         [Display(Name = "Video")]
-        [StringLength(45)]
+        [StringLength(150)]
         public string Video { get; set; }
 
         public IList<Plano> Planos { get; set; }
