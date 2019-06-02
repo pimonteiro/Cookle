@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Cookle.Data;
 using Cookle.Models;
+using Microsoft.AspNetCore.Routing;
 
 namespace Cookle.Controllers
 {
@@ -63,10 +64,14 @@ namespace Cookle.Controllers
             {
                 _context.Add(frigorifico);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var data = new
+                {
+                    id = frigorifico.UserId
+                };
+                return RedirectToAction("User", data);
             }
             ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", frigorifico.UserId);
-            return View(frigorifico);
+            return RedirectToAction(nameof(User), new {id = frigorifico.UserId});
         }
 
         // GET: Frigorifico/Edit/5
@@ -155,6 +160,33 @@ namespace Cookle.Controllers
         private bool FrigorificoExists(int id)
         {
             return _context.Frigorifico.Any(e => e.UserId == id);
+        }
+
+        public IActionResult User(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var frigorifico = _context.Frigorifico.Where(f => f.UserId == id).ToList();
+            ViewData["Ingredientes"] = _context.Ingrediente.ToList();
+            ViewData["User"] = id;
+            return View(frigorifico);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveIng(int? id, int? ing)
+        {
+            if (ing == null){
+                return RedirectToAction("User", new {id = id});
+            }
+
+            var frigorifico = _context.Frigorifico.Where(f => f.UserId == id && f.IngredienteId == ing).ToList();
+            _context.Frigorifico.Remove(frigorifico.FirstOrDefault());
+            await _context.SaveChangesAsync();
+            return RedirectToAction("User", new {id = id});
+
         }
     }
 }
