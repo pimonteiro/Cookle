@@ -12,7 +12,7 @@ namespace Cookle.Models
         
         [Required]
         [Display(Name = "Nome")]
-        [StringLength(45)]
+        [StringLength(150)]
         public string Nome { get; set; }
         
         [Required]
