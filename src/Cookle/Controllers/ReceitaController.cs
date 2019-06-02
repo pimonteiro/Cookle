@@ -19,14 +19,8 @@ namespace Cookle.Controllers
             _context = context;
         }
 
-        // GET: Receita
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Receita.ToListAsync());
-        }
-
-        // GET: Receita/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: ReceitaIntegra
+        public async Task<IActionResult> ReceitaIntegra(int? id)
         {
             if (id == null)
             {
@@ -40,9 +34,64 @@ namespace Cookle.Controllers
                 return NotFound();
             }
 
+            var nutrienteReceita = _context.NutrienteReceita.Where(n => n.ReceitaId == id).ToList();
+            var valor = 0;
+            foreach (var n in nutrienteReceita)
+            {
+                if (n.ReceitaId == id)
+                {
+                    valor += _context.Nutriente.FirstOrDefault(m => m.Id == n.NutrienteId).Unidade;
+                }
+            }
+            ViewData["ValorNutricional"] = valor;
             return View(receita);
         }
+        
+        //GET: ReceitaPasso
+        public async Task<IActionResult> ReceitaPasso(int? id) //ID de receita
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var receita = await _context.Receita
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (receita == null)
+            {
+                return NotFound();
+            }
+
+            return View(receita.Passos.ElementAt(0));
+        }
+        
+        //GET: ReceitaPreview
+        public async Task<IActionResult> ReceitaPreview(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var receita = await _context.Receita
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (receita == null)
+            {
+                return NotFound();
+            }
+
+            var nutrienteReceita = _context.NutrienteReceita.Where(n => n.ReceitaId == id).ToList();
+            var valor = 0;
+            foreach (var n in nutrienteReceita)
+            {
+                if (n.ReceitaId == id)
+                {
+                    valor += _context.Nutriente.FirstOrDefault(m => m.Id == n.NutrienteId).Unidade;
+                }
+            }
+            ViewData["ValorNutricional"] = valor;
+            return View(receita);
+        }
         // GET: Receita/Create
         public IActionResult Create()
         {
@@ -60,7 +109,7 @@ namespace Cookle.Controllers
             {
                 _context.Add(receita);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ReceitaIntegra));
             }
             return View(receita);
         }
@@ -111,7 +160,7 @@ namespace Cookle.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ReceitaIntegra));
             }
             return View(receita);
         }
@@ -142,7 +191,7 @@ namespace Cookle.Controllers
             var receita = await _context.Receita.FindAsync(id);
             _context.Receita.Remove(receita);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ReceitaIntegra));
         }
 
         private bool ReceitaExists(int id)
