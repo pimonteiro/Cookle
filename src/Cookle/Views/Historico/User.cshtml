@@ -1,0 +1,38 @@
+@model List<Cookle.Models.Historico>
+
+@{    
+    //ONLY ONE BEING USED
+    ViewData["Title"] = "Historico";
+    var user = ViewData["User"];
+}
+
+<section class="clean-block clean-pricing dark">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info" style="margin-top: 36px;">Histórico de Receitas</h2>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width:13px;"></th>
+                        <th>Receita</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ 
+                        foreach(Historico h in Model)
+                        {
+                                        <tr>
+                                            <td class="float-none"><a asp-controller="Historico" asp-action="RemoveRec" asp-route-id="@user" asp-route-rec="@h.ReceitaId"><i class="fa fa-remove" style="color:red;"></i></a></td>
+                                            <td>@h.Receita.Nome</td>
+                                            <td>@h.UltimaVez</td>
+                                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
