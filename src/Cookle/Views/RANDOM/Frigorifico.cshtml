@@ -1,6 +1,8 @@
-﻿
+﻿@model Cookle.Models.User
+
 @{
     ViewData["Title"] = "Frigorifico";
+    var ingredientes = ViewData["Ingredientes"] as IList<Ingrediente>;
 }
 
 <div class="container">
@@ -8,30 +10,46 @@
         <h1 class="text-center" style="margin-top: 89px;margin-left: 10px;color: #3b99e0!important;">Frigorífico</h1>
     </section>
     <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th style="width:13px;"></th>
-                    <th>Alimento</th>
-                    <th>Quantidade</th>
-                    <th>Data de Expiração</th>
-                </tr>
-            </thead>
-            <tbody> <!-- Insert for each of data -->
-                <tr>
-                    <td class="float-none"><i class="fa fa-remove" style="color:red;"></i></td>
-                    <td>polpa de tomate</td>
-                    <td>14</td>
-                    <td>24/04/2016</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><button class="btn btn-primary float-right" type="button">Adicionar</button></td>
-                </tr>
-            </tbody>
-        </table>
+        <form method="post" asp-controller="" asp-action="">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width:13px;"></th>
+                        <th>Alimento</th>
+                        <th>Quantidade</th>
+                        <th>Data de Expiração</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (Frigorifico f in Model.Frigorificos)
+                        {
+                                        <tr>
+                                            <td class="float-none"><a asp-controller="" asp-action="" asp-route-id="@f.IngredienteId"><i class="fa fa-remove" style="color:red;"></i></a></td>
+                                            <td>@f.Ingrediente.Nome</td>
+                                            <td>@f.Quantidade</td>
+                                            <td>@f.Data</td>
+                                        </tr>
+                        }
+                    }
+                    <tr>
+                        <td>
+                            <select name="ingrediente">
+                                @{
+                                    foreach (Ingrediente ing in ingredientes)
+                                    {
+                                        <option value="@ing.Id">@ing.Nome</option>
+                                    }
+                                }
+                            </select>
+                        </td>
+                        <td><input type="number" /></td>
+                        <td><input type="datetime" /></td>
+                        <td><input class="btn btn-primary float-right" type="button" />Adicionar</td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
     </div>
 </div>
 

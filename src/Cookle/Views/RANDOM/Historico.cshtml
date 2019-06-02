@@ -23,7 +23,7 @@
                         foreach(Historico h in Model.Historicos)
                         {
                                         <tr>
-                                            <td class="float-none"><i class="fa fa-remove" style="color:red;"></i></td>
+                                            <td class="float-none"><a asp-controller="" asp-action="" asp-route-id="@h.Numero"><i class="fa fa-remove" style="color:red;"></i></a></td>
                                             <td>@h.Receita.Nome</td>
                                             <td>@h.UltimaVez</td>
                                         </tr>
