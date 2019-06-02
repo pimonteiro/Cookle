@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cookle.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190602142956_FirstSeed")]
+    [Migration("20190602192718_FirstSeed")]
     partial class FirstSeed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -621,7 +621,7 @@ namespace Cookle.Migrations
                         new
                         {
                             Id = 1,
-                            Descricao = "Um dos bolos mais fáceis e saborosos - e uma receita muito indicada para ensinar às crianças. Pode ser feito com iogurte natural ou de qualquer sabor e é óptimo para o lanche.",
+                            Descricao = "Um dos bolos mais fáceis e saborosos.",
                             Dificuldade = 2,
                             Imagem = "https://www.pingodoce.pt/wp-content/uploads/2016/03/comofazerbolodeiogurte617.jpg",
                             Nome = "Bolo de iogurte",
@@ -703,6 +703,27 @@ namespace Cookle.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "54f21e1f-d572-42c6-b1c3-d354496aecc8",
+                            DataNascimento = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "test@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TEST@GMAIL.COM",
+                            NormalizedUserName = "TEST",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKQHJYtdg65vcWdsQg554lundBXxA7Nb2VjsBCjj4gQQI0nZRHHkgGmlZtqSQ5JOrA==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            Sexo = 0,
+                            TwoFactorEnabled = false,
+                            UserName = "Test",
+                            Voz = false
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>

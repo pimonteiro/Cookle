@@ -47,6 +47,23 @@ namespace Cookle.Data
             {
                 table.UserId, table.IngredienteId
             });
+            
+            #region UserSeed
+            
+            var hasher = new PasswordHasher<User>();
+            builder.Entity<User>().HasData(new User
+            {
+                Id = 1,
+                UserName = "Test",
+                NormalizedUserName = "TEST",
+                Email = "test@gmail.com",
+                NormalizedEmail = "TEST@GMAIL.COM",
+                EmailConfirmed = true,
+                PasswordHash = hasher.HashPassword(null, "Cookle123!"),
+                SecurityStamp = string.Empty
+            });
+            
+            #endregion
 
             #region AdminSeed
 
@@ -62,7 +79,7 @@ namespace Cookle.Data
                 {
                     Id = 1,
                     Descricao =
-                        "Um dos bolos mais fáceis e saborosos - e uma receita muito indicada para ensinar às crianças. Pode ser feito com iogurte natural ou de qualquer sabor e é óptimo para o lanche.",
+                        "Um dos bolos mais fáceis e saborosos.",
                     Dificuldade = 2,
                     Imagem = "https://www.pingodoce.pt/wp-content/uploads/2016/03/comofazerbolodeiogurte617.jpg",
                     Nome = "Bolo de iogurte", NumPessoas = 10, TempoPrep = 55

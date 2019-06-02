@@ -14,7 +14,7 @@ namespace Cookle.Models
         
         public int? SubReceitaId { get; set; }
                 
-        [Required, StringLength(200)]
+        [Required, StringLength(500)]
         public string Descricao { get; set; }
         
         public virtual Receita SubReceita { get; set; }
