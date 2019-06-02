@@ -701,6 +701,27 @@ namespace Cookle.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "33f85e0a-d4f6-401b-9fd2-c6297c4b10ed",
+                            DataNascimento = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "test@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TEST@GMAIL.COM",
+                            NormalizedUserName = "TEST",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPWOgRifs/YHzKH+zzGNZ4BM1jPyAY5V1/SNbwV3E3tK8wz91bnocF2ndkQcCzgHFQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "",
+                            Sexo = 0,
+                            TwoFactorEnabled = false,
+                            UserName = "Test",
+                            Voz = false
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>

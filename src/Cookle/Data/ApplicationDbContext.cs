@@ -47,6 +47,23 @@ namespace Cookle.Data
             {
                 table.UserId, table.IngredienteId
             });
+            
+            #region UserSeed
+            
+            var hasher = new PasswordHasher<User>();
+            builder.Entity<User>().HasData(new User
+            {
+                Id = 1,
+                UserName = "Test",
+                NormalizedUserName = "TEST",
+                Email = "test@gmail.com",
+                NormalizedEmail = "TEST@GMAIL.COM",
+                EmailConfirmed = true,
+                PasswordHash = hasher.HashPassword(null, "Cookle123!"),
+                SecurityStamp = string.Empty
+            });
+            
+            #endregion
 
             #region AdminSeed
 
