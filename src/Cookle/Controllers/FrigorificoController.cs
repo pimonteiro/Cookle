@@ -20,9 +20,9 @@ namespace Cookle.Controllers
         }
 
         // GET: Frigorifico
-        public async Task<IActionResult> Frigorifico()
+        public async Task<IActionResult> Frigorifico(int id)
         {
-            var applicationDbContext = _context.Frigorifico.Include(f => f.User);
+            var applicationDbContext = _context.Frigorifico.Where(f => f.UserId==id);
             return View(await applicationDbContext.ToListAsync());
         }
 
