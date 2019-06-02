@@ -43,13 +43,25 @@
         <div style="margin-left:10px;">
             <p>@Model.Descricao<br></p>
             <p><strong>Valor nutritivo: </strong>@nut  kcal.</p>
+            <p>Ingredientes:</p>
             <ul>
                 @{
                     foreach (IngredienteReceita ing in Model.IngredienteReceitas)
                     {
-                        <li><strong>@ing.Quantidade</strong>&nbsp;<strong>@ing.Unidade</strong>&nbsp;@ing.Receita.Nome<br></li>
+                                <li>
+                                    <strong>@ing.Quantidade </strong>&nbsp;
+                                    @switch (ing.Unidade)
+                                    {
+                                        case 1:
+                                            <strong>gramas</strong><br>
+                                            break;
+                                        case 2:
+                                            <strong>ml</strong><br>
+                                            break;
+                                    }
+                                </li>
                     }
-                }
+                                    }
             </ul>
             <div>
                 <h3>Notas:</h3>
