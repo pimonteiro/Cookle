@@ -22,8 +22,8 @@ namespace Cookle.Controllers
         // GET: Frigorifico
         public async Task<IActionResult> Frigorifico(int id)
         {
-            var applicationDbContext = _context.Frigorifico.Where(f => f.UserId==id);
-            return View(await applicationDbContext.ToListAsync());
+            var frigorifico = _context.Frigorifico.Where(f => f.UserId == id);
+            return View( frigorifico.FirstOrDefault());
         }
 
         // GET: Frigorifico/Details/5
