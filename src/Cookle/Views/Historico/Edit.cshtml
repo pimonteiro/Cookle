@@ -1,39 +1,40 @@
-@model Cookle.Models.Historico
+@model Cookle.Models.User
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Historico";
 }
 
-<h1>Edit</h1>
-
-<h4>Historico</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="UserId" />
-            <input type="hidden" asp-for="ReceitaId" />
-            <div class="form-group">
-                <label asp-for="UltimaVez" class="control-label"></label>
-                <input asp-for="UltimaVez" class="form-control" />
-                <span asp-validation-for="UltimaVez" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Numero" class="control-label"></label>
-                <input asp-for="Numero" class="form-control" />
-                <span asp-validation-for="Numero" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<section class="clean-block clean-pricing dark">
+    <div class="container">
+        <div class="block-heading">
+            <h2 class="text-info" style="margin-top: 36px;">Histórico de Receitas</h2>
+        </div>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th style="width:13px;"></th>
+                    <th>Receita</th>
+                    <th>Data</th>
+                </tr>
+                </thead>
+                <tbody>
+                @{ 
+                    foreach(Historico h in Model.Historicos)
+                    {
+                        <tr>
+                            <td class="float-none"><a asp-controller="" asp-action="" asp-route-id="@h.Numero"><i class="fa fa-remove" style="color:red;"></i></a></td>
+                            <td>@h.Receita.Nome</td>
+                            <td>@h.UltimaVez</td>
+                        </tr>
+                    }
+                }
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
+</section>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

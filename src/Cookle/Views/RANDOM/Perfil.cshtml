@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Perfil";
+    var ingredientes = ViewData["Ingredientes"] as IList<Ingrediente>;
 }
 
 <main class="page">
@@ -73,24 +74,39 @@
             </form>
             <div>
                 <div class="table-responsive">
-                    <table class="table">
-                        <thead>
+                    <form asp-controller="" asp-action="">
+                        <table class="table">
+                            <thead>
                             <tr>
                                 <th>Alimentos excluídos</th>
                                 <th></th>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             <tr>
-                                <td></td>
-                                <td></td>
+                                @{
+                                    foreach (PreferenciaIngrediente i in Model.PreferenciaIngredientes)
+                                    {
+                                        <td>@i.Ingrediente.Nome</td>
+                                    }
+                                }
                             </tr>
                             <tr>
-                                <td></td>
-                                <td><button class="btn btn-primary float-right" type="button">Adicionar</button></td>
+                                <td>
+                                    <select>
+                                        @{
+                                            foreach (Ingrediente ing in ingredientes)
+                                            {
+                                                <option value="@ing.Id" name="ingrediente">@ing.Nome</option>
+                                            }
+                                        }
+                                    </select>
+                                </td>
+                                <td><input class="btn btn-primary float-right" type="button" value="Adicionar"></td>
                             </tr>
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </form>
                 </div>
             </div>
         </section>
