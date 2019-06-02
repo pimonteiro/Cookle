@@ -1,18 +1,32 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Cookle.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Cookle.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private UserManager<User> _userManager;
+        
+        public HomeController(UserManager<User> userManager)
         {
-            return View();
+            _userManager = userManager;
+        }
+        
+        [Authorize]
+        public async Task<IActionResult> Index()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            
+
+            return View(user);
         }
 
         public IActionResult Privacy()

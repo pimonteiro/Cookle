@@ -1,36 +1,54 @@
-@model Cookle.Models.Frigorifico
+@model Cookle.Models.User
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Frigorifico";
+    var ingredientes = ViewData["Ingredientes"] as IList<Ingrediente>;
 }
 
-<h1>Details</h1>
-
-<div>
-    <h4>Frigorifico</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Quantidade)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Quantidade)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Data)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Data)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Id)
-        </dd>
-    </dl>
-</div>
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
+<div class="container">
+    <section class="clean-block features">
+        <h1 class="text-center" style="margin-top: 89px;margin-left: 10px;color: #3b99e0!important;">Frigorífico</h1>
+    </section>
+    <div class="table-responsive">
+        <form method="post" asp-controller="" asp-action="">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width:13px;"></th>
+                        <th>Alimento</th>
+                        <th>Quantidade</th>
+                        <th>Data de Expiração</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (Frigorifico f in Model.Frigorificos)
+                        {
+                                        <tr>
+                                            <td class="float-none"><a asp-controller="" asp-action="" asp-route-id="@f.IngredienteId"><i class="fa fa-remove" style="color:red;"></i></a></td>
+                                            <td>@f.Ingrediente.Nome</td>
+                                            <td>@f.Quantidade</td>
+                                            <td>@f.Data</td>
+                                        </tr>
+                        }
+                    }
+                    <tr>
+                        <td>
+                            <select name="ingrediente">
+                                @{
+                                    foreach (Ingrediente ing in ingredientes)
+                                    {
+                                        <option value="@ing.Id">@ing.Nome</option>
+                                    }
+                                }
+                            </select>
+                        </td>
+                        <td><input type="number" /></td>
+                        <td><input type="datetime" /></td>
+                        <td><input class="btn btn-primary float-right" type="button" />Adicionar</td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
 </div>

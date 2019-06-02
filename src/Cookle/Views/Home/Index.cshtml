@@ -2,12 +2,12 @@
 
 @{
     ViewData["Title"] = "Home Page";
-    int i = 0;
+    int i;
 }
 
 <section class="border rounded d-flex justify-content-center align-items-center align-content-center justify-content-xl-center align-items-xl-center clean-block" style="color: rgba(71,62,62,0.3);background-image: url(&quot;https://www.simplyrecipes.com/wp-content/uploads/2014/11/turkey-soup-horiz-a-1600.jpg&quot;);opacity: 1;font-size: 25px;min-height: 680px;background-repeat: no-repeat;background-size: cover;background-position: center;">
-    <a class="btn btn-primary btn-lg text-uppercase text-center text-sm-center text-md-center text-lg-center text-xl-center border rounded border-white shadow-none d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center align-items-center align-content-center align-items-sm-center align-items-md-center align-items-lg-center justify-content-xl-center"
-        role="button" href="index.html" data-bs-hover-animate="pulse" style="background-color: rgba(249,63,35,0.8);color: rgb(255,255,255);height: 130px;width: 400px;font-size: 30px;font-family: Montserrat, sans-serif;">Comece a cozinhar</a>
+    <a asp-controller="" asp-action="" class="btn btn-primary btn-lg text-uppercase text-center text-sm-center text-md-center text-lg-center text-xl-center border rounded border-white shadow-none d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center align-items-center align-content-center align-items-sm-center align-items-md-center align-items-lg-center justify-content-xl-center"
+        role="button"  data-bs-hover-animate="pulse" style="background-color: rgba(249,63,35,0.8);color: rgb(255,255,255);height: 130px;width: 400px;font-size: 30px;font-family: Montserrat, sans-serif;">Comece a cozinhar</a>
 </section>
 <section class="clean-block features"></section>
 <div class="article-list">
@@ -17,17 +17,20 @@
                 <i class="material-icons icon" style="color: rgb(249,63,35);font-size: 40px;">restaurant_menu</i>
                 <h3 class="name" style="font-size: 16px;">Frigorífico</h3>
                 @{
-                    i = 0;
-                    foreach (Frigorifico f in Model.Frigorificos)
+                    if (Model.Frigorificos != null)
                     {
-                        if (i > 3)
+                        i = 0;
+                        foreach (Frigorifico f in Model.Frigorificos)
                         {
-                            break;
+                            if (i > 3)
+                            {
+                                break;
+                            }
+                            <p class="description" style="margin: 5px;">@f.Ingrediente.Nome</p>
+                            i++;
                         }
-                        <p class="description" style="margin: 5px;">@f.Ingrediente.Nome</p>
-                        i++;
                     }
-                    <p class="description" style="margin: 5px;"><a asp-action="" asp-controller="">...</a></p>
+                    <p class="description" style="margin: 5px;"><a asp-action="Details" asp-controller="Frigorifico" asp-route-id="@Model.Id">...</a></p>
                 }
             </div>
             <!--
@@ -45,38 +48,43 @@
         </div>
         <div class="row d-xl-flex justify-content-xl-center articles">
             <div class="col-sm-6 col-md-6 col-xl-4 item">
-                <i class="fas fa-history icon" style="color: rgb(249,63,35);font-size: 40px;"></i>
+                <i class="material-icons" style="color: rgb(249,63,35);font-size: 40px;">history</i>
+                <h3 class="name">Histórico</h3>
                 @{
-                    i = 0;
-                    foreach (Historico h in Model.Historicos)
+                    if (Model.Historicos != null)
                     {
-                        if(i > 3)
+                        i = 0;
+                        foreach (Historico h in Model.Historicos)
                         {
-                            break;
+                            if(i > 3)
+                            {
+                                break;
+                            }
+                            <p class="description" style="margin: 5px;">@h.Receita.Nome</p>
+                            i++;
                         }
-                        <p class="description" style="margin: 5px;">@h.Receita.Nome</p>
-                        i++;
                     }
-                    <p class="description" style="margin: 5px;"><a asp-action="" asp-controller="">...</a></p>
-
+                    <p class="description" style="margin: 5px;"><a asp-action="Details" asp-controller="Historico">...</a></p>
                 }
             </div>
             <div class="col-sm-6 col-md-6 col-xl-4 item">
-                <i class="far fa-calendar icon" style="color: rgb(249,63,35);font-size: 40px;"></i>
+               <i class="material-icons" style="color: rgb(249,63,35);font-size: 40px;">today</i>
                 <h3 class="name">Plano Semanal</h3>
                 @{
-                    i = 0;
-                    foreach (Plano p in Model.Planos)
+                    if (Model.Planos != null)
                     {
-                        if (i > 3)
+                        i = 0;
+                        foreach (Plano p in Model.Planos)
                         {
-                            break;
+                            if (i > 3)
+                            {
+                                break;
+                            }
+                            <p class="description">@p.Receita.Nome</p>
+                            i++;
                         }
-                        <p class="description">@p.Receita.Nome</p>
-                        i++;
                     }
-                    <p class="description" style="margin: 5px;"><a asp-action="" asp-controller="">...</a></p>
-
+                    <p class="description" style="margin: 5px;"><a asp-action="Details" asp-controller="Plano">...</a></p>
                 }
             </div>
         </div>
