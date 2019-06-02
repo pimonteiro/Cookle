@@ -42,7 +42,7 @@
                             <a class="nav-link" asp-controller="Historico" asp-action="User" asp-route-id="@UserManager.GetUserId(User)" style="color: rgb(249,63,35);">Histórico</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" asp-controller="" asp-action="" style="color: rgb(249,63,35);">Favoritos</a>
+                            <a class="nav-link" asp-controller="Plano" asp-action="User" asp-route-id="@UserManager.GetUserId(User)" style="color: rgb(249,63,35);">Plano Semanal</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
