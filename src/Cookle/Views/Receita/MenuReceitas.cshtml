@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Procurar receita";
+    var receitas = ViewData["Receitas"] as IList<Receita>;
+}
+
+<div class="article-list" style="margin-bottom: 241px;">
+    <div class="container">
+        <div class="block-content" style="text-align:center;">
+            <h2 class="text-info" style="margin-top: 72px;">Receitas</h2>
+            <p>Procure a sua receita favorita!</p>
+            <form asp-controller="" asp-action="">
+                <input type="search" style="width:515px;" name="search"><input class="btn btn-primary" value="Procurar" type="button">
+            </form>
+        </div>
+        <div class="row articles">
+            <!--for each to create each article-->
+            @{
+                foreach (Receita r in receitas)
+                {
+                    <div class="col-sm-6 col-md-4 item">
+                        <img class="img-fluid" src="@r.Imagem" style="height: 203px;">
+                        <h3 class="name">@r.Nome</h3>
+                        <p class="description">@r.Descricao</p>
+                        <p class="description">Dificuldade: @r.Dificuldade</p>
+                        <div><i class="fa fa-heart" style="color:gray;"></i></div><a asp-controller="" asp-action="" asp-route-id="@r.Id"><i class="fa fa-arrow-circle-right"></i></a>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

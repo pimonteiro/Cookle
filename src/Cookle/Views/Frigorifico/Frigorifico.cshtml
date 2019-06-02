@@ -1,0 +1,56 @@
+﻿@model Cookle.Models.User
+
+@{
+    ViewData["Title"] = "Frigorifico";
+    var ingredientes = ViewData["Ingredientes"] as IList<Ingrediente>;
+}
+
+<div class="container">
+    <section class="clean-block features">
+        <h1 class="text-center" style="margin-top: 89px;margin-left: 10px;color: #3b99e0!important;">Frigorífico</h1>
+    </section>
+    <div class="table-responsive">
+        <form method="post" asp-controller="" asp-action="">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width:13px;"></th>
+                        <th>Alimento</th>
+                        <th>Quantidade</th>
+                        <th>Data de Expiração</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (Frigorifico f in Model.Frigorificos)
+                        {
+                                        <tr>
+                                            <td class="float-none"><a asp-controller="" asp-action="" asp-route-id="@f.IngredienteId"><i class="fa fa-remove" style="color:red;"></i></a></td>
+                                            <td>@f.Ingrediente.Nome</td>
+                                            <td>@f.Quantidade</td>
+                                            <td>@f.Data</td>
+                                        </tr>
+                        }
+                    }
+                    <tr>
+                        <td>
+                            <select name="ingrediente">
+                                @{
+                                    foreach (Ingrediente ing in ingredientes)
+                                    {
+                                        <option value="@ing.Id">@ing.Nome</option>
+                                    }
+                                }
+                            </select>
+                        </td>
+                        <td><input type="number" /></td>
+                        <td><input type="datetime" /></td>
+                        <td><input class="btn btn-primary float-right" type="button" />Adicionar</td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>
+
+
