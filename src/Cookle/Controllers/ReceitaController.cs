@@ -229,6 +229,13 @@ namespace Cookle.Controllers
                 _context.SaveChangesAsync();
             }
 
+            var planos = _context.Plano.FirstOrDefault(p => p.UserId == idU && p.ReceitaId == idR);
+            if (planos != null)
+            {
+                _context.Remove(planos);
+                _context.SaveChangesAsync();
+            }
+
             return RedirectToAction("Preview", new {id = idR});
         }
 

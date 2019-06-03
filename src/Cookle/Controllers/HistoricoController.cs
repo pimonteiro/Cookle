@@ -176,8 +176,7 @@ namespace Cookle.Controllers
             return View(historico);
 
         }
-
-        [HttpPost]
+        
         public async Task<IActionResult> RemoveRec(int? id, int? rec)
         {
             if (rec == null){

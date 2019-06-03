@@ -75,11 +75,14 @@
                                 @switch (ing.Unidade)
                                 {
                                     case 1:
-                                        <strong>gramas</strong><br>@ing.Ingrediente.Nome
+                                        <strong>gramas</strong> @ing.Ingrediente.Nome
                                         break;
                                     case 2:
-                                        <strong>ml</strong><br>@ing.Ingrediente.Nome
+                                        <strong>ml</strong> @ing.Ingrediente.Nome
                                         break;
+                                        default:
+                                            @ing.Ingrediente.Nome
+                                            break;
                                 }
                             </li>
                         }
