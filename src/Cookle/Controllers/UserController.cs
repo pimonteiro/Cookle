@@ -29,7 +29,7 @@ namespace Cookle.Controllers
         // GET: User/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if (id == null || id.ToString() != LoggedUserId())
             {
                 return NotFound();
             }
@@ -172,6 +172,10 @@ namespace Cookle.Controllers
         [HttpPost]
         public async Task<IActionResult> AddIng(int id, [Bind("Tipo,IngredienteId")] PreferenciaIngrediente ing)
         {
+            if (id.ToString() != LoggedUserId())
+            {
+                return NotFound();
+            }
             ing.Ingrediente = _context.Ingrediente.Find(ing.IngredienteId);
             ing.User = _context.User.Find(id);
             ing.UserId = id;
@@ -183,6 +187,10 @@ namespace Cookle.Controllers
 
         public async Task<IActionResult> RemoveIng(int id, int ingId)
         {
+            if (id.ToString() != LoggedUserId())
+            {
+                return NotFound();
+            }
             var ing = _context.PreferenciaIngrediente.First(f => f.UserId == id && f.IngredienteId == ingId);
             if (ing == null)
             {
