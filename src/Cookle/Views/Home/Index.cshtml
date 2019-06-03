@@ -26,11 +26,14 @@
                             {
                                 break;
                             }
-                            <p class="description" style="margin: 5px;">@f.Ingrediente.Nome</p>
+                            if (f.Ingrediente != null)
+                            {
+                                <p class="description" style="margin: 5px;">@f.Ingrediente.Nome</p>
+                            }
                             i++;
                         }
                     }
-                    <p class="description" style="margin: 5px;"><a asp-action="Details" asp-controller="Frigorifico" asp-route-id="@Model.Id">...</a></p>
+                    <p class="description" style="margin: 5px;"><a asp-action="User" asp-controller="Frigorifico" asp-route-id="@Model.Id">...</a></p>
                 }
             </div>
             <!--
@@ -60,11 +63,14 @@
                             {
                                 break;
                             }
-                            <p class="description" style="margin: 5px;">@h.Receita.Nome</p>
+                            if (h.Receita != null)
+                            {
+                                <p class="description" style="margin: 5px;">@h.Receita.Nome</p>
+                            }
                             i++;
                         }
                     }
-                    <p class="description" style="margin: 5px;"><a asp-action="Details" asp-controller="Historico">...</a></p>
+                    <p class="description" style="margin: 5px;"><a asp-action="User" asp-controller="Historico" asp-route-id="@Model.Id">...</a></p>
                 }
             </div>
             <div class="col-sm-6 col-md-6 col-xl-4 item">
@@ -80,11 +86,14 @@
                             {
                                 break;
                             }
-                            <p class="description">@p.Receita.Nome</p>
+                            if (p.Receita != null)
+                            {
+                                <p class="description">@p.Receita.Nome</p>
+                            }
                             i++;
                         }
                     }
-                    <p class="description" style="margin: 5px;"><a asp-action="Details" asp-controller="Plano">...</a></p>
+                    <p class="description" style="margin: 5px;"><a asp-action="User" asp-controller="Plano" asp-route-id="@Model.Id">...</a></p>
                 }
             </div>
         </div>

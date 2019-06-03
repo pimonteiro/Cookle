@@ -1,0 +1,65 @@
+@model IList<Frigorifico>
+
+@{
+    //USE ONLY THIS VIEW
+    ViewData["Title"] = "Frigorifico";
+    var ingredientes = ViewData["Ingredientes"] as List<Ingrediente>;
+    var user = ViewData["User"];
+}
+
+<div class="container">
+    <section class="clean-block features">
+        <h1 class="text-center" style="margin-top: 89px;margin-left: 10px;color: #3b99e0!important;">Frigorífico</h1>
+    </section>
+    <div class="table-responsive">
+        <form method="post" asp-controller="Frigorifico" asp-action="Create">
+            <input type="hidden" name="UserId" value="@user" />
+            <table class="table">
+                <thead>
+                <tr>
+                    <th style="width:13px;"></th>
+                    <th>Alimento</th>
+                    <th>Quantidade</th>
+                    <th>Data de Expiração</th>
+                </tr>
+                </thead>
+                <tbody>
+                @{
+                    foreach (Frigorifico f in @Model)
+                    {
+                        <tr>
+                            <td class="float-none"><a asp-controller="Frigorifico" asp-action="RemoveIng" asp-route-ing="@f.IngredienteId" asp-route-id="@user"><i class="fa fa-remove" style="color:red;"></i></a></td>
+                            <td>@ingredientes[@f.IngredienteId-1].Nome</td>
+                            <td>@f.Quantidade</td>
+                            @if (f.Data > DateTime.Today)
+                            {
+                                <td style="color:red;">@f.Data</td>
+                            }
+                            else
+                            {
+                                <td style="color:green;">@f.Data</td>
+                            }
+                        </tr>
+                    }
+                }
+                <tr>
+                    <td><input class="btn btn-primary float-right" type="submit" value="Adicionar"/></td>
+                    <td>
+                        <select name="IngredienteId">
+                            @{
+                                foreach (Ingrediente ing in ingredientes)
+                                {
+                                    <option value="@ing.Id">@ing.Nome</option>
+                                }
+                            }
+                        </select>
+                    </td>
+                    <td><input type="number" name="Quantidade"/></td>
+                    <td><input type="date" name="Data"/></td>
+
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+</div>

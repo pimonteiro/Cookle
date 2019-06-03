@@ -59,17 +59,19 @@ namespace Cookle.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ReceitaId,UserId,Descricao,Data")] Nota nota)
+        public async Task<IActionResult> Create([Bind("ReceitaId,UserId,Descricao,Data")] Nota nota)
         {
             if (ModelState.IsValid)
             {
+                nota.Receita = _context.Receita.Find(nota.ReceitaId);
+                nota.User = _context.User.Find(nota.UserId);
                 _context.Add(nota);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Preview","Receita", new {id = nota.ReceitaId});
             }
             ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", nota.ReceitaId);
             ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", nota.UserId);
-            return View(nota);
+            return RedirectToAction("Search", "Receita");
         }
 
         // GET: Nota/Edit/5

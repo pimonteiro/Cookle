@@ -1,4 +1,4 @@
-@model Cookle.Models.User
+@model Historico
 
 @{
     ViewData["Title"] = "Historico";
@@ -20,12 +20,13 @@
                 </thead>
                 <tbody>
                 @{ 
-                    foreach(Historico h in Model.Historicos)
+                    
+                    //foreach(Historico h in Model)
                     {
                         <tr>
-                            <td class="float-none"><a asp-controller="" asp-action="" asp-route-id="@h.Numero"><i class="fa fa-remove" style="color:red;"></i></a></td>
-                            <td>@h.Receita.Nome</td>
-                            <td>@h.UltimaVez</td>
+                            <td class="float-none"><a asp-controller="" asp-action="" asp-route-id="@Model.Numero"><i class="fa fa-remove" style="color:red;"></i></a></td>
+                            <td>@Model.Receita.Nome</td>
+                            <td>@Model.UltimaVez</td>
                         </tr>
                     }
                 }

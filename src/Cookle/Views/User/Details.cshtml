@@ -2,13 +2,14 @@
 
 @{
     ViewData["Title"] = "Perfil";
+    var ingredientes = ViewData["Ingredientes"] as List<Ingrediente>;
 }
 
 <hr/>
 <main class="page">
     <div class="container">
         <section class="clean-block about-us" style="margin-top: 35px;">
-            <h2 class="text-left text-info" style="margin-top: 51px; margin-left: 10px;">Perfil</h2>
+            <h2 class="text-left text-info" style="margin-top: 67px; margin-left: 10px;">Perfil</h2>
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-row">
@@ -64,11 +65,11 @@
                         var mic = Model.Voz;
                         if (mic == true)
                         {
-                            <input class="form-check-input" type="checkbox" value="true" id="defaultCheck1" checked>
+                            <input name="Voz" class="form-check-input" type="checkbox" value="true" id="defaultCheck1" checked>
                         }
                         else
                         {
-                            <input class="form-check-input" type="checkbox" value="true" id="defaultCheck1">
+                            <input name="Voz" class="form-check-input" type="checkbox" value="true" id="defaultCheck1">
                         }
                     }
                     <label class="form-check-label" for="defaultCheck1">
@@ -91,30 +92,54 @@
                 <input type="hidden" asp-for="LockoutEnabled"/>
 
 
-                <button type="submit" class="btn btn-primary">Atualizar</button>
+                <input type="submit" class="btn btn-primary" value="Atualizar">
             </form>
             <div>
                 <div class="table-responsive">
+                    <form method="post" asp-controller="User" asp-action="AddIng" asp-route-id="@Model.Id">
                     <table class="table">
                         <thead>
                         <tr>
+                            <th style="width: 10px;"></th>
                             <th>Alimentos excluídos</th>
-                            <th></th>
+                            <th>Tipo de exclusão</th>
                         </tr>
                         </thead>
                         <tbody>
+                        @{
+                            foreach (PreferenciaIngrediente ing in Model.PreferenciaIngredientes)
+                            {
+                                <tr>
+                                    <td class="float-none"><a asp-controller="User" asp-action="RemoveIng" asp-route-id="@Model.Id" asp-route-ingId="@ing.IngredienteId"><i class="fa fa-remove" style="color:red;"></i></a></td>
+                                    <td>@ing.Ingrediente.Nome</td>
+                                    <td>@ing.Tipo.ToString()</td>
+                                </tr>
+                            }
+                        }
                         <tr>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td></td>
                             <td>
-                                <button class="btn btn-primary float-right" type="button">Adicionar</button>
+                                <input class="btn btn-primary float-right" type="submit" value="Adicionar">
+                            </td>
+                            <td>
+                                <select name="IngredienteId">
+                                    @{
+                                        foreach (Ingrediente ing in ingredientes)
+                                        {
+                                            <option value="@ing.Id">@ing.Nome</option>
+                                        }
+                                    }
+                                </select>
+                            </td>
+                            <td>
+                                <select name="Tipo">
+                                    <option value="@Tipo.Evitar">Evitar</option>
+                                    <option value="@Tipo.Pref">Preferido</option>
+                                </select>
                             </td>
                         </tr>
                         </tbody>
                     </table>
+                    </form>
                 </div>
             </div>
         </section>

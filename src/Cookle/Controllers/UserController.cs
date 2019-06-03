@@ -29,17 +29,18 @@ namespace Cookle.Controllers
         // GET: User/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if (id == null || id.ToString() != LoggedUserId())
             {
                 return NotFound();
             }
 
-            var user = await _context.User
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var user = await _context.User.Include(f => f.PreferenciaIngredientes).FirstAsync(m => m.Id == id);
             if (user == null)
             {
                 return NotFound();
             }
+
+            ViewData["Ingredientes"] = _context.Ingrediente.ToList();
 
             return View(user);
         }
@@ -78,12 +79,13 @@ namespace Cookle.Controllers
                 return NotFound();
             }
 
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.User.Include(f => f.PreferenciaIngredientes).FirstAsync(m => m.Id == id);
             if (user == null)
             {
                 return NotFound();
             }
 
+            ViewData["Ingredientes"] = _context.Ingrediente.ToList();
             return View(user);
         }
 
@@ -121,10 +123,10 @@ namespace Cookle.Controllers
                     }
                 }
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details",new {id = id});
             }
 
-            return View(user);
+            return RedirectToAction("Details",new {id = id});
         }
 
         // GET: User/Delete/5
@@ -165,6 +167,38 @@ namespace Cookle.Controllers
         {
             var id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return id;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddIng(int id, [Bind("Tipo,IngredienteId")] PreferenciaIngrediente ing)
+        {
+            if (id.ToString() != LoggedUserId())
+            {
+                return NotFound();
+            }
+            ing.Ingrediente = _context.Ingrediente.Find(ing.IngredienteId);
+            ing.User = _context.User.Find(id);
+            ing.UserId = id;
+            _context.PreferenciaIngrediente.Add(ing);
+            await _context.SaveChangesAsync();
+            
+            return RedirectToAction("Details", new {id = id});
+        }
+
+        public async Task<IActionResult> RemoveIng(int id, int ingId)
+        {
+            if (id.ToString() != LoggedUserId())
+            {
+                return NotFound();
+            }
+            var ing = _context.PreferenciaIngrediente.First(f => f.UserId == id && f.IngredienteId == ingId);
+            if (ing == null)
+            {
+                return NotFound();
+            }
+            _context.Remove(ing);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Details", new {id = id});
         }
     }
 }

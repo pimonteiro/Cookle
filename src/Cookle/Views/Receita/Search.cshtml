@@ -1,0 +1,41 @@
+@model List<Receita>
+
+@{
+    ViewData["Title"] = "Menu Receitas";
+}
+
+<div class="article-list" style="margin-bottom: 241px;">
+    <div class="container">
+        <div class="block-content" style="text-align:center;">
+            <h2 class="text-info" style="margin-top: 72px;">Receitas</h2>
+            <p>Procure a sua receita favorita!</p>
+            <form method="get" asp-controller="Receita" asp-action="Search">
+                <input type="text" style="width:515px;" name="search">
+                <select name="tipo">
+                    <option value="@Tipo.Evitar.ToString()">Apenas alimentos a evitar</option>
+                    <option value="@Tipo.Pref.ToString()">Apenas alimentos preferidos</option>
+                    <option value="NAN">Todos</option>
+                </select>
+                <input class="btn btn-primary" value="Procurar" type="submit">
+            </form>
+        </div>
+        <div class="row articles">
+            <!--for each to create each article-->
+            @{
+                if (@Model != null)
+                {
+                    foreach (Receita r in Model)
+                    {
+                        <div class="col-sm-6 col-md-4 item">
+                            <img class="img-fluid" src="@r.Imagem" style="height: 203px;">
+                            <h3 class="name">@r.Nome</h3>
+                            <p class="description">@r.Descricao</p>
+                            <p class="description">Dificuldade: @r.Dificuldade</p>
+                            <div><i class="fa fa-heart" style="color:gray;"></i></div><a asp-controller="Receita" asp-action="Preview" asp-route-id="@r.Id"><i class="fa fa-arrow-circle-right"></i></a>
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+</div>

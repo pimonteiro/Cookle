@@ -162,5 +162,34 @@ namespace Cookle.Controllers
         {
             return _context.Plano.Any(e => e.UserId == id);
         }
+        
+        
+        public IActionResult User(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var plano = _context.Plano
+                .Include(r => r.Receita)
+                .Where(f => f.UserId == id).ToList();
+            ViewData["User"] = id;
+            return View(plano);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveRec(int? id, int? rec)
+        {
+            if (rec == null){
+                return RedirectToAction("User", new {id = id});
+            }
+
+            var plano = _context.Plano.Where(f => f.UserId == id && f.ReceitaId == rec).ToList();
+            _context.Plano.Remove(plano.FirstOrDefault());
+            await _context.SaveChangesAsync();
+            return RedirectToAction("User", new {id = id});
+
+        }
     }
 }

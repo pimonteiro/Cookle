@@ -162,5 +162,33 @@ namespace Cookle.Controllers
         {
             return _context.Historico.Any(e => e.UserId == id);
         }
+        
+        public IActionResult User(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var historico = _context.Historico
+                .Include(r => r.Receita)
+                .Where(f => f.UserId == id).ToList();
+            ViewData["User"] = id;
+            return View(historico);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RemoveRec(int? id, int? rec)
+        {
+            if (rec == null){
+                return RedirectToAction("User", new {id = id});
+            }
+
+            var historico = _context.Historico.Where(f => f.UserId == id && f.ReceitaId == rec).ToList();
+            _context.Historico.Remove(historico.FirstOrDefault());
+            await _context.SaveChangesAsync();
+            return RedirectToAction("User", new {id = id});
+
+        }
     }
 }
