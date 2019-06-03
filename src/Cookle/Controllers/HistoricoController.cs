@@ -169,7 +169,9 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            var historico = _context.Historico.Where(f => f.UserId == id).ToList();
+            var historico = _context.Historico
+                .Include(r => r.Receita)
+                .Where(f => f.UserId == id).ToList();
             ViewData["User"] = id;
             return View(historico);
 

@@ -3,7 +3,7 @@
 @{
     //USE ONLY THIS VIEW
     ViewData["Title"] = "Frigorifico";
-    var ingredientes = ViewData["Ingredientes"] as IList<Ingrediente>;
+    var ingredientes = ViewData["Ingredientes"] as List<Ingrediente>;
     var user = ViewData["User"];
 }
 
@@ -29,7 +29,7 @@
                     {
                         <tr>
                             <td class="float-none"><a asp-controller="Frigorifico" asp-action="RemoveIng" asp-route-ing="@f.IngredienteId" asp-route-id="@user"><i class="fa fa-remove" style="color:red;"></i></a></td>
-                            <td>@f.Ingrediente.Nome</td>
+                            <td>@ingredientes[@f.IngredienteId-1].Nome</td>
                             <td>@f.Quantidade</td>
                             <td>@f.Data</td>
                         </tr>
@@ -38,7 +38,7 @@
                 <tr>
                     <td><input class="btn btn-primary float-right" type="submit" value="Adicionar"/></td>
                     <td>
-                        <select name="IngredientId">
+                        <select name="IngredienteId">
                             @{
                                 foreach (Ingrediente ing in ingredientes)
                                 {
