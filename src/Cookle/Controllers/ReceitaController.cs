@@ -210,7 +210,9 @@ namespace Cookle.Controllers
             var past = _context.Historico.Where(h => h.ReceitaId == idR && h.UserId == idU).ToList();
             if ( past.Count != 0)
             {
-                _context.Historico.First(h => h.ReceitaId == idR && h.UserId == idU).Numero++; 
+                var temp = _context.Historico.First(h => h.ReceitaId == idR && h.UserId == idU);
+                temp.Numero++;
+                temp.UltimaVez = DateTime.Now;
                 _context.SaveChangesAsync();
             }
             else
