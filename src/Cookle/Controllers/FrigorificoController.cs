@@ -63,6 +63,8 @@ namespace Cookle.Controllers
         {
             if (ModelState.IsValid)
             {
+                frigorifico.User = _context.User.Find(frigorifico.UserId);
+                frigorifico.Ingrediente = _context.Ingrediente.Find(frigorifico.IngredienteId);
                 _context.Add(frigorifico);
                 await _context.SaveChangesAsync();
                 var data = new
