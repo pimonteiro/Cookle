@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Cookle.Data;
 using Cookle.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Cookle.Controllers
 {
@@ -190,8 +192,12 @@ namespace Cookle.Controllers
                     nut += rec.Quantidade;
                 }
             }
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var notas = _context.Nota.Where(f => f.ReceitaId == id && f.UserId.ToString() == userId).ToList();
 
             ViewData["ValorNutricional"] = nut;
+            ViewData["NotasUser"] = notas;
+            ViewData["UserId"] = userId;
             return View(receita);
         }
 
