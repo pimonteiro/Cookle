@@ -182,6 +182,7 @@ namespace Cookle.Controllers
                 return RedirectToAction("Preview", "Receita", data);
             }
             else if (passo == receita.Passos.Count)
+
             {
                 var data = new
                 {
