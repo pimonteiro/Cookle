@@ -5,11 +5,11 @@
     var before = Model.Numero - 1;
     var after = Model.Numero + 1;
 }
-<section class="clean-block clean-post dark">
+<section class="clean-block clean-post">
     <h1 class="text-center" style="color: rgb(249,63,35);">@Model.Receita.Nome</h1>
     <div class="container">
         <div class="block-content">
-            <h2 style="text-align: center;color: #3b99e0!important;padding-top: 5px;margin-top: 8px;"><a asp-action="Receipt" asp-controller="Passo" asp-route-id="@Model.ReceitaId" asp-route-passo="@before"><i class="fa fa-arrow-left" style="padding-right:5px;color:gray;"></i></a>Passo @Model.Numero&nbsp;<a a asp-controller="Passo" asp-action="Receipt" asp-route-id="@Model.ReceitaId" asp-route-passo="@after"><i class="fa fa-arrow-right" style="padding-right:5px;color:gray;"></i></a></h2>
+            <h2 style="text-align: center;color: black!important;padding-top: 5px;margin-top: 8px;"><a asp-action="Receipt" asp-controller="Passo" asp-route-id="@Model.ReceitaId" asp-route-passo="@before"><i class="fa fa-arrow-left" style="padding-right:5px;color:gray;"></i></a>Passo @Model.Numero&nbsp;<a a asp-controller="Passo" asp-action="Receipt" asp-route-id="@Model.ReceitaId" asp-route-passo="@after"><i class="fa fa-arrow-right" style="padding-right:5px;color:gray;"></i></a></h2>
             
             
             <div class="post-body">
