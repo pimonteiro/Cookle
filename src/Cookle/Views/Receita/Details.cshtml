@@ -1,13 +1,14 @@
 @model Cookle.Models.Receita
 
 @{
-    ViewData["Title"] = "A cozinhar";
+    // Whole receipt 
+    ViewData["Title"] = Model.Nome;
     var nut = ViewData["ValorNutricional"];
 }
 
 <section class="clean-block clean-post dark" style="margin-bottom: 48px;">
     <div class="container">
-        <a asp-controller="Home" asp-action="Index"><input class="btn btn-primary" type="button" value="Voltar ao Preview"></a>
+        <a asp-controller="Receita" asp-action="Preview" asp-route-id="@Model.Id"><input class="btn btn-primary" type="submit" value="Voltar ao Preview"></a>
         <div class="block-content">
             <h2 style="text-align:center;color:#3b99e0!important;padding-top:5px;">Receita na Íntegra</h2>
             <div class="post-body">
@@ -15,9 +16,12 @@
                 <p><strong>Ingredientes:</strong></p>
                 <ul>
                     @{
-                        foreach (IngredienteReceita ing in Model.IngredienteReceitas)
+                        if (Model.IngredienteReceitas != null)
                         {
-                            <li><strong>@ing.Quantidade</strong>&nbsp;<strong>@ing.Unidade</strong>&nbsp;@ing.Receita.Nome<br></li>
+                            foreach (IngredienteReceita ing in Model.IngredienteReceitas)
+                            {
+                                <li><strong>@ing.Quantidade</strong>&nbsp;<strong>@ing.Unidade</strong>&nbsp;@ing.Receita.Nome<br></li>
+                            }
                         }
                     }
                 </ul>
@@ -26,13 +30,16 @@
                 <p><strong>Valor nutritivo: </strong>@nut  kcal.</p>
                 <h3>Confecção</h3>
                 @{
-                    foreach (Passo p in Model.Passos)
+                    if (Model.Passos != null)
                     {
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1"><strong>@p.Numero .&nbsp;</strong>@p.Descricao<br></label></div>
+                        foreach (Passo p in Model.Passos)
+                        {
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1"><strong>@p.Numero .&nbsp;</strong>@p.Descricao<br></label></div>
+                        }
                     }
                 }
-            <a asp-controller="" asp-action="">
-                <input class="btn btn-primary" type="button" style="margin-top:15px;float:right;" value="Terminar">
+            <a asp-controller="Receita" asp-action="Finish">
+                <input class="btn btn-primary" type="submit" style="margin-top:15px;float:right;" value="Terminar">
             </a>
             </div>
         </div>

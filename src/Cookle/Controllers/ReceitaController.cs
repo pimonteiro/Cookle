@@ -40,6 +40,16 @@ namespace Cookle.Controllers
                 return NotFound();
             }
 
+            float nut = 0;
+            if (receita.NutrienteReceitas != null)
+            {
+                foreach (NutrienteReceita rec in receita.NutrienteReceitas)
+                {
+                    nut += rec.Quantidade;
+                }
+            }
+
+            ViewData["ValorNutricional"] = nut;
             return View(receita);
         }
 
@@ -148,6 +158,39 @@ namespace Cookle.Controllers
         private bool ReceitaExists(int id)
         {
             return _context.Receita.Any(e => e.Id == id);
+        }
+
+        public async Task<IActionResult> Preview(int? id)
+        {    
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var receita = await _context.Receita
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (receita == null)
+            {
+                return NotFound();
+            }
+
+            float nut = 0;
+            if (receita.NutrienteReceitas != null)
+            {
+                foreach (NutrienteReceita rec in receita.NutrienteReceitas)
+                {
+                    nut += rec.Quantidade;
+                }
+            }
+
+            ViewData["ValorNutricional"] = nut;
+            return View(receita);
+        }
+
+        public IActionResult Finish(int id)
+        {
+            //TODO Save to User
+            return RedirectToAction("Preview", new {id = id});
         }
     }
 }
