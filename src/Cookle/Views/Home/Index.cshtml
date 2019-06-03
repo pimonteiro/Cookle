@@ -26,7 +26,10 @@
                             {
                                 break;
                             }
-                            <p class="description" style="margin: 5px;">@f.Ingrediente.Nome</p>
+                            if (f.Ingrediente != null)
+                            {
+                                <p class="description" style="margin: 5px;">@f.Ingrediente.Nome</p>
+                            }
                             i++;
                         }
                     }
@@ -60,7 +63,10 @@
                             {
                                 break;
                             }
-                            <p class="description" style="margin: 5px;">@h.Receita.Nome</p>
+                            if (h.Receita != null)
+                            {
+                                <p class="description" style="margin: 5px;">@h.Receita.Nome</p>
+                            }
                             i++;
                         }
                     }
@@ -80,7 +86,10 @@
                             {
                                 break;
                             }
-                            <p class="description">@p.Receita.Nome</p>
+                            if (p.Receita != null)
+                            {
+                                <p class="description">@p.Receita.Nome</p>
+                            }
                             i++;
                         }
                     }
