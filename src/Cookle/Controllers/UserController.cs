@@ -121,10 +121,10 @@ namespace Cookle.Controllers
                     }
                 }
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details",new {id = id});
             }
 
-            return View(user);
+            return RedirectToAction("Details",new {id = id});
         }
 
         // GET: User/Delete/5
