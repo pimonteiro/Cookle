@@ -11,6 +11,11 @@
             <p>Procure a sua receita favorita!</p>
             <form method="get" asp-controller="Receita" asp-action="Search">
                 <input type="text" style="width:515px;" name="search">
+                <select name="tipo">
+                    <option value="@Tipo.Evitar.ToString()">Apenas alimentos a evitar</option>
+                    <option value="@Tipo.Pref.ToString()">Apenas alimentos preferidos</option>
+                    <option value="NAN">Todos</option>
+                </select>
                 <input class="btn btn-primary" value="Procurar" type="submit">
             </form>
         </div>
