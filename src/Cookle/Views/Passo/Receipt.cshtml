@@ -8,8 +8,16 @@
     <div class="container">
         <div class="block-content">
             <h2 style="text-align: center;color: #3b99e0!important;padding-top: 5px;margin-top: 8px;"><a asp-action="Receipt" asp-controller="Passo" asp-route-id="@Model.ReceitaId" asp-route-passo="@Model.Numero-1"><i class="fa fa-arrow-left" style="padding-right:5px;color:gray;"></i></a>Passo @Model.Numero&nbsp;<a a asp-controller="Passo" asp-action="Receipt" asp-route-id="@Model.ReceitaId" asp-route-passo="@Model.Numero+1"><i class="fa fa-arrow-right" style="padding-right:5px;color:gray;"></i></a></h2>
+            
+            
             <div class="post-body">
                 <p class="text-center" style="font-size: 17px;"><br>@Model.Descricao<br></p>
+                @{
+                    if (@Model.SubReceitaId != null)
+                    {
+                        <a type="submit" asp-controller="Receita" asp-action="Preview" asp-route-id="@Model.SubReceitaId">Para mais informações clique aqui.</a> 
+                    }
+                }
             </div>
         </div>
     </div>
