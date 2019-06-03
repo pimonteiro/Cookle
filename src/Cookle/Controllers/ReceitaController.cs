@@ -160,6 +160,7 @@ namespace Cookle.Controllers
             return _context.Receita.Any(e => e.Id == id);
         }
 
+        // GET: Receita/Preview/5
         public async Task<IActionResult> Preview(int? id)
         {    
             if (id == null)
@@ -187,10 +188,23 @@ namespace Cookle.Controllers
             return View(receita);
         }
 
+        // GET: Receita/Finish/5
         public IActionResult Finish(int id)
         {
             //TODO Save to User
             return RedirectToAction("Preview", new {id = id});
+        }
+
+        // GET: Receita/Search
+        public async Task<IActionResult> Search(string search)
+        {
+            if (!String.IsNullOrEmpty(search))
+            {
+                var receitas = await _context.Receita.Where(r => r.Nome.Contains(search)).ToListAsync();
+                return View(receitas);
+            }
+            else
+                return View(_context.Receita.ToList());
         }
     }
 }
