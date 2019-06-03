@@ -205,7 +205,7 @@ namespace Cookle.Controllers
         }
 
         // GET: Receita/Finish/5
-        public  IActionResult Finish(int idU, int idR)
+        public  async Task<IActionResult>Finish(int idU, int idR)
         {
             var past = _context.Historico.Where(h => h.ReceitaId == idR && h.UserId == idU).ToList();
             if ( past.Count != 0)
@@ -233,7 +233,7 @@ namespace Cookle.Controllers
                 _context.Remove(planos);
                 
             }
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction("Preview", new {id = idR});
         }
 
