@@ -47,22 +47,22 @@ namespace Cookle.Data
             {
                 table.UserId, table.IngredienteId
             });
-            
+
             #region UserSeed
-            
+
             var hasher = new PasswordHasher<User>();
             builder.Entity<User>().HasData(new User
             {
                 Id = 1,
-                UserName = "Test",
-                NormalizedUserName = "TEST",
+                UserName = "test@gmail.com",
+                NormalizedUserName = "test@gmail.com",
                 Email = "test@gmail.com",
-                NormalizedEmail = "TEST@GMAIL.COM",
+                NormalizedEmail = "test@gmail.com",
                 EmailConfirmed = true,
-                PasswordHash = hasher.HashPassword(null, "Cookle123!"),
+                PasswordHash = hasher.HashPassword(null, "123456"),
                 SecurityStamp = string.Empty
             });
-            
+
             #endregion
 
             #region AdminSeed
@@ -71,7 +71,7 @@ namespace Cookle.Data
                 new Admin() {Id = 1, Email = "admin@admin.pt", Name = "Admin", Password = "admin123"});
 
             #endregion
-            
+
             #region ReceitaSeed
 
             builder.Entity<Receita>().HasData(
@@ -187,7 +187,7 @@ namespace Cookle.Data
                 });
 
             #endregion
-            
+
             #region FrigorificoSeed
 
             builder.Entity<Frigorifico>().HasData(
@@ -345,8 +345,6 @@ namespace Cookle.Data
                 new PreferenciaIngrediente() {UserId = 1, IngredienteId = 1, Tipo = Models.Tipo.Pref});
 
             #endregion
-
-           
         }
 
         public DbSet<Cookle.Models.Admin> Admin { get; set; }
