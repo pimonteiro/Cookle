@@ -421,7 +421,7 @@ namespace Cookle.Migrations
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasMaxLength(200);
+                        .HasMaxLength(500);
 
                     b.Property<int?>("SubReceitaId");
 
@@ -591,16 +591,16 @@ namespace Cookle.Migrations
 
                     b.Property<string>("Descricao")
                         .IsRequired()
-                        .HasMaxLength(150);
+                        .HasMaxLength(500);
 
                     b.Property<int?>("Dificuldade");
 
                     b.Property<string>("Imagem")
-                        .HasMaxLength(45);
+                        .HasMaxLength(500);
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasMaxLength(45);
+                        .HasMaxLength(500);
 
                     b.Property<int?>("NumPessoas");
 
@@ -609,7 +609,7 @@ namespace Cookle.Migrations
                     b.Property<int?>("Tipo");
 
                     b.Property<string>("Video")
-                        .HasMaxLength(45);
+                        .HasMaxLength(150);
 
                     b.HasKey("Id");
 
@@ -707,14 +707,14 @@ namespace Cookle.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "54f21e1f-d572-42c6-b1c3-d354496aecc8",
+                            ConcurrencyStamp = "9e35f6da-236d-4d27-af5a-24b88c072799",
                             DataNascimento = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "test@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "TEST@GMAIL.COM",
                             NormalizedUserName = "TEST",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKQHJYtdg65vcWdsQg554lundBXxA7Nb2VjsBCjj4gQQI0nZRHHkgGmlZtqSQ5JOrA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMXE74M7Y0V/YP1TPuLJuZ7gNZ8zFbyzIb1nUzrb5dpVWgOWqaH0YZDipbF3PO2Rng==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "",
                             Sexo = 0,
