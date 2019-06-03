@@ -28,6 +28,7 @@
                     var flag = false;
                     foreach (Receita r in Model)
                     {
+                        flag = false;
                         <div class="col-sm-6 col-md-4 item">
                             @if (String.IsNullOrEmpty(r.Imagem))
                             {
@@ -51,15 +52,10 @@
                                                 <i class="fa fa-heart" style="color:red;"></i>
                                                 flag = true;
                                             }
-                                            else
-                                            {
-                                                <i class="fa fa-heart" style="color:gray;"></i>
-                                                flag = true;
-                                            }
                                         }
                                         if (!flag)
                                         {
-                                            <i class="fa fa-heart" style="color:gray;"></i>
+                                            <i class="fa fa-heart"  style="color:gray;"></i>
                                         }
                                     }
                                 </a></div><a asp-controller="Receita" asp-action="Preview" asp-route-id="@r.Id"><i class="fa fa-arrow-circle-right"></i></a>
