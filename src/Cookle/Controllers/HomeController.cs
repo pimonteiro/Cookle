@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Cookle.Data;
 using Microsoft.AspNetCore.Mvc;
 using Cookle.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -14,10 +15,12 @@ namespace Cookle.Controllers
     public class HomeController : Controller
     {
         private UserManager<User> _userManager;
-        
-        public HomeController(UserManager<User> userManager)
+        private ApplicationDbContext _context;
+
+        public HomeController(UserManager<User> userManager, ApplicationDbContext context)
         {
             _userManager = userManager;
+            _context = context;
         }
         
         [Authorize]
