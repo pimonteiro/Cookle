@@ -77,7 +77,7 @@ namespace Cookle.Controllers
                 {
                     var updatedFrigde = tmp.First();
                     updatedFrigde.Quantidade += frigorifico.Quantidade;
-                    updatedFrigde.Data = DateTime.Now;
+                    updatedFrigde.Data = frigorifico.Data;
                     await _context.SaveChangesAsync();
                 }
                 
