@@ -168,14 +168,15 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            var frigorifico = _context.Frigorifico.Where(f => f.UserId == id).ToList();
+            var frigorificos = _context.Frigorifico
+                .Include(m => m.Ingrediente)
+                .Where(f => f.UserId == id).ToList();
             ViewData["Ingredientes"] = _context.Ingrediente.ToList();
             ViewData["User"] = id;
-            return View(frigorifico);
+            return View(frigorificos);
 
         }
 
-        [HttpPost]
         public async Task<IActionResult> RemoveIng(int? id, int? ing)
         {
             if (ing == null){

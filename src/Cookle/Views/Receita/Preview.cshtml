@@ -51,7 +51,7 @@
           </div>
           <div class="modal-footer">
                 <a asp-controller="Receita" asp-action="Details" asp-route-id="@Model.Id"><input class="btn btn-primary float-left" type="submit" style="margin-right:10px;" value="Receita na Integra"></a>
-                <a asp-controller="Passo" asp-action="Details"><input class="btn btn-primary float-right" type="submit" style="margin-right:10px;" value="Receita em Passos"></a>
+                <a asp-controller="Passo" asp-action="Receipt" asp-route-id="@Model.Id" asp-route-passo="1"><input class="btn btn-primary float-right" type="submit" style="margin-right:10px;" value="Receita em Passos"></a>
           </div>
         </div>
       </div>

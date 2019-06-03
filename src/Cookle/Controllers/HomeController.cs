@@ -24,7 +24,7 @@ namespace Cookle.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
-            
+            //TODO need to access user stuff from the database            
 
             return View(user);
         }
