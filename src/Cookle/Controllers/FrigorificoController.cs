@@ -63,11 +63,24 @@ namespace Cookle.Controllers
         {
             if (ModelState.IsValid)
             {
-                frigorifico.User = _context.User.Find(frigorifico.UserId);
-                frigorifico.Ingrediente = _context.Ingrediente.Find(frigorifico.IngredienteId);
-                _context.Add(frigorifico);
-                await _context.SaveChangesAsync();
+                var tmp = _context.Frigorifico.Where(f =>
+                    f.UserId == frigorifico.UserId && f.IngredienteId == frigorifico.IngredienteId).ToList();
 
+                if (tmp.Count == 0)
+                {
+                    frigorifico.User = _context.User.Find(frigorifico.UserId);
+                    frigorifico.Ingrediente = _context.Ingrediente.Find(frigorifico.IngredienteId);
+                    _context.Add(frigorifico);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    var updatedFrigde = tmp.First();
+                    updatedFrigde.Quantidade += frigorifico.Quantidade;
+                    updatedFrigde.Data = DateTime.Now;
+                    await _context.SaveChangesAsync();
+                }
+                
                 var data = new
                 {
                     id = frigorifico.UserId
