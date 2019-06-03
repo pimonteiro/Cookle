@@ -9,7 +9,7 @@
     <div class="container">
         <section class="clean-block about-us" style="margin-top: 35px;">
             <h2 class="text-left text-info" style="margin-top: 51px; margin-left: 10px;">Perfil</h2>
-            <form asp-action="Edit">
+            <form asp-controller="User" asp-action="Edit" asp-route-id="@Model.Id">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
