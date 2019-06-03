@@ -4,6 +4,7 @@
     // Whole receipt 
     ViewData["Title"] = Model.Nome;
     var nut = ViewData["ValorNutricional"];
+    var user = ViewData["UserId"];
 }
 
 <section class="clean-block clean-post dark" style="margin-bottom: 48px;">
@@ -51,7 +52,7 @@
                         }
                     }
                 }
-            <a asp-controller="Receita" asp-action="Finish">
+            <a asp-controller="Receita" asp-action="Finish" asp-route-idR="@Model.Id" asp-route-idU="@user">
                 <input class="btn btn-primary" type="submit" style="margin-top:15px;float:right;" value="Terminar">
             </a>
             </div>

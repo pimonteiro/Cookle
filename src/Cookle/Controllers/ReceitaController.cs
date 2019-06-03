@@ -57,6 +57,7 @@ namespace Cookle.Controllers
             }
 
             ViewData["ValorNutricional"] = nut;
+            ViewData["UserId"] = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             return View(receita);
         }
 
@@ -178,6 +179,7 @@ namespace Cookle.Controllers
             var receita = await _context.Receita
                 .Include(f => f.Passos)
                 .Include(f => f.IngredienteReceitas)
+                .ThenInclude(m => m.Ingrediente)
                 .Include(f => f.NutrienteReceitas)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (receita == null)
@@ -203,9 +205,10 @@ namespace Cookle.Controllers
         }
 
         // GET: Receita/Finish/5
-        public IActionResult Finish(int idU, int idR)
+        public  IActionResult Finish(int idU, int idR)
         {
-            if (_context.Historico.First(h => h.ReceitaId == idR && h.UserId == idU) != null)
+            var past = _context.Historico.Where(h => h.ReceitaId == idR && h.UserId == idU).ToList();
+            if ( past.Count != 0)
             {
                 _context.Historico.First(h => h.ReceitaId == idR && h.UserId == idU).Numero++; 
                 _context.SaveChangesAsync();
