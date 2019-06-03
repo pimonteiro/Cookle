@@ -170,7 +170,9 @@ namespace Cookle.Controllers
             {
                 return NotFound();
             }
-            var plano = _context.Plano.Where(f => f.UserId == id).ToList();
+            var plano = _context.Plano
+                .Include(r => r.Receita)
+                .Where(f => f.UserId == id).ToList();
             ViewData["User"] = id;
             return View(plano);
 

@@ -162,5 +162,35 @@ namespace Cookle.Controllers
         {
             return _context.Passo.Any(e => e.Numero == id);
         }
+
+        // Get Passo/Receipt/5?passo=1
+        public IActionResult Receipt(int id, int passo)
+        {
+            var receita = _context.Receita.Include(f => f.Passos).Where(r => r.Id == id).ToList().FirstOrDefault();
+            
+            if (receita == null)
+            {
+                return NotFound();
+            }
+
+            if (passo <= 0)
+            {
+                var data = new
+                {
+                    id = id
+                };
+                return RedirectToAction("Preview", "Receita", data);
+            }
+            else if (passo > receita.Passos.Count)
+            {
+                var data = new
+                {
+                    id = id
+                };
+                return RedirectToAction("Finish", "Receita", data);
+
+            }
+            return View(receita.Passos[passo-1]);
+        }
     }
 }

@@ -26,6 +26,7 @@ namespace Cookle.Controllers
         }
 
         // GET: Receita/Details/5
+        // Receita na integra
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,6 +35,9 @@ namespace Cookle.Controllers
             }
 
             var receita = await _context.Receita
+                .Include(f => f.Passos)
+                .Include(f => f.IngredienteReceitas)
+                .Include(f => f.NutrienteReceitas)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (receita == null)
             {
@@ -169,6 +173,9 @@ namespace Cookle.Controllers
             }
 
             var receita = await _context.Receita
+                .Include(f => f.Passos)
+                .Include(f => f.IngredienteReceitas)
+                .Include(f => f.NutrienteReceitas)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (receita == null)
             {
