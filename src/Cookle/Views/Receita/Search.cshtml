@@ -12,9 +12,9 @@
             <form method="get" asp-controller="Receita" asp-action="Search">
                 <input type="text" style="width:515px;" name="search">
                 <select name="tipo">
-                    <option value="@Tipo.Evitar.ToString()">Apenas alimentos a evitar</option>
-                    <option value="@Tipo.Pref.ToString()">Apenas alimentos preferidos</option>
-                    <option value="NAN">Todos</option>
+                    <option value="@Tipo.Evitar.ToString()">Excluir alimentos a evitar</option>
+                    <option value="@Tipo.Pref.ToString()">Excluir alimentos preferidos</option>
+                    <option value="NAN" selected>Todos</option>
                 </select>
                 <input class="btn btn-primary" value="Procurar" type="submit">
             </form>
