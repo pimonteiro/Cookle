@@ -65,7 +65,11 @@ namespace Cookle.Controllers
             {
                 _context.Add(plano);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var data = new
+                {
+                    id = plano.UserId
+                };
+                return RedirectToAction("User", data);
             }
             ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", plano.ReceitaId);
             ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", plano.UserId);
@@ -177,8 +181,7 @@ namespace Cookle.Controllers
             return View(plano);
 
         }
-
-        [HttpPost]
+        
         public async Task<IActionResult> RemoveRec(int? id, int? rec)
         {
             if (rec == null){
@@ -190,6 +193,23 @@ namespace Cookle.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("User", new {id = id});
 
+        }
+        
+        public async Task<IActionResult> AddRec([Bind("UserId,ReceitaId")] Plano plano)
+        {
+            var data = new
+            {
+                id = plano.UserId
+            };
+            
+            if (_context.Plano.FirstOrDefault(f => plano.UserId == f.UserId && plano.ReceitaId == f.ReceitaId) == null)
+            {
+                _context.Add(plano);
+                await _context.SaveChangesAsync();
+                
+            }
+
+            return RedirectToAction("User", data);
         }
     }
 }

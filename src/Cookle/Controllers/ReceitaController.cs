@@ -236,6 +236,8 @@ namespace Cookle.Controllers
         public async Task<IActionResult> Search(string search, string tipo)
         {
             var id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            ViewData["UserId"] = _context.User.Include(f => f.Planos).First(p => p.Id.ToString() == id);
+            
             List<IngredienteReceita> ingredientesRe = new List<IngredienteReceita>();
             List<Ingrediente> ingredientes = new List<Ingrediente>();
             List<Receita> recRet = new List<Receita>();
