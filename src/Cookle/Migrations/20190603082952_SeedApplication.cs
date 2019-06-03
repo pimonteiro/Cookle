@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Cookle.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class SeedApplication : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -100,14 +100,14 @@ namespace Cookle.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(maxLength: 45, nullable: false),
-                    Descricao = table.Column<string>(maxLength: 150, nullable: false),
+                    Nome = table.Column<string>(maxLength: 500, nullable: false),
+                    Descricao = table.Column<string>(maxLength: 500, nullable: false),
                     TempoPrep = table.Column<int>(nullable: true),
                     NumPessoas = table.Column<int>(nullable: true),
                     Dificuldade = table.Column<int>(nullable: true),
                     Tipo = table.Column<int>(nullable: true),
-                    Imagem = table.Column<string>(maxLength: 45, nullable: true),
-                    Video = table.Column<string>(maxLength: 45, nullable: true)
+                    Imagem = table.Column<string>(maxLength: 500, nullable: true),
+                    Video = table.Column<string>(maxLength: 150, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -388,7 +388,7 @@ namespace Cookle.Migrations
                     Numero = table.Column<int>(nullable: false),
                     ReceitaId = table.Column<int>(nullable: false),
                     SubReceitaId = table.Column<int>(nullable: true),
-                    Descricao = table.Column<string>(maxLength: 200, nullable: false)
+                    Descricao = table.Column<string>(maxLength: 500, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -431,6 +431,135 @@ namespace Cookle.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Admin",
+                columns: new[] { "Id", "Email", "Name", "Password" },
+                values: new object[] { 1, "admin@admin.pt", "Admin", "admin123" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DataNascimento", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "Sexo", "TwoFactorEnabled", "UserName", "Voz" },
+                values: new object[] { 1, 0, "9e35f6da-236d-4d27-af5a-24b88c072799", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "test@gmail.com", true, false, null, "TEST@GMAIL.COM", "TEST", "AQAAAAEAACcQAAAAEMXE74M7Y0V/YP1TPuLJuZ7gNZ8zFbyzIb1nUzrb5dpVWgOWqaH0YZDipbF3PO2Rng==", null, false, "", 0, false, "Test", false });
+
+            migrationBuilder.InsertData(
+                table: "Ingrediente",
+                columns: new[] { "Id", "Nome" },
+                values: new object[,]
+                {
+                    { 2, "manteiga" },
+                    { 12, "oleo vegetal" },
+                    { 11, "sal" },
+                    { 1, "ovos" },
+                    { 8, "açúcar em pó" },
+                    { 10, "leite" },
+                    { 6, "fermento em pó" },
+                    { 5, "óleo" },
+                    { 4, "açúcar" },
+                    { 3, "iogurte natural" },
+                    { 7, "farinha" },
+                    { 9, "farinha de trigo" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Nutriente",
+                columns: new[] { "Id", "Nome", "Unidade" },
+                values: new object[,]
+                {
+                    { 1, "Proteína", 1 },
+                    { 2, "Hidratos de carbono", 0 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Receita",
+                columns: new[] { "Id", "Descricao", "Dificuldade", "Imagem", "Nome", "NumPessoas", "TempoPrep", "Tipo", "Video" },
+                values: new object[,]
+                {
+                    { 3, "Uma massa simples mas deliciosa.", 1, null, "Massa de panquecas simples", 2, 15, null, null },
+                    { 1, "Um dos bolos mais fáceis e saborosos.", 2, "https://www.pingodoce.pt/wp-content/uploads/2016/03/comofazerbolodeiogurte617.jpg", "Bolo de iogurte", 10, 55, null, null },
+                    { 2, "A forma mais fácil de bater claras em castelo, para que os seus bolos fiquem perfeitos.", 1, "https://i1.wp.com/www.docesregionais.com/wp-content/uploads/2013/02/Como-Bater-Claras-em-NeveCastelo.jpg", "Claras em Castelo", null, null, null, null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Frigorifico",
+                columns: new[] { "UserId", "IngredienteId", "Data", "IngredienteId1", "Quantidade" },
+                values: new object[] { 1, 1, new DateTime(2019, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 3 });
+
+            migrationBuilder.InsertData(
+                table: "Historico",
+                columns: new[] { "UserId", "ReceitaId", "Numero", "UltimaVez" },
+                values: new object[] { 1, 1, 1, new DateTime(2019, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified) });
+
+            migrationBuilder.InsertData(
+                table: "IngredienteReceita",
+                columns: new[] { "IngredienteId", "ReceitaId", "Quantidade", "Unidade" },
+                values: new object[,]
+                {
+                    { 1, 3, 1f, 0 },
+                    { 11, 3, 2f, 1 },
+                    { 12, 3, 1.5f, 1 },
+                    { 1, 2, 2f, 0 },
+                    { 9, 3, 1f, 1 },
+                    { 1, 1, 4f, 0 },
+                    { 5, 1, 0.25f, 2 },
+                    { 2, 1, 1f, 1 },
+                    { 3, 1, 1f, 1 },
+                    { 4, 1, 3f, 1 },
+                    { 8, 1, 2f, 1 },
+                    { 10, 3, 1f, 2 },
+                    { 6, 1, 2f, 1 },
+                    { 7, 1, 2f, 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Nota",
+                columns: new[] { "Id", "Data", "Descricao", "ReceitaId", "UserId" },
+                values: new object[] { 1, new DateTime(2019, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Acrescentar mais açucar na próxima confeção.", 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "NutrienteReceita",
+                columns: new[] { "NutrienteId", "ReceitaId", "NutrienteId1", "Quantidade" },
+                values: new object[,]
+                {
+                    { 1, 3, null, 3f },
+                    { 2, 3, null, 60.3f },
+                    { 2, 1, null, 5f },
+                    { 1, 1, null, 3f }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Passo",
+                columns: new[] { "Numero", "ReceitaId", "Descricao", "SubReceitaId" },
+                values: new object[,]
+                {
+                    { 4, 3, "Espere até a massa se soltar do fundo, vire e deixe fritar do outro lado.", null },
+                    { 3, 3, "Faça movimentos circulares para que a massa se espalhe por toda a frigideira.", null },
+                    { 2, 3, "Unte uma frigideira com óleo e despeje uma concha de massa.", null },
+                    { 1, 3, "Bata todos os ingredientes no liquidificador até obter uma consistência cremosa.", null },
+                    { 5, 3, "Acrescente o recheio de sua preferência, enrole e está pronta para servir.", null },
+                    { 2, 2, "Coloque-as no copo da batedeira.", null },
+                    { 4, 2, "Caso seja necessário, bata mais 3 minutos até obter a consistência de neve.", null },
+                    { 3, 2, "Bata em velocidade mínima durante 7 minutos.", 2 },
+                    { 1, 2, "Separe as claras das gemas.", null },
+                    { 3, 1, "Bata as claras em castelo e reserve numa taça.", 2 },
+                    { 7, 1, " Retire do forno e deixe arrefecer ligeiramente antes de desenformar. Antes de servir, polvilhe com o açúcar em pó.", null },
+                    { 6, 1, "Deite a massa na forma de chaminé, previamente untada, e leve ao forno durante 40 a 45 minutos, ou espete um palito na massa e verifique se sai limpo.", null },
+                    { 5, 1, "Junte as claras e bata com uma batedeira até a massa estar homogénea.", null },
+                    { 4, 1, "Numa taça, adicione o iogurte e as gemas de ovo. Utilize a medida do copo de iogurte e adicione o açúcar, o óleo, a farinha e o fermento.", null },
+                    { 2, 1, "Unte uma forma de chaminé com manteiga e reserve.", null },
+                    { 1, 1, "Pre-aqueça o forno a 180º C.", null },
+                    { 5, 2, "Para verificar se as claras estão no ponto, vire o recipiente ao contrário e, se permanecerem no fundo, sem cair, estão perfeitas.", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Plano",
+                columns: new[] { "UserId", "ReceitaId" },
+                values: new object[] { 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "PreferenciaIngrediente",
+                columns: new[] { "UserId", "IngredienteId", "Tipo" },
+                values: new object[] { 1, 1, 0 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
