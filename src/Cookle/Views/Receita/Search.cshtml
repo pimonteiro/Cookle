@@ -28,32 +28,37 @@
                     var flag = false;
                     foreach (Receita r in Model)
                     {
+                        flag = false;
                         <div class="col-sm-6 col-md-4 item">
-                            <img class="img-fluid" src="@r.Imagem" style="height: 203px;">
+                            @if (String.IsNullOrEmpty(r.Imagem))
+                            {
+                                <img class="img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" style="height: 203px;">
+                            }
+                            else
+                            {
+                                <img class="img-fluid" src="@r.Imagem" style="height: 203px;">
+                            }
+                            
                             <h3 class="name">@r.Nome</h3>
                             <p class="description">@r.Descricao</p>
                             <p class="description">Dificuldade: @r.Dificuldade</p>
-                            <div><a asp-controller="Plano" asp-action="AddRec" asp-route-ReceitaId="@r.Id" asp-route-UserId="@user.Id">
-                                @{
-                                    foreach (var p in user.Planos)
-                                    {
-                                        if (p.ReceitaId == r.Id)
+                            <div>
+                                <a asp-controller="Plano" asp-action="AddRec" asp-route-ReceitaId="@r.Id" asp-route-UserId="@user.Id">
+                                    @{
+                                        foreach (var p in user.Planos)
                                         {
-                                            <i class="fa fa-heart" style="color:red;"></i>
-                                            flag = true;
+                                            if (p.ReceitaId == r.Id)
+                                            {
+                                                <i class="fa fa-heart" style="color:red;"></i>
+                                                flag = true;
+                                            }
                                         }
-                                        else
+                                        if (!flag)
                                         {
-                                            <i class="fa fa-heart" style="color:gray;"></i>
-                                            flag = true;
+                                            <i class="fa fa-heart"  style="color:gray;"></i>
                                         }
                                     }
-                                    if (!flag)
-                                    {
-                                        <i class="fa fa-heart" style="color:gray;"></i>
-                                    }
-                                }
-                            </a></div><a asp-controller="Receita" asp-action="Preview" asp-route-id="@r.Id"><i class="fa fa-arrow-circle-right"></i></a>
+                                </a></div><a asp-controller="Receita" asp-action="Preview" asp-route-id="@r.Id"><i class="fa fa-arrow-circle-right"></i></a>
                         </div>
                     }
                 }

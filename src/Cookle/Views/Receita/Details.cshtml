@@ -7,11 +7,11 @@
     var user = ViewData["UserId"];
 }
 
-<section class="clean-block clean-post dark" style="margin-bottom: 48px;">
+<section class="clean-block clean-post" style="margin-bottom: 48px;">
     <div class="container">
         <a asp-controller="Receita" asp-action="Preview" asp-route-id="@Model.Id"><input class="btn btn-primary" type="submit" value="Voltar ao Preview"></a>
         <div class="block-content">
-            <h2 style="text-align:center;color:#3b99e0!important;padding-top:5px;">Receita na Íntegra</h2>
+            <h2 style="text-align:center;color:#f93f23!important;padding-top:5px;">Receita na Íntegra</h2>
             <div class="post-body">
                 <h3>@Model.Nome</h3>
                 <p><strong>Ingredientes:</strong></p>

@@ -205,7 +205,7 @@ namespace Cookle.Controllers
         }
 
         // GET: Receita/Finish/5
-        public  IActionResult Finish(int idU, int idR)
+        public  async Task<IActionResult>Finish(int idU, int idR)
         {
             var past = _context.Historico.Where(h => h.ReceitaId == idR && h.UserId == idU).ToList();
             if ( past.Count != 0)
@@ -213,7 +213,6 @@ namespace Cookle.Controllers
                 var temp = _context.Historico.First(h => h.ReceitaId == idR && h.UserId == idU);
                 temp.Numero++;
                 temp.UltimaVez = DateTime.Now;
-                _context.SaveChangesAsync();
             }
             else
             {
@@ -226,16 +225,15 @@ namespace Cookle.Controllers
                     Receita = _context.Receita.First(u => u.Id == idR)
                 };
                 _context.Historico.Add(historico);
-                _context.SaveChangesAsync();
             }
 
             var planos = _context.Plano.FirstOrDefault(p => p.UserId == idU && p.ReceitaId == idR);
             if (planos != null)
             {
                 _context.Remove(planos);
-                _context.SaveChangesAsync();
+                
             }
-
+            await _context.SaveChangesAsync();
             return RedirectToAction("Preview", new {id = idR});
         }
 
@@ -244,67 +242,14 @@ namespace Cookle.Controllers
         {
             var id = User.FindFirst(ClaimTypes.NameIdentifier).Value;
             ViewData["UserId"] = _context.User.Include(f => f.Planos).First(p => p.Id.ToString() == id);
-            
-            List<IngredienteReceita> ingredientesRe = new List<IngredienteReceita>();
-            List<Ingrediente> ingredientes = new List<Ingrediente>();
-            List<Receita> recRet = new List<Receita>();
+
             if (!String.IsNullOrEmpty(search))
             {
-                var receitas = await _context.Receita.Where(r => r.Nome.Contains(search)).ToListAsync();
-
-                if (tipo.Equals("NAN"))
-                {
-                    return View(receitas);
-                }
-                foreach (var rec in receitas)
-                {
-                    var flag = 0;
-                    ingredientesRe = _context.IngredienteReceita.Where(r => r.ReceitaId == rec.Id).ToList();
-                    foreach (var ingreR in ingredientesRe)
-                    {
-                        ingredientes = _context.Ingrediente.Where(i => i.Id == ingreR.IngredienteId).ToList();
-                    }
-                    foreach (var ing in ingredientes)
-                    {
-                        if (!_context.PreferenciaIngrediente.First(p => p.UserId.ToString() == id && p.IngredienteId == ing.Id).Tipo.ToString().Equals(tipo))
-                        {
-                            flag++;
-                        }
-                    }
-                    if(flag == 0)
-                        recRet.Add(_context.Receita.First(r => r.Id == rec.Id));
-                }
-               
-                return View(recRet);
+                return View(_context.Receita.Where(f => f.Nome.Contains(search)).ToList());
             }
             else
             {
-                var receitas = await _context.Receita.ToListAsync();
-                
-                if (tipo.Equals("NAN"))
-                {
-                    return View(receitas);
-                }
-                foreach (var rec in receitas)
-                {
-                    var flag = 0;
-                    ingredientesRe = _context.IngredienteReceita.Where(r => r.ReceitaId == rec.Id).ToList();
-                    foreach (var ingreR in ingredientesRe)
-                    {
-                        ingredientes = _context.Ingrediente.Where(i => i.Id == ingreR.IngredienteId).ToList();
-                    }
-                    foreach (var ing in ingredientes)
-                    {
-                        if (!_context.PreferenciaIngrediente.First(p => p.UserId.ToString() == id && p.IngredienteId == ing.Id).Tipo.ToString().Equals(tipo))
-                        {
-                            flag++;
-                        }
-                    }
-                    if(flag == 0)
-                        recRet.Add(_context.Receita.First(r => r.Id == rec.Id));
-                }
-
-                return View(recRet);
+                return View(_context.Receita.ToList());
             }
         }
     }
