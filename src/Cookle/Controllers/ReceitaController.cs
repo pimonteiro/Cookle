@@ -213,7 +213,6 @@ namespace Cookle.Controllers
                 var temp = _context.Historico.First(h => h.ReceitaId == idR && h.UserId == idU);
                 temp.Numero++;
                 temp.UltimaVez = DateTime.Now;
-                _context.SaveChangesAsync();
             }
             else
             {
@@ -226,16 +225,15 @@ namespace Cookle.Controllers
                     Receita = _context.Receita.First(u => u.Id == idR)
                 };
                 _context.Historico.Add(historico);
-                _context.SaveChangesAsync();
             }
 
             var planos = _context.Plano.FirstOrDefault(p => p.UserId == idU && p.ReceitaId == idR);
             if (planos != null)
             {
                 _context.Remove(planos);
-                _context.SaveChangesAsync();
+                
             }
-
+            _context.SaveChangesAsync();
             return RedirectToAction("Preview", new {id = idR});
         }
 

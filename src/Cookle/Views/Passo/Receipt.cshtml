@@ -1,7 +1,7 @@
 @model Cookle.Models.Passo
 
 @{
-    ViewData["Title"] = "Receita passo a passo";
+    ViewData["Title"] = @Model.Receita.Nome;
     var before = Model.Numero - 1;
     var after = Model.Numero + 1;
 }
