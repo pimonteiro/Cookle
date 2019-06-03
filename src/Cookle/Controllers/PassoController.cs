@@ -181,7 +181,7 @@ namespace Cookle.Controllers
                 };
                 return RedirectToAction("Preview", "Receita", data);
             }
-            else if (passo > receita.Passos.Count)
+            else if (passo == receita.Passos.Count)
             {
                 var data = new
                 {
@@ -190,7 +190,11 @@ namespace Cookle.Controllers
                 return RedirectToAction("Finish", "Receita", data);
 
             }
-            return View(receita.Passos[passo-1]);
+            else if (passo > receita.Passos.Count)
+            {
+                return NotFound();
+            }
+                return View(receita.Passos[passo-1]);
         }
     }
 }

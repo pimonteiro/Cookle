@@ -39,6 +39,7 @@ namespace Cookle.Controllers
             var receita = await _context.Receita
                 .Include(f => f.Passos)
                 .Include(f => f.IngredienteReceitas)
+                .ThenInclude(m => m.Ingrediente)
                 .Include(f => f.NutrienteReceitas)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (receita == null)

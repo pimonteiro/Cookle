@@ -20,13 +20,22 @@
                         {
                             foreach (IngredienteReceita ing in Model.IngredienteReceitas)
                             {
-                                <li><strong>@ing.Quantidade</strong>&nbsp;<strong>@ing.Unidade</strong>&nbsp;@ing.Receita.Nome<br></li>
+                                <li><strong>@ing.Quantidade</strong>&nbsp;
+                                    @switch (ing.Unidade)
+                                    {
+                                        case 1:
+                                            <strong>gramas</strong>
+                                            break;
+                                        case 2:
+                                            <strong>mililitos</strong>
+                                            break;
+                                    }
+                                @ing.Ingrediente.Nome<br></li>
                             }
                         }
                     }
                 </ul>
-
-
+                
                 <p><strong>Valor nutritivo: </strong>@nut  kcal.</p>
                 <h3>Confecção</h3>
                 @{

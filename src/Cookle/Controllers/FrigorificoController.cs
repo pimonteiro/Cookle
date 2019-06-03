@@ -66,7 +66,7 @@ namespace Cookle.Controllers
                 frigorifico.User = _context.User.Find(frigorifico.UserId);
                 frigorifico.Ingrediente = _context.Ingrediente.Find(frigorifico.IngredienteId);
                 _context.Add(frigorifico);
-                await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();
                 var data = new
                 {
                     id = frigorifico.UserId
