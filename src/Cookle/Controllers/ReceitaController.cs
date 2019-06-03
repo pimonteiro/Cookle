@@ -196,10 +196,28 @@ namespace Cookle.Controllers
         }
 
         // GET: Receita/Finish/5
-        public IActionResult Finish(int id)
+        public IActionResult Finish(int idU, int idR)
         {
-            //TODO Save to User
-            return RedirectToAction("Preview", new {id = id});
+            if (_context.Historico.First(h => h.ReceitaId == idR && h.UserId == idU) != null)
+            {
+                _context.Historico.First(h => h.ReceitaId == idR && h.UserId == idU).Numero++; 
+                _context.SaveChangesAsync();
+            }
+            else
+            {
+                var historico = new Historico()
+                {
+                    UserId = idU,
+                    ReceitaId = idR,
+                    UltimaVez = DateTime.Now,
+                    User = _context.User.First(u => u.Id == idU),
+                    Receita = _context.Receita.First(u => u.Id == idR)
+                };
+                _context.Historico.Add(historico);
+                _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("Preview", new {id = idR});
         }
 
         // GET: Receita/Search
