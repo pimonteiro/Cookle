@@ -6,7 +6,7 @@
 }
 
 <section class="border rounded d-flex justify-content-center align-items-center align-content-center justify-content-xl-center align-items-xl-center clean-block" style="color: rgba(71,62,62,0.3);background-image: url(&quot;https://www.simplyrecipes.com/wp-content/uploads/2014/11/turkey-soup-horiz-a-1600.jpg&quot;);opacity: 1;font-size: 25px;min-height: 680px;background-repeat: no-repeat;background-size: cover;background-position: center;">
-    <a asp-controller="" asp-action="" class="btn btn-primary btn-lg text-uppercase text-center text-sm-center text-md-center text-lg-center text-xl-center border rounded border-white shadow-none d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center align-items-center align-content-center align-items-sm-center align-items-md-center align-items-lg-center justify-content-xl-center"
+    <a asp-controller="Receita" asp-action="Search" asp-route-tipo="NAN" class="btn btn-primary btn-lg text-uppercase text-center text-sm-center text-md-center text-lg-center text-xl-center border rounded border-white shadow-none d-sm-flex d-md-flex d-lg-flex d-xl-flex justify-content-center align-items-center align-content-center align-items-sm-center align-items-md-center align-items-lg-center justify-content-xl-center"
         role="button"  data-bs-hover-animate="pulse" style="background-color: rgba(249,63,35,0.8);color: rgb(255,255,255);height: 130px;width: 400px;font-size: 30px;font-family: Montserrat, sans-serif;">Comece a cozinhar</a>
 </section>
 <section class="clean-block features"></section>
@@ -26,11 +26,14 @@
                             {
                                 break;
                             }
-                            <p class="description" style="margin: 5px;">@f.Ingrediente.Nome</p>
+                            if (f.Ingrediente != null)
+                            {
+                                <p class="description" style="margin: 5px;">@f.Ingrediente.Nome</p>
+                            }
                             i++;
                         }
                     }
-                    <p class="description" style="margin: 5px;"><a asp-action="Details" asp-controller="Frigorifico" asp-route-id="@Model.Id">...</a></p>
+                    <p class="description" style="margin: 5px;"><a asp-action="User" asp-controller="Frigorifico" asp-route-id="@Model.Id">...</a></p>
                 }
             </div>
             <!--
@@ -60,11 +63,14 @@
                             {
                                 break;
                             }
-                            <p class="description" style="margin: 5px;">@h.Receita.Nome</p>
+                            if (h.Receita != null)
+                            {
+                                <p class="description" style="margin: 5px;">@h.Receita.Nome</p>
+                            }
                             i++;
                         }
                     }
-                    <p class="description" style="margin: 5px;"><a asp-action="Details" asp-controller="Historico">...</a></p>
+                    <p class="description" style="margin: 5px;"><a asp-action="User" asp-controller="Historico" asp-route-id="@Model.Id">...</a></p>
                 }
             </div>
             <div class="col-sm-6 col-md-6 col-xl-4 item">
@@ -80,11 +86,14 @@
                             {
                                 break;
                             }
-                            <p class="description">@p.Receita.Nome</p>
+                            if (p.Receita != null)
+                            {
+                                <p class="description">@p.Receita.Nome</p>
+                            }
                             i++;
                         }
                     }
-                    <p class="description" style="margin: 5px;"><a asp-action="Details" asp-controller="Plano">...</a></p>
+                    <p class="description" style="margin: 5px;"><a asp-action="User" asp-controller="Plano" asp-route-id="@Model.Id">...</a></p>
                 }
             </div>
         </div>

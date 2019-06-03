@@ -1,0 +1,145 @@
+@model IList<Frigorifico>
+@{
+    //USE ONLY THIS VIEW
+    ViewData["Title"] = "Frigorifico";
+    var ingredientes = ViewData["Ingredientes"] as List<Ingrediente>;
+    var user = ViewData["User"];
+}
+
+    <script type='text/javascript'>
+    var map;
+ 
+    //Query URL to the NAVTEQ POI data source
+    var sdsDataSourceUrl = 'http://spatial.virtualearth.net/REST/v1/data/c2ae584bbccc4916a0acf75d1e6947b4/NavteqEU/NavteqPOIs';
+ 
+    function GetMap() {
+        map = new Microsoft.Maps.Map('#map', {});
+ 
+        //Load the Bing Spatial Data Services module.
+        Microsoft.Maps.loadModule('Microsoft.Maps.SpatialDataService', function () {
+            //Add an event handler for when the map moves.
+            Microsoft.Maps.Events.addHandler(map, 'viewchangeend', getNearByLocations);
+ 
+            getNearByLocations();
+        });
+    }
+ 
+    function setUserPosition() {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            var loc = new Microsoft.Maps.Location(
+                position.coords.latitude,
+                position.coords.longitude);
+               
+            //Add a pushpin at the user's location.
+            var pin = new Microsoft.Maps.Pushpin(loc, { color: 'blue', title: 'You' });
+            map.entities.push(pin);
+ 
+            //Center the map on the user's location.
+            map.setView({ center: loc, zoom: 15 });
+        });
+    }
+ 
+    function getNearByLocations() {
+        map.entities.clear();
+ 
+        //Create a query to get nearby data.
+        var queryOptions = {
+            queryUrl: sdsDataSourceUrl,
+            spatialFilter: {
+                spatialFilterType: 'nearby',
+                location: map.getCenter(),
+                radius: 25
+            },
+            //Filter to retrieve Gas Stations.
+            filter: new Microsoft.Maps.SpatialDataService.Filter('EntityTypeID', 'Eq', 5400, 'Or', 'EntityTypeID', 'Eq', 6512, 'Or','EntityTypeID', 'Eq', 9535)
+        };
+ 
+        //Process the query.
+        Microsoft.Maps.SpatialDataService.QueryAPIManager.search(queryOptions, map, function (data) {
+            data.forEach(function(entry) {
+                var loc = new Microsoft.Maps.Location(entry.metadata.Latitude, entry.metadata.Longitude);
+                var pin = new Microsoft.Maps.Pushpin(loc, { title: entry.metadata.DisplayName });
+                map.entities.push(pin);
+            });
+        });
+ 
+        setUserPosition();
+    }
+    </script>
+<script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AjRQRoKlbki7dVCYLo8fFiSlTXgNkscWZqKJOU7NIGoIcH4Nn8h1gTWRLKIuXNDD' async defer></script>
+
+
+<div class="container">
+    <section class="clean-block features">
+        <h1 class="text-center" style="margin-top: 89px;margin-left: 10px;color: #3b99e0!important;">Frigorífico</h1>
+    </section>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Começar Receita</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-title">
+                    Encontro o supermecado mais próximo!
+                </div>
+                <div class="modal-body">
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <form method="post" asp-controller="Frigorifico" asp-action="Create">
+            <input type="hidden" name="UserId" value="@user" />
+            <table class="table">
+                <thead>
+                <tr>
+                    <th style="width:13px;"></th>
+                    <th>Alimento</th>
+                    <th>Quantidade</th>
+                    <th>Data de Expiração</th>
+                </tr>
+                </thead>
+                <tbody>
+                @{
+                    foreach (Frigorifico f in @Model)
+                    {
+                        <tr>
+                            <td class="float-none"><a asp-controller="Frigorifico" asp-action="RemoveIng" asp-route-ing="@f.IngredienteId" asp-route-id="@user"><i class="fa fa-remove" style="color:red;"></i></a></td>
+                            <td>@ingredientes[@f.IngredienteId-1].Nome</td>
+                            <td>@f.Quantidade</td>
+                            @if (f.Data > DateTime.Today)
+                            {
+                                <td style="color:red;">@f.Data</td>
+                            }
+                            else
+                            {
+                                <td style="color:green;">@f.Data</td>
+                            }
+                        </tr>
+                    }
+                }
+                <tr>
+                    <td><input class="btn btn-primary float-right" type="submit" value="Adicionar"/></td>
+                    <td>
+                        <select name="IngredienteId">
+                            @{
+                                foreach (Ingrediente ing in ingredientes)
+                                {
+                                    <option value="@ing.Id">@ing.Nome</option>
+                                }
+                            }
+                        </select>
+                    </td>
+                    <td><input type="number" name="Quantidade"/></td>
+                    <td><input type="date" name="Data"/></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+        <div style="text-align:center;"><button data-toggle="modal" data-target="#exampleModal" class="btn btn-primary float-right" type="button" style="margin-right:10px;">Ver supermecados próximos</button></div>
+    </div>
+</div>

@@ -1,7 +1,9 @@
-@model Plano
+@model List<Cookle.Models.Plano>
 
 @{
+//USE ONLY THIS ONE
     ViewData["Title"] = "Plano Semanal";
+    var user = ViewData["User"];
 }
 
 <section class="clean-block clean-pricing dark" style="background-color: #f6f6f6;margin-top: 44px;">
@@ -17,11 +19,11 @@
                 </thead>
                 <tbody>
                 @{
-                    //foreach (Plano p in Model.Planos)
+                    foreach (Plano p in Model)
                     {
                         <tr>
-                            <td class="float-none"><a asp-controller="" asp-action="" asp-route-id="@Model.ReceitaId"><i class="fa fa-remove" style="color:red;"></i></a></td>
-                            <td>@Model.Receita.Nome</td>
+                            <td class="float-none"><a asp-controller="Plano" asp-action="RemoveRec" asp-route-rec="@p.ReceitaId" asp-route-id="@user"><i class="fa fa-remove" style="color:red;"></i></a></td>
+                            <td>@p.Receita.Nome</td>
                         </tr>
                     }
                 }
@@ -30,7 +32,3 @@
         </div>
     </div>
 </section>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

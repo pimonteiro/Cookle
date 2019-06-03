@@ -65,7 +65,11 @@ namespace Cookle.Controllers
             {
                 _context.Add(plano);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var data = new
+                {
+                    id = plano.UserId
+                };
+                return RedirectToAction("User", data);
             }
             ViewData["ReceitaId"] = new SelectList(_context.Receita, "Id", "Descricao", plano.ReceitaId);
             ViewData["UserId"] = new SelectList(_context.User, "Id", "Id", plano.UserId);
@@ -161,6 +165,51 @@ namespace Cookle.Controllers
         private bool PlanoExists(int id)
         {
             return _context.Plano.Any(e => e.UserId == id);
+        }
+        
+        
+        public IActionResult User(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var plano = _context.Plano
+                .Include(r => r.Receita)
+                .Where(f => f.UserId == id).ToList();
+            ViewData["User"] = id;
+            return View(plano);
+
+        }
+        
+        public async Task<IActionResult> RemoveRec(int? id, int? rec)
+        {
+            if (rec == null){
+                return RedirectToAction("User", new {id = id});
+            }
+
+            var plano = _context.Plano.Where(f => f.UserId == id && f.ReceitaId == rec).ToList();
+            _context.Plano.Remove(plano.FirstOrDefault());
+            await _context.SaveChangesAsync();
+            return RedirectToAction("User", new {id = id});
+
+        }
+        
+        public async Task<IActionResult> AddRec([Bind("UserId,ReceitaId")] Plano plano)
+        {
+            var data = new
+            {
+                id = plano.UserId
+            };
+            
+            if (_context.Plano.FirstOrDefault(f => plano.UserId == f.UserId && plano.ReceitaId == f.ReceitaId) == null)
+            {
+                _context.Add(plano);
+                await _context.SaveChangesAsync();
+                
+            }
+
+            return RedirectToAction("User", data);
         }
     }
 }

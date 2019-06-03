@@ -1,0 +1,118 @@
+@model Cookle.Models.Receita
+
+@{
+    ViewData["Title"] = "Receita Preview";
+    var nut = ViewData["ValorNutricional"];
+    var notas = ViewData["NotasUser"] as List<Nota>;
+    var user = ViewData["UserId"];
+}
+
+<section class="clean-block clean-faq dark" style="margin-top: 40px;margin-bottom: 140px;">
+    <div class="block-heading" style="margin-top:25px;">
+        <h2 class="text-info">@Model.Nome</h2>
+    </div>
+    <div class="container d-flex justify-content-center">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="@Model.Imagem">
+                </div>
+                <div class="carousel-item">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="@Model.Video"></iframe>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+    
+    
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Começar Receita</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Escolha o tipo de acompanhamento:
+          </div>
+          <div class="modal-footer">
+                <a asp-controller="Receita" asp-action="Details" asp-route-id="@Model.Id"><input class="btn btn-primary float-left" type="submit" style="margin-right:10px;" value="Receita na Integra"></a>
+                <a asp-controller="Passo" asp-action="Receipt" asp-route-id="@Model.Id" asp-route-passo="1"><input class="btn btn-primary float-right" type="submit" style="margin-right:10px;" value="Receita em Passos"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:10px;">
+        <div style="margin-left:10px;">
+            <p>@Model.Descricao<br></p>
+            <p><strong>Valor nutritivo: </strong>@nut  kcal.</p>
+            <p>Ingredientes:</p>
+            <ul>
+                @{
+                    if (Model.IngredienteReceitas != null)
+                    {
+                        foreach (IngredienteReceita ing in Model.IngredienteReceitas)
+                        {
+                            <li>
+                                <strong>@ing.Quantidade </strong>&nbsp;
+                                @switch (ing.Unidade)
+                                {
+                                    case 1:
+                                        <strong>gramas</strong> @ing.Ingrediente.Nome
+                                        break;
+                                    case 2:
+                                        <strong>ml</strong> @ing.Ingrediente.Nome
+                                        break;
+                                        default:
+                                            @ing.Ingrediente.Nome
+                                            break;
+                                }
+                            </li>
+                        }
+                    }
+                }
+            </ul>
+            <div>
+                <h3>Notas:</h3>
+                <ul>
+                    @{
+                        if (notas != null)
+                        {
+                            foreach (Nota n in notas)
+                            {
+                                <li>@n.Data.ToShortDateString(): @n.Descricao<br></li>
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+            <div>
+                <form method="post" asp-controller="Nota" asp-action="Create">
+                    <input type="text" name="Descricao">
+                    <input type="hidden" name="Data" value="@DateTime.Today">
+                    <input type="hidden" name="UserId" value="@user">
+                    <input type="hidden" name="ReceitaId" value="@Model.Id">
+                    <input type="submit" class="btn btn-primary" value="Adicionar">
+                </form>
+            </div>
+            <div style="text-align:center;"><button data-toggle="modal" data-target="#exampleModal" class="btn btn-primary float-right" type="button" style="margin-right:10px;">Começar receita</button></div>
+        </div>
+    </div>
+</section>

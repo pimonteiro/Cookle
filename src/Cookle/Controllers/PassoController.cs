@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -161,6 +162,42 @@ namespace Cookle.Controllers
         private bool PassoExists(int id)
         {
             return _context.Passo.Any(e => e.Numero == id);
+        }
+
+        // Get Passo/Receipt/5?passo=1
+        public IActionResult Receipt(int id, int passo)
+        {
+            var receita = _context.Receita.Include(f => f.Passos).Where(r => r.Id == id).ToList().FirstOrDefault();
+            
+            if (receita == null)
+            {
+                return NotFound();
+            }
+
+            if (passo <= 0)
+            {
+                var data = new
+                {
+                    id = id
+                };
+                return RedirectToAction("Preview", "Receita", data);
+            }
+            else if (passo == receita.Passos.Count)
+
+            {
+                var data = new
+                {
+                    idR = id,
+                    idU = User.FindFirst(ClaimTypes.NameIdentifier).Value
+                };
+                return RedirectToAction("Finish", "Receita", data);
+
+            }
+            else if (passo > receita.Passos.Count)
+            {
+                return NotFound();
+            }
+                return View(receita.Passos[passo-1]);
         }
     }
 }
