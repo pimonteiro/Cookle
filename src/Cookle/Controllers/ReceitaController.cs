@@ -221,15 +221,43 @@ namespace Cookle.Controllers
         }
 
         // GET: Receita/Search
-        public async Task<IActionResult> Search(string search)
+        public async Task<IActionResult> Search(string search, int id, int cat)
         {
             if (!String.IsNullOrEmpty(search))
             {
                 var receitas = await _context.Receita.Where(r => r.Nome.Contains(search)).ToListAsync();
-                return View(receitas);
+                
+                List<IngredienteReceita> ingredientesRe = new List<IngredienteReceita>();
+                List<Ingrediente> ingredientes = new List<Ingrediente>();
+                List<Receita> recRet = new List<Receita>();
+                foreach (var rec in receitas)
+                {
+                    var flag = 0;
+                    ingredientesRe = _context.IngredienteReceita.Where(r => r.ReceitaId == rec.Id).ToList();
+                    foreach (var ingreR in ingredientesRe)
+                    {
+                        ingredientes = _context.Ingrediente.Where(i => i.Id == ingreR.IngredienteId).ToList();
+                    }
+                    foreach (var ing in ingredientes)
+                    {
+                        if (_context.PreferenciaIngrediente.First(p => p.UserId == id && p.IngredienteId == ing.Id).Tipo == Tipo.Evitar && cat == 1)
+                        {
+                            flag++;
+                        }
+                        if (_context.PreferenciaIngrediente.First(p => p.UserId == id && p.IngredienteId == ing.Id).Tipo != Tipo.Pref && cat == 0)
+                        {
+                            flag++;
+                        }
+                        
+                    }
+                    if(flag < 0)
+                        recRet.Add(_context.Receita.First(r => r.Id == rec.Id));
+                }
+                
+                return View(recRet);
             }
-            else
-                return View(_context.Receita.ToList());
+           
+            return View(_context.Receita.ToList());
         }
     }
 }
