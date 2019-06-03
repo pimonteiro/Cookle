@@ -37,7 +37,8 @@ namespace Cookle.Controllers
 
             var frigorifico = await _context.Frigorifico
                 .Include(f => f.User)
-                .FirstOrDefaultAsync(m => m.UserId == id);
+                .Where(f => f.UserId == id)
+                .ToListAsync();
             if (frigorifico == null)
             {
                 return NotFound();

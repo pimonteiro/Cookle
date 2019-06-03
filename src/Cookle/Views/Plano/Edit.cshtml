@@ -17,11 +17,11 @@
                 </thead>
                 <tbody>
                 @{
-                    foreach (Plano p in Model.Planos)
+                    //foreach (Plano p in Model.Planos)
                     {
                         <tr>
-                            <td class="float-none"><a asp-controller="" asp-action="" asp-route-id="@p.ReceitaId"><i class="fa fa-remove" style="color:red;"></i></a></td>
-                            <td>@p.Receita.Nome</td>
+                            <td class="float-none"><a asp-controller="" asp-action="" asp-route-id="@Model.ReceitaId"><i class="fa fa-remove" style="color:red;"></i></a></td>
+                            <td>@Model.Receita.Nome</td>
                         </tr>
                     }
                 }
